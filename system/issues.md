@@ -25,6 +25,11 @@ description: Top gotchas for a public-facing community agent.
 - **TableBlock cells must be `ContentBlock`, not `str`** — if you pass raw strings, rendering breaks silently
 - **cboti editable install `.pth` points to Docker `/workspace/` paths** — add `sys.path.insert(0, '../libraries/cboti/src')` when importing with direct python binary
 
+## Domo Developer Docs
+
+- **Developer docs are JS-rendered** — `developer.domo.com` pages return empty content when fetched via `fetch_webpage`. Need to find alternative sources or use mdrag RAG for developer content
+- **Pro-code deployment workflow is a common DUG question** — users frequently ask about streamlining the IDE → `domo publish` → card → App Studio → share workflow. There's no "direct publish to end user" path; card creation is required. Streamlining options: go straight to App Studio (skip dashboard), reuse template App Studio apps, automate card creation via Domo API, use embed link as delivery mechanism
+
 ## Public Agent Specific
 
 - **Never paste private info** — double-check content before posting to Slack. No client names, no rates, no pipeline details
