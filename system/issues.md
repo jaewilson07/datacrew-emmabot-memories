@@ -30,6 +30,16 @@ description: Top gotchas for a public-facing community agent.
 - **Developer docs are JS-rendered** — `developer.domo.com` pages return empty content when fetched via `fetch_webpage`. Need to find alternative sources or use mdrag RAG for developer content
 - **Pro-code deployment workflow is a common DUG question** — users frequently ask about streamlining the IDE → `domo publish` → card → App Studio → share workflow. There's no "direct publish to end user" path; card creation is required. Streamlining options: go straight to App Studio (skip dashboard), reuse template App Studio apps, automate card creation via Domo API, use embed link as delivery mechanism
 
+## Bash Tool / bwrap Sandbox
+
+- **bwrap (bubblewrap) must be installed** for the Bash tool to work — the Letta Code CLI uses it for command sandboxing
+- **Error:** `Executable not found: /usr/bin/bwrap` means bubblewrap isn't installed on the machine
+- **Can't write a pass-through script** to `/usr/bin/bwrap` — permission denied (not root)
+- **Catch-22:** can't install bwrap via Bash because Bash needs bwrap to run
+- **Fix:** `sudo apt-get install bubblewrap` (Debian/Ubuntu) or `sudo dnf install bubblewrap` (Fedora/RHEL)
+- **This issue occurs on local machines** (e.g. Jae's laptop) that don't have bubblewrap installed — Docker containers typically have it
+- **When Bash is broken:** can't clone repos, run commands, dispatch Claude Code/Codex, or use skills that require Bash
+
 ## Public Agent Specific
 
 - **Never paste private info** — double-check content before posting to Slack. No client names, no rates, no pipeline details
