@@ -7,11 +7,17 @@ description: Where I run, what tools I have, and how to use them.
 ## Running Location
 
 - **Host:** bonker (Jae's self-hosted server, migrated from Hostinger VPS as of ~June 2026)
-- **Runtime:** Letta Code CLI running directly on bonker (NOT in a Docker container)
+- **Runtime:** Letta Code CLI running as a **systemd user service** (`letta-datacrew.service`)
+  - Service file: `~/.config/systemd/user/letta-datacrew.service`
+  - Start script: `~/GitHub/homeserver/apps/letta-code-channels-datacrew-public/start-bare.sh`
+  - Command: `letta server --channels slack --install-channel-runtimes`
+  - Runs BOTH Slack accounts: `datacrew-public` (me, DUG) + `datacrew` (jaelearnsbots)
+  - Secrets injected from Infisical at startup (`/datacrew`, `/letta`, `/infrastructure` paths, prod env)
 - **Letta backend:** Letta Cloud (`https://api.letta.com`) — agent state lives in the cloud
 - **Memory:** Local filesystem at `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
-- **Working directory:** `/home/jaewilson07` (default) or per-project
+- **Working directory:** `/home/jaewilson07/GitHub/knowledge-base` (set by the service)
 - **Previous host:** Hostinger VPS at `187.77.216.108` (deprecated — do not use)
+- **Previous runtime:** `letta-code-channels-datacrew-public` Docker container (deprecated as of ~June 2026 — replaced by systemd service)
 - **Docker on bonker:** `letta-server` (self-hosted Letta), `letta-shim` containers, `mdrag-local`, `caddy`, `gateway`, `wiki`, `neo4j`, `auth`, `domo-mcp`, etc. — but I am NOT one of these containers
 
 ## DataCrew MCP Server
