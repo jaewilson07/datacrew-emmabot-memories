@@ -6,10 +6,13 @@ description: Where I run, what tools I have, and how to use them.
 
 ## Running Location
 
-- **Host:** bonker (Jae's new server, migrated from Hostinger VPS) — `letta-code-channels-datacrew-public` Docker container
+- **Host:** bonker (Jae's self-hosted server, migrated from Hostinger VPS as of ~June 2026)
+- **Runtime:** Letta Code CLI running directly on bonker (NOT in a Docker container)
+- **Letta backend:** Letta Cloud (`https://api.letta.com`) — agent state lives in the cloud
+- **Memory:** Local filesystem at `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
+- **Working directory:** `/home/jaewilson07` (default) or per-project
 - **Previous host:** Hostinger VPS at `187.77.216.108` (deprecated — do not use)
-- **Working directory:** `/workspace/datacrew`
-- **Skills directory:** `/workspace/.agents/skills/` (same skills as datacrew-cloud)
+- **Docker on bonker:** `letta-server` (self-hosted Letta), `letta-shim` containers, `mdrag-local`, `caddy`, `gateway`, `wiki`, `neo4j`, `auth`, `domo-mcp`, etc. — but I am NOT one of these containers
 
 ## DataCrew MCP Server
 
