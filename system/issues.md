@@ -23,7 +23,7 @@ description: Top gotchas for a public-facing community agent.
 
 - **`GoogleSheets.batch_update()` ≠ `batch_update_values()`** — the former is spreadsheet-level metadata/formatting; the latter is for cell content
 - **TableBlock cells must be `ContentBlock`, not `str`** — if you pass raw strings, rendering breaks silently
-- **cboti editable install `.pth` points to Docker `/workspace/` paths** — add `sys.path.insert(0, '../libraries/cboti/src')` when importing with direct python binary
+- **cboti path mismatches** — when importing cboti with a direct python binary (not via the package install), add `sys.path.insert(0, '../libraries/cboti/src')` to find the source. Path issues were common in the old Docker container; on bonker, check the actual install location.
 
 ## Environment / Tooling Gotchas
 
