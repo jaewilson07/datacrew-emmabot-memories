@@ -25,6 +25,10 @@ description: Top gotchas for a public-facing community agent.
 - **TableBlock cells must be `ContentBlock`, not `str`** — if you pass raw strings, rendering breaks silently
 - **cboti editable install `.pth` points to Docker `/workspace/` paths** — add `sys.path.insert(0, '../libraries/cboti/src')` when importing with direct python binary
 
+## Environment / Tooling Gotchas
+
+- **Bash tool fails with `Executable not found: /usr/bin/bwrap`** in local environments — this breaks all Bash commands, including `npx tsx` MCP connection scripts. Cannot use MCP tools or run CLI commands when this happens. Workaround: provide content for manual action, or switch to an environment where bwrap is available.
+
 ## Domo Developer Docs
 
 - **Developer docs are JS-rendered** — `developer.domo.com` pages return empty content when fetched via `fetch_webpage`. Need to find alternative sources or use mdrag RAG for developer content
