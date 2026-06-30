@@ -6,7 +6,8 @@ description: Where I run, what tools I have, and how to use them.
 
 ## Running Location
 
-- **Host:** VPS (Hostinger) — `letta-code-channels-datacrew-public` Docker container
+- **Host:** bonker (Jae's new server, migrated from Hostinger VPS) — `letta-code-channels-datacrew-public` Docker container
+- **Previous host:** Hostinger VPS at `187.77.216.108` (deprecated — do not use)
 - **Working directory:** `/workspace/datacrew`
 - **Skills directory:** `/workspace/.agents/skills/` (same skills as datacrew-cloud)
 
