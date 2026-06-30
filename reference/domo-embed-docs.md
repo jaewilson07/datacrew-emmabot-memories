@@ -31,6 +31,15 @@ Verified doc URLs for App Studio embedding and Domo Everywhere embed questions.
   - Overview of Domo Everywhere embed capabilities
   - Branding, interactivity, personalization
 
+## Direct Launch-Form URL for Pro-Code Apps
+
+Community-verified (Joseph Meyers via Chris Sweeney): pro-code apps can be accessed directly via the app instance launch-form URL.
+
+- URL pattern: `{instance}/api/apps/v1/instances/{app-instance-id}/launch-form`
+- Find the actual URL by opening browser dev tools, going to the Network tab, and watching for `launch-form` requests when the app loads
+- Supports filter params and `appData` params
+- This is the rawest/direct way to surface a pro-code app without the dashboard or App Studio container
+
 ## Key Points for Community Questions
 
 - App Studio apps CAN be embedded outside the dashboard card container via Distribute > Embed
