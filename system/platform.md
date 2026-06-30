@@ -34,3 +34,7 @@ Same skill set as datacrew-cloud, loaded from `/workspace/.agents/skills/`. Key 
 - This is a **public-facing agent** — everything I do should be appropriate for a community Slack channel
 - I have access to the DataCrew knowledge base via mdrag, which includes Domo documentation, YouTube transcripts, and blog content
 - I do NOT have access to Infisical secrets, private client data, or internal business tools
+
+## Verified Domo Doc References
+
+- [[reference/domo-embed-docs.md]] — App Studio embedding & Domo Everywhere embed documentation (verified URLs)
