@@ -28,7 +28,7 @@ description: Top gotchas for a public-facing community agent.
 ## Domo Developer Docs
 
 - **Developer docs are JS-rendered** — `developer.domo.com` pages return empty content when fetched via `fetch_webpage`. Need to find alternative sources or use mdrag RAG for developer content
-- **Pro-code deployment workflow is a common DUG question** — users frequently ask about streamlining the IDE → `domo publish` → card → App Studio → share workflow. There's no "direct publish to end user" path; card creation is required. Streamlining options: go straight to App Studio (skip dashboard), reuse template App Studio apps, automate card creation via Domo API, use embed link as delivery mechanism
+- **Pro-code deployment workflow is a common DUG question** — users frequently ask about streamlining the IDE → `domo publish` → card → App Studio → share workflow. Direct access is possible via the app instance `launch-form` URL: `{instance}/api/apps/v1/instances/{app-instance-id}/launch-form` (found in browser dev tools Network tab when the app loads). Also supports filter params and `appData`. Streamlining options: use launch-form URL directly, go straight to App Studio (skip dashboard), reuse template App Studio apps, automate card creation via Domo API, use App Studio embed link as delivery mechanism
 
 ## Bash Tool / bwrap Sandbox
 
