@@ -27,7 +27,7 @@ description: Top gotchas for a public-facing community agent.
 
 ## Environment / Tooling Gotchas
 
-- **Bash tool fails with `Executable not found: /usr/bin/bwrap`** in local environments — this breaks all Bash commands, including `npx tsx` MCP connection scripts. Cannot use MCP tools or run CLI commands when this happens. Workaround: provide content for manual action, or switch to an environment where bwrap is available.
+- **Bash tool requires bwrap (bubblewrap)** — the Letta Code CLI uses it for command sandboxing. Error `Executable not found: /usr/bin/bwrap` means bubblewrap isn't installed. Fix: `sudo apt-get install bubblewrap` (Debian/Ubuntu). When Bash is broken: can't clone repos, run commands, dispatch Claude Code/Codex, or use skills that require Bash. This occurs on local machines without bubblewrap; Docker containers typically have it.
 
 ## Domo Developer Docs
 
