@@ -20,24 +20,40 @@ description: Where I run, what tools I have, and how to use them.
 - **Previous runtime:** `letta-code-channels-datacrew-public` Docker container (deprecated as of ~June 2026 — replaced by systemd service)
 - **Docker on bonker:** `letta-server` (self-hosted Letta), `letta-shim` containers, `mdrag-local`, `caddy`, `gateway`, `wiki`, `neo4j`, `auth`, `domo-mcp`, etc. — but I am NOT one of these containers
 
-## DataCrew MCP Server
+## DataCrew MCP Server (wiki)
 
-- **URL:** `https://mdrag.datacrew.space/mcp/`
-- **Primary tools for community help:**
-  - `search_web` — SearXNG-powered web search
-  - `crawl_url` — crawl a single page for content
-  - `query_rag` — query the DataCrew knowledge base (Domo docs, blog posts, YouTube transcripts)
-  - `save_url_to_knowledge` — ingest URLs into the knowledge base
-- **Use mdrag first** for Domo questions — it has verified Domo content indexed
+- **URL:** `https://wiki.datacrew.space/mcp/` (note: `wiki` not `wikki` or `mdrag` — old `mdrag.datacrew.space` 301-redirects to `wiki.datacrew.space`)
+- **Auth:** `X-DC-Token: $DATACREW_API_TOKEN` header (DataCrew JWT from Infisical `/datacrew` path)
+- **Protocol:** MCP Streamable HTTP (JSON-RPC over HTTP with SSE responses). Requires `Accept: application/json, text/event-stream` header. Session ID returned in `Mcp-Session-Id` header on `initialize`.
+- **Connection flow:** `initialize` → `notifications/initialized` → `reveal_toolset(name)` → `tools/call`
+- **Toolsets are lazy-loaded** — call `list_capabilities` to see all toolsets, then `reveal_toolset(name)` to access tools
+- **Key toolsets:**
+  - `rag` — `query_rag`, `save_text_to_knowledge`, `save_url_to_knowledge`, `save_audio_to_knowledge`
+  - `web` — `search_web`, `crawl_url`, `crawl_site`
+  - `graph` — `add_episode`, `search_graph`, `ingest_structured_data`, etc.
+  - `wiki` — `query_wiki`, `compile_wiki`, `detect_gaps`, etc.
+  - `browser` — `start_browser_session`, `fetch_authenticated`, `capture_linkedin_page`
+  - `learn` — `create_lesson`, `create_reference`, `add_learning_record`, etc.
+- **Use wiki first** for Domo questions — it has verified Domo content indexed
+- **Known issue:** `save_url_to_knowledge` returns 401 (internal auth forwarding bug). Use `save_text_to_knowledge` instead — it works fine.
+- **Ingestion script:** `/home/jaewilson07/GitHub/knowledge-base/ingest_to_mdrag.py` — Python script that connects to MCP and ingests markdown files via `save_text_to_knowledge`
 
 ## Skills Available
 
-Loaded from the Letta Code CLI global skills directory (`/usr/lib/node_modules/@letta-ai/letta-code/skills`) and my own `memory/skills/`. Key ones for community work:
+Loaded from the Letta Code CLI global skills directory (`/usr/lib/node_modules/@letta-ai/letta-code/skills`) and my own `memory/skills/`. Key ones:
 
-- `mdrag-mcp` — connect to DataCrew MCP for search, crawl, and RAG
-- `verified-analyst` — high-fidelity research using verified knowledge base chunks
-- `research-and-archive` — research a topic and archive findings
-- `create-gdoc` — create Google Docs (use sparingly — only when community content needs a doc)
+- `acquiring-skills` — discover and install skills from registries
+- `converting-mcps-to-skills` — connect to MCP servers and create skills
+- `creating-skills` — guide for creating new skills
+- `dispatching-coding-agents` — dispatch stateless coding agents (Claude Code/Codex)
+- `image-generation` — generate images from text prompts
+- `scheduling-tasks` — schedule reminders and recurring tasks
+- `messaging-agents` — send messages to other agents on the server
+- `finding-agents` — find other agents on the same server
+- `syncing-memory-filesystem` — manage git-backed memory repos
+- `context_doctor` — repair degraded system prompt / memory
+- `initializing-memory` — guide for initializing or reorganizing agent memory
+- My own: `memory/skills/teach/` — teaching skill
 
 ## Key Notes
 
@@ -51,7 +67,7 @@ Loaded from the Letta Code CLI global skills directory (`/usr/lib/node_modules/@
 
 ## Agentic Patterns Reference (Claude Cookbooks)
 
-Curated reference files from Anthropic's claude-cookbooks repo (88 notebooks converted to markdown at `/home/jaewilson07/GitHub/knowledge-base/claude-cookbooks/`). Use these when answering questions about Claude API patterns, agent architecture, or agentic development.
+Curated reference files from Anthropic's claude-cookbooks repo (88 notebooks converted to markdown at `/home/jaewilson07/GitHub/knowledge-base/claude-cookbooks/`). Use these when answering questions about Claude API patterns, agent architecture, or agentic development. Key content also ingested into the DataCrew knowledge base (wiki MCP `claude-cookbooks` collection) for RAG queries.
 
 - [[reference/agentic-patterns/overview.md]] — Overview of all patterns + repo structure
 - [[reference/agentic-patterns/basic-workflows.md]] — Prompt chaining, parallelization, routing
