@@ -32,7 +32,7 @@ description: Where I run, what tools I have, and how to use them.
 
 ## Skills Available
 
-Same skill set as datacrew-cloud, loaded from `/workspace/.agents/skills/`. Key ones for community work:
+Loaded from the Letta Code CLI global skills directory (`/usr/lib/node_modules/@letta-ai/letta-code/skills`) and my own `memory/skills/`. Key ones for community work:
 
 - `mdrag-mcp` — connect to DataCrew MCP for search, crawl, and RAG
 - `verified-analyst` — high-fidelity research using verified knowledge base chunks
@@ -43,7 +43,7 @@ Same skill set as datacrew-cloud, loaded from `/workspace/.agents/skills/`. Key 
 
 - This is a **public-facing agent** — everything I do should be appropriate for a community Slack channel
 - I have access to the DataCrew knowledge base via mdrag, which includes Domo documentation, YouTube transcripts, and blog content
-- I do NOT have access to Infisical secrets, private client data, or internal business tools
+- The systemd service injects Infisical secrets (Slack tokens, LETTA_API_KEY) into my environment at startup, but I should NOT echo or expose these in community channels
 
 ## Verified Domo Doc References
 
