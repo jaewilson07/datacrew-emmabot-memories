@@ -10,10 +10,24 @@ Reference for Domo Python libraries that come up in DUG Slack questions.
 
 - **What:** DataCrew's open-source Python SDK that wraps the Domo API
 - **Maintained by:** Jae Wilson / DataCrew
+- **GitHub:** `https://github.com/hector-dcs/crew-dcs.git`
 - **Install:** `pip install crew-dcs --index-url https://datacrew.space/packages/` (NOT on standard PyPI — uses DataCrew's custom package index)
 - **Package index:** `https://datacrew.space/packages/`
 - **Blog post with examples:** `datacrew.space/blog/trigger-report-builder-from-domo-workflows` (Scheduled Reports API examples)
 - **Notes:** Newer SDK. Documented examples mainly cover Scheduled Reports API so far. May have broader Domo API coverage since it wraps the API generally.
+
+### crew-dcs Code Engine Support
+
+crew-dcs includes Domo Code Engine integration via `crew_dcs.classes.DomoCodeEngine_Package`:
+
+- **`DomoCodeEngine_Package.upsert(auth, package_name, file_path)`** — creates or updates a Code Engine package from a Python file. Auto-parses AST to build the manifest (functions, args, return types from type annotations + docstrings)
+- **`DomoCodeEngine_Package.get_by_id(auth, package_id)`** — fetch a package by ID
+- **`deploy_release()`** — deploys/releases a version (must be done before functions can run)
+- **`run_function(function_name, args)`** — executes a function in the deployed package
+- **API endpoint:** `POST /api/codeengine/v2/packages` (create), `GET /api/codeengine/v2/packages/{id}` (fetch)
+- **Python type → Code Engine type mappings:** `str` → `text`, `int` → `number`, `bool` → `boolean`, `float` → `number`
+- **Workflow:** (1) Create .py file with type-annotated functions + docstrings → (2) `upsert()` to upload → (3) `deploy_release()` to deploy version → (4) `run_function()` to test
+- **Known bugs (as of 2026-07-14, may be fixed in upstream):** See [[system/issues.md]] § crew-dcs Code Engine
 
 ## domolibrary
 

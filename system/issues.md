@@ -57,6 +57,13 @@ description: Top gotchas for a public-facing community agent.
 - **Whisper cache exists** at `/home/jaewilson07/.cache/whisper/` (has `base.pt` and `tiny.pt` models). Can install via `uv venv /tmp/whisper_env && source /tmp/whisper_env/bin/activate && uv pip install openai-whisper`. But results are poor for Slack voice memos.
 - **No cloud transcription available** — no OpenAI API key, no Groq key. Hugging Face API is unreachable from the sandbox (DNS resolution fails). The only option is local whisper, which doesn't work well.
 
+## crew-dcs Code Engine
+
+- **`create()` doesn't re-fetch after creation** — The API response from `POST /api/codeengine/v2/packages` doesn't include `versions`, so `current_version` is always `None` after creating a package. Fix: re-fetch via `get_by_id()` after `create()`. (Found 2026-07-14, fix applied to local clone — may not be pushed upstream yet)
+- **`from_dict()` version timing bug** — `versions` is set AFTER `__post_init__` runs, but `_set_current_version()` is only called in `__post_init__`. So `current_version` stays `None` even when versions are present. Fix: call `_set_current_version()` after versions are populated in `from_dict()`.
+- **Return type annotation extraction broken** — `from_ast_function_return_arg()` passes `ast_fn.returns` (an `ast.Name` node) to `extract_ast_arg_type_annotation()` which expects an `ast.arg` with `.annotation` attr. All return types default to `"object"` instead of the correct type. Fix: use `ast.unparse(ast_fn.returns)` directly. Now `-> str` maps to `text` and `-> int` maps to `number`.
+- **Version must be deployed before functions run** — after `upsert()`, call `deploy_release()` to deploy the version. Functions cannot be called until the version is released.
+
 ## Public Agent Specific
 
 - **Never paste private info** — double-check content before posting to Slack. No client names, no rates, no pipeline details
