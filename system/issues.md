@@ -51,6 +51,12 @@ description: Top gotchas for a public-facing community agent.
 - **Mobile app workaround** — AI Chat is available in the Domo mobile app (More > AI) without grants, good for testing data/AI Readiness setup while web UI issues are sorted
 - **Key docs**: Use AI Chat (https://www.domo.com/docs/s/article/000005539), AI Readiness (https://www.domo.com/docs/s/article/000005561), AI Admin Settings (https://www.domo.com/docs/s/article/AI-Admin-Settings), AI Admin Agent Settings (https://www.domo.com/docs/s/article/AI-Admin-Agent-Settings)
 
+## Audio Transcription
+
+- **Local whisper models produce unreliable transcriptions** — both `tiny` and `base` models hallucinate on Slack audio clips (produce repetitive garbage like "I think it is" or "AXE"). The audio clips from Slack voice memos seem to have characteristics that confuse whisper (consistent amplitude, possible background noise). Don't rely on local whisper for Slack audio — ask the sender to type it out instead.
+- **Whisper cache exists** at `/home/jaewilson07/.cache/whisper/` (has `base.pt` and `tiny.pt` models). Can install via `uv venv /tmp/whisper_env && source /tmp/whisper_env/bin/activate && uv pip install openai-whisper`. But results are poor for Slack voice memos.
+- **No cloud transcription available** — no OpenAI API key, no Groq key. Hugging Face API is unreachable from the sandbox (DNS resolution fails). The only option is local whisper, which doesn't work well.
+
 ## Public Agent Specific
 
 - **Never paste private info** — double-check content before posting to Slack. No client names, no rates, no pipeline details
