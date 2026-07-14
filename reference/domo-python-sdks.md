@@ -38,6 +38,8 @@ crew-dcs includes Domo Code Engine integration via `crew_dcs.classes.DomoCodeEng
   - `list` → object (isList=True): PARTIAL — lists of dicts work, lists of strings return HTTP 400 (Code Engine expects list items to be objects, not primitives)
   - Python default values: NOT APPLIED — when input is omitted, function receives `None` not the default. Workaround: handle `None` in function body
   - Functions without type annotations: default to `object` but may fail at runtime
+  - `from typing import Any` import causes `TypeError: 'type' object is not subscriptable` in Code Engine runtime — avoid importing from `typing` in Code Engine packages
+  - `str | None` (union type) maps to `object` and fails at runtime — avoid union types in Code Engine function signatures
 
 ## domolibrary
 
