@@ -25,9 +25,19 @@ crew-dcs includes Domo Code Engine integration via `crew_dcs.classes.DomoCodeEng
 - **`deploy_release()`** — deploys/releases a version (must be done before functions can run)
 - **`run_function(function_name, args)`** — executes a function in the deployed package
 - **API endpoint:** `POST /api/codeengine/v2/packages` (create), `GET /api/codeengine/v2/packages/{id}` (fetch)
-- **Python type → Code Engine type mappings:** `str` → `text`, `int` → `number`, `bool` → `boolean`, `float` → `number`
+- **Python type → Code Engine type mappings:** `str` → `text`, `int` → `number`, `float` → `decimal`, `bool` → `boolean`, `dict` → `object`, `list` → `object` (isList=True), `Any` → `object`
 - **Workflow:** (1) Create .py file with type-annotated functions + docstrings → (2) `upsert()` to upload → (3) `deploy_release()` to deploy version → (4) `run_function()` to test
-- **Known bugs (as of 2026-07-14, may be fixed in upstream):** See [[system/issues.md]] § crew-dcs Code Engine
+- **Sample project:** `projects/sample-codeengine-functions/` in crew-dcs repo — includes `sample_utils.py` (hello world), `type_test.py` (all type coverage), `upload.py` (upload+deploy+test script), and `README.md` with full docs
+- **Bugs fixed 2026-07-14 (commit 4b08d19):** (1) `create()` now re-fetches via `get_by_id` after creation (POST response omits versions), (2) `from_dict()` calls `_set_current_version()` after versions are populated, (3) `from_ast_function_return_arg()` uses `ast.unparse()` directly instead of passing through `extract_ast_arg_type_annotation()` (which expects `ast.arg` not `ast.Name`)
+- **Runtime type test results (domo-community, Python 3.13):**
+  - `str` → text: WORKS
+  - `int` → number: WORKS
+  - `float` → decimal: WORKS
+  - `bool` → boolean: WORKS
+  - `dict` → object: WORKS
+  - `list` → object (isList=True): PARTIAL — lists of dicts work, lists of strings return HTTP 400 (Code Engine expects list items to be objects, not primitives)
+  - Python default values: NOT APPLIED — when input is omitted, function receives `None` not the default. Workaround: handle `None` in function body
+  - Functions without type annotations: default to `object` but may fail at runtime
 
 ## domolibrary
 
