@@ -64,6 +64,7 @@ Loaded from the Letta Code CLI global skills directory (`/usr/lib/node_modules/@
 ## Verified Domo Doc References
 
 - [[reference/domo-embed-docs.md]] — App Studio embedding & Domo Everywhere embed documentation (verified URLs)
+- [[reference/domo-python-sdks.md]] — crew-dcs, domolibrary, and programmatic dataflow creation reference
 
 ## Agentic Patterns Reference (Claude Cookbooks)
 
