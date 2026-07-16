@@ -15,6 +15,9 @@ description: Where I run, what tools I have, and how to use them.
   - Secrets injected from Infisical at startup (`/datacrew`, `/letta`, `/infrastructure` paths, prod env)
 - **Letta backend:** Letta Cloud (`https://api.letta.com`) — agent state lives in the cloud
 - **Memory:** Local filesystem at `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
+  - **Primary remote (origin):** Letta Cloud git (`https://api.letta.com/v1/git/agent-5afcfa48-.../state.git`) — used by the Letta Code harness for memory persistence
+  - **Shared remote (github):** `https://github.com/jaewilson07/datacrew-memories.git` — shared memory with DataCrew and IdrisBot. Push with `git push github HEAD:master` after committing to origin. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`)
+  - **Local clone:** `/home/jaewilson07/GitHub/datacrew-memories` — working copy of the GitHub repo (set up 2026-07-16)
 - **Working directory:** `/home/jaewilson07/GitHub/knowledge-base` (set by the service)
 - **Previous host:** Hostinger VPS at `187.77.216.108` (deprecated — do not use)
 - **Previous runtime:** `letta-code-channels-datacrew-public` Docker container (deprecated as of ~June 2026 — replaced by systemd service)
