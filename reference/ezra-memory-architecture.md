@@ -64,11 +64,15 @@ Every file has `---description: ...---` frontmatter for discoverability
 - Method: identify workflow, separate facts from interpretation, safest action first
 - Privacy/safety: never expose user context, minimum evidence, no irreversible cleanup
 
-## Proposed Implementation Steps for My Memory
+## Implementation Status (2026-07-16)
 
-1. Split `issues.md` into compact pinned index + `reference/domo-gotchas/` files
-2. Create `system/memfs/maintenance.md` with placement test and audit rules
-3. Create `reference/patterns/` for Domo diagnostic patterns
-4. Add frontmatter descriptions to all memory files
-5. Create `users/` directory for regular DUG members (with privacy rules)
-6. Formalize response rules in a `system/support/` section
+- [x] Split `issues.md` into compact `system/gotchas.md` index + `reference/gotchas/` files (10 topic files)
+- [x] Slimmed `platform.md` from 85 lines to ~30 lines — moved MCP details, skills, and doc references to `reference/`
+- [x] Added `archives/` directory for deduplicated/outdated content (instead of deleting)
+- [x] Added `.gitignore` to GitHub repo (privacy-first, excludes users/, conversations, secrets, .letta/)
+- [x] Added `README.md` to GitHub repo explaining structure and architecture principles
+- [x] All memory files have frontmatter descriptions
+- [ ] Create `reference/patterns/` for Domo diagnostic patterns (symptom → mechanism → diagnostic → fix)
+- [ ] Create `users/` directory for regular DUG members (with privacy rules)
+- [ ] Formalize response rules in a `system/support/` section
+- [ ] Create `CURATION_LOG.md` to track memory changes over time
