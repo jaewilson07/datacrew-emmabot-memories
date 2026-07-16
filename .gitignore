@@ -1,0 +1,38 @@
+# User information - never commit
+users/
+profiles/
+*.user.json
+*_user_*.md
+
+# Conversation logs and personal data
+conversations/
+logs/
+*.log
+
+# Secrets and credentials
+.env
+*.key
+*.pem
+secrets/
+
+# Temporary files
+*.tmp
+*.bak
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node/build artifacts
+node_modules/
+dist/
+
+# Local agent config
+.letta/
+
+# Large binary files
+*.db
+*.pkl
+*.bin
