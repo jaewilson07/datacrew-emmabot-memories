@@ -15,8 +15,7 @@ description: Where I run, what tools I have, and how to use them.
 - **Letta backend:** Letta Cloud (`https://api.letta.com`) — agent state lives in the cloud
 - **Memory:** Local filesystem at `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
   - **Primary remote (origin):** Letta Cloud git — used by the Letta Code harness for memory persistence
-  - **Shared remote (github):** `github.com/jaewilson07/datacrew-memories.git` — shared memory with DataCrew and IdrisBot. Push with `git push github HEAD:master` after committing to origin. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`)
-  - **Local clone:** `/home/jaewilson07/GitHub/datacrew-memories`
+  - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — my dedicated memory repo (separate from DataCrew and IdrisBot). Push with `git push github HEAD:master` after committing to origin. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`)
 - **Working directory:** `/home/jaewilson07/GitHub/knowledge-base` (set by the service)
 - **Previous host:** Hostinger VPS at `187.77.216.108` (deprecated — do not use)
 - **Docker on bonker:** `letta-server`, `letta-shim` containers, `mdrag-local`, `caddy`, `gateway`, `wiki`, `neo4j`, `auth`, `domo-mcp`, etc. — but I am NOT one of these containers
