@@ -26,11 +26,22 @@ Domo supports PGP **decryption** on the **import** side but does NOT support PGP
 - Generates a public key in the connector UI that you place on the SFTP server
 - Doc: https://www.domo.com/docs/s/article/360058713713
 
+### Workbench
+- Primarily for **inbound** data into Domo
+- Has a writeback feature but only to **on-prem databases via ODBC** — NOT to SFTP servers
+- Doc: https://www.domo.com/docs/s/article/000005234
+- Common misconception: users think Workbench can write to external SFTP — it cannot
+
+### S3 Writeback Connector (for comparison)
+- Does have encryption options (Encryption Method + Encryption Key fields)
+- But that's S3-specific, not PGP, and not SFTP
+- Doc: https://www.domo.com/docs/s/article/360042932194
+
 ## Workarounds for Outbound PGP Encryption
 
 1. **External orchestration** (recommended) — Export from Domo via API or SFTP Writeback to intermediate server, then use a script (`gpg --encrypt --recipient <key>` + `sftp put`) to encrypt and upload
 2. **Domo Code Engine** — Potentially write a Python tile with PGP library, but uncertain which crypto libs are available and still need SFTP delivery
-3. **Workbench + local pre-processing** — Encrypt locally before Workbench picks up the file (more manual)
+3. **Workbench + local pre-processing** — Encrypt locally before Workbench picks up the file (more manual, and Workbench is inbound-only for SFTP)
 
 ## Common DUG Question Pattern
 
