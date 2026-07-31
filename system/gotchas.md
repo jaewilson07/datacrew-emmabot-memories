@@ -14,4 +14,5 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Domo AI Library**: Conversational Agents is beta, needs CSM enable → [[reference/gotchas/domo-ai-library.md]]
 - **Audio transcription**: local whisper unreliable for Slack voice memos → [[reference/gotchas/audio-transcription.md]]
 - **crew-dcs Code Engine**: create() doesn't re-fetch, type mapping incomplete → [[reference/gotchas/crew-dcs-code-engine.md]]
+- **AppDB permissions**: `Write` = collection properties, NOT document CRUD → [[reference/gotchas/appdb-permissions.md]]
 - **Public agent rules**: never paste private info, don't pretend to be human → [[reference/gotchas/public-agent-rules.md]]
