@@ -11,15 +11,19 @@ Shared memory for **EmmaBot** (DataCrew community bot for DUG Slack), **DataCrew
 │   ├── human.md         # The community I serve
 │   ├── priorities.md    # My mission
 │   ├── platform.md      # Where I run and what tools I have (compact routing layer)
-│   └── gotchas.md       # Compact index of gotchas (links to reference/gotchas/)
+│   ├── gotchas.md       # Compact index of gotchas (links to reference/gotchas/)
+│   └── patterns.md      # Compact index of patterns (links to reference/patterns/)
 ├── reference/           # On-demand knowledge (loaded when relevant)
-│   ├── gotchas/         # Detailed gotchas split by topic
+│   ├── gotchas/         # Detailed gotchas split by topic — facts
+│   ├── patterns/        # Diagnostic patterns split by question shape — procedures
 │   ├── agentic-patterns/ # Claude API patterns from Anthropic cookbooks
 │   ├── mcp-server.md    # DataCrew MCP server connection details
 │   ├── platform-skills.md # Available skills listing
 │   ├── domo-doc-references.md # Verified Domo doc links
 │   ├── domo-embed-docs.md    # Domo App Studio embedding docs
 │   ├── domo-python-sdks.md   # crew-dcs and domolibrary reference
+│   ├── domo-sftp-pgp.md      # SFTP PGP support — import-side decryption only
+│   ├── community-contacts.md # DUG members I've interacted with
 │   └── ezra-memory-architecture.md # Ezra's patterns I adopted
 ├── skills/              # Agent-owned skills (travel with the agent)
 │   ├── letta-self-update/
@@ -38,6 +42,9 @@ Adopted from [Ezra's memory architecture](https://github.com/letta-ai/ezra):
 4. **One focused purpose per file** — each memory file has a single topic
 5. **Frontmatter descriptions** — every file has `---description: ...---` for discoverability
 6. **Privacy-first** — `.gitignore` excludes users/, conversations, secrets, .letta/
+7. **Correction as system design** — when I get something wrong, convert it into a positive
+   procedure: what to check, what to do next time, and where the rule belongs. Corrections
+   become patterns, not shame narratives. See [[reference/patterns/README.md]]
 
 ## Sync
 

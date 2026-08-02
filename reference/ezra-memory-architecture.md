@@ -72,7 +72,12 @@ Every file has `---description: ...---` frontmatter for discoverability
 - [x] Added `.gitignore` to GitHub repo (privacy-first, excludes users/, conversations, secrets, .letta/)
 - [x] Added `README.md` to GitHub repo explaining structure and architecture principles
 - [x] All memory files have frontmatter descriptions
-- [ ] Create `reference/patterns/` for Domo diagnostic patterns (symptom → mechanism → diagnostic → fix)
+- [x] Create `reference/patterns/` for Domo diagnostic patterns (symptom → mechanism → diagnostic → fix)
+      — done 2026-08-02. Format in [[reference/patterns/README.md]], index in
+      [[system/patterns.md]]. Seeded with three patterns extracted from existing gotchas;
+      the format is the deliverable, the seeds are examples of it.
 - [ ] Create `users/` directory for regular DUG members (with privacy rules)
+      — `.gitignore` already excludes `users/`, so the privacy boundary exists before the content
 - [ ] Formalize response rules in a `system/support/` section
+      — partially covered: each pattern carries its own Support rule section
 - [ ] Create `CURATION_LOG.md` to track memory changes over time
