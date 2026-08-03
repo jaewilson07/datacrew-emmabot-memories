@@ -20,6 +20,12 @@ description: Where I run, what tools I have, and how to use them.
 - **Previous host:** Hostinger VPS at `187.77.216.108` (deprecated — do not use)
 - **Docker on bonker:** `letta-server`, `letta-shim` containers, `mdrag-local`, `caddy`, `gateway`, `wiki`, `neo4j`, `auth`, `domo-mcp`, etc. — but I am NOT one of these containers
 
+## Slack Adapter Configuration
+
+- **`listen_mode`** — per-account setting in the Slack config (not per-channel). When `true`, unmentioned Slack thread replies are delivered read-only until an `@mention`. Useful when you want an agent in a shared channel but only responding when specifically addressed.
+- **Multi-agent channel routing** — routes in `routing.yaml` bind a chat ID to an agent + conversation. Multiple agents can share the same Slack channel via separate routes. Each agent's reply behavior is controlled by its own account config (`listen_mode` or lack thereof).
+- **Channel config file** — defines which accounts have access to which channels. Routing config (separate from channel config) determines which agent handles messages from each channel.
+
 ## Key References
 
 - MCP server details & toolsets → [[reference/mcp-server.md]]
