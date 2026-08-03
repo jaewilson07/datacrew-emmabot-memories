@@ -26,7 +26,13 @@ description: Where I run, what tools I have, and how to use them.
 - **`channel-mention-gate` mod** — `~/.letta/mods/channel-mention-gate.ts` + config at `~/.letta/mods/.channel-mention-gate.json`. Emulates per-channel `listen_mode` for Slack by cancelling `turn_start` when a message arrives in a gated channel without an @mention of the bot. Currently gates `C0AV0QJ0YMB` (#datacrew-macchinations) for all 3 agents.
 - **Multi-agent channel routing** — routes in `routing.yaml` bind a chat ID to an agent + conversation. Multiple agents can share the same Slack channel via separate routes. Each agent's reply behavior is controlled by its own account config (`listen_mode` or lack thereof).
 - **Channel config file** — defines which accounts have access to which channels. Routing config (separate from channel config) determines which agent handles messages from each channel.
-- **`allowBots`** — per-account Slack setting (not in docs, but in type defs). `false` (default) drops bot-authored messages; `"mentions"` accepts only explicit foreign bot mentions. No accept-all mode (intentional pair-loop guard). Relevant for agent-to-agent via Slack.
+- **`allowBots`** — per-account Slack setting (not in docs, but in type defs). `false` (default) drops bot-authored messages; `\"mentions\"` accepts only explicit foreign bot mentions. No accept-all mode (intentional pair-loop guard). Relevant for agent-to-agent via Slack. Set to `\"mentions\"` on all 3 accounts as of 2026-08-03.
+
+## Shared Memory
+
+- **`datacrew-shared`** repository (`repo-api-96928a50-9c08-4729-96db-ec553d4550ee`) — shared memory on Letta Cloud, attached to EmmaBot, DataCrew, and IdrisBot. Used for team conventions, project decisions, research artifacts. Not part of personal MemFS. Access via Letta API (`/v1/repositories/{id}/files`).
+- **Decision log:** `project/decision-log.md` in the shared repo — jointly maintained by all three agents.
+- **Agent-to-agent messaging:** `letta -p --from-agent $LETTA_AGENT_ID --agent <target-id> \"message\"` — sends directly through Letta API, not Slack. Conversations are hidden. Can continue with `--conversation <id>`.
 
 ## Key References
 
