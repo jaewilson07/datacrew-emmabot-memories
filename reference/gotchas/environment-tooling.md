@@ -1,5 +1,5 @@
 ---
-description: Environment and tooling gotchas — bwrap, MCP server, env var safety.
+description: Environment and tooling gotchas — bwrap, MCP server, mod scoping, env var safety, mdrag ingestion.
 ---
 # Environment / Tooling Gotchas
 
@@ -10,3 +10,6 @@ description: Environment and tooling gotchas — bwrap, MCP server, env var safe
 - **MCP requires SSE Accept header** — must send `Accept: application/json, text/event-stream` or get "Not Acceptable" error. Responses come as SSE events (`event: message\ndata: {...}`).
 - **MCP session ID required** — after `initialize`, extract `Mcp-Session-Id` from response headers and include it in all subsequent requests.
 - **Never `env | grep` without filtering** — printing all env vars exposes secrets (Slack tokens, API keys, JWTs, OAuth credentials). Always filter to specific vars or use `grep -i VARNAME` for a single var.
+- **Mods at `~/.letta/mods/` run on ALL agents** — bonker hosts EmmaBot, IdrisBot, and DataCrew; a harness-level mod affects every agent. Agent-specific mods must go in `$MEMORY_DIR/mods/` (agent-level). The dug-community mod was originally at harness level and caused all 3 agents to trigger simultaneously on the same doc gaps.
+- **dug-community state is harness-scoped** — `~/.letta/mods/dug-community-state.json` is shared by all agents. If one agent resolves a gap, the others see it. If one resolves with a wrong `resolutionPath`, the others inherit that error. Always verify another agent's resolution path points to a real file.
+- **mdrag ingestion requires `uv` + `httpx`** — the ingestion function uses `uv run --with httpx python3 -c "..."` (not the crew-dcs package, which may not be installed). Requires the `domo-official-docs` collection to pre-exist on mdrag. If `domo-rag.ts` `queryMdrag` fails: it uses `source_group` parameter — the correct param is `topics`.
