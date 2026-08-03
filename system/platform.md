@@ -27,6 +27,7 @@ description: Where I run, what tools I have, and how to use them.
 - **Multi-agent channel routing** — routes in `routing.yaml` bind a chat ID to an agent + conversation. Multiple agents can share the same Slack channel via separate routes. Each agent's reply behavior is controlled by its own account config (`listen_mode` or lack thereof).
 - **Channel config file** — defines which accounts have access to which channels. Routing config (separate from channel config) determines which agent handles messages from each channel.
 - **`allowBots`** — per-account Slack setting (not in docs, but in type defs). `false` (default) drops bot-authored messages; `\"mentions\"` accepts only explicit foreign bot mentions. No accept-all mode (intentional pair-loop guard). Relevant for agent-to-agent via Slack. Set to `\"mentions\"` on all 3 accounts as of 2026-08-03.
+- **Bot user IDs** (for checking mentions in mods): EmmaBot `U0B35MJ9540` (datacrew-public), DataCrew `U0AQ7N23LKT` (datacrew), IdrisBot `U0BHRTU63E1` (idrisbot). Useful for mod development that checks `<@...>` mention syntax.
 
 ## Shared Memory
 
