@@ -27,6 +27,10 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+
+const execFileAsync = promisify(execFile);
 
 // --- State management ----------------------------------------------------
 
@@ -121,6 +125,111 @@ function generateId(): string {
 
 function getOpenGaps(state: ModState): DocGap[] {
   return state.docGaps.filter((g) => g.status === "open" || g.status === "reviewing");
+}
+
+// --- mdrag ingestion -------------------------------------------------------
+
+const CREW_DCS_DIR = "/tmp/crew-dcs";
+const ENV_FILE = "/home/jaewilson07/GitHub/homeserver/.env";
+const MDRAG_COLLECTION = "domo-official-docs";
+
+function loadEnv(): Record<string, string> {
+  try {
+    const content = readFileSync(ENV_FILE, "utf-8");
+    const env: Record<string, string> = {};
+    for (const line of content.split("\n")) {
+      const match = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+      if (match) {
+        env[match[1]] = match[2].replace(/^["']|["']$/g, "");
+      }
+    }
+    return env;
+  } catch {
+    return {};
+  }
+}
+
+function loadRagConfig(): { mdrag_mcp_url: string } | null {
+  try {
+    const path = join(homedir(), ".letta", "mods", ".domo_rag_config.json");
+    return JSON.parse(readFileSync(path, "utf-8"));
+  } catch {
+    return null;
+  }
+}
+
+async function ingestToMdrag(
+  filePath: string,
+  title: string,
+  tags: string[],
+): Promise<{ success: boolean; message: string }> {
+  const env = loadEnv();
+  const token = env["DATACREW_API_TOKEN"];
+  if (!token) {
+    return { success: false, message: "DATACREW_API_TOKEN not found in env" };
+  }
+
+  const config = loadRagConfig();
+  const mcpUrl = config?.mdrag_mcp_url || "https://wiki.datacrew.space/mcp/";
+  const fileContent = readFileSync(filePath, "utf-8");
+
+  const script = `
+import json, sys, httpx
+
+TOKEN = "${token}"
+MCP_URL = "${mcpUrl}"
+TITLE = ${JSON.stringify(title)}
+TEXT = ${JSON.stringify(fileContent)}
+COLLECTION = "${MDRAG_COLLECTION}"
+TAGS = ${JSON.stringify(tags)}
+
+headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json, text/event-stream",
+    "X-DC-Token": TOKEN,
+}
+
+with httpx.Client(timeout=120) as client:
+    init = {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "dug-community", "version": "1.0"}}}
+    res = client.post(MCP_URL, headers=headers, json=init)
+    session_id = res.headers.get("mcp-session-id", "")
+    if not session_id:
+        print(json.dumps({"success": False, "message": "mdrag session init failed"}))
+        exit()
+    headers["Mcp-Session-Id"] = session_id
+    client.post(MCP_URL, headers=headers, json={"jsonrpc": "2.0", "method": "notifications/initialized"})
+    # Reveal rag toolset
+    client.post(MCP_URL, headers=headers, json={"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "reveal_toolset", "arguments": {"name": "rag"}}})
+    call = {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "save_text_to_knowledge", "arguments": {"text": TEXT, "title": TITLE, "collection": COLLECTION, "source_label": "dug-community", "tags": TAGS}}}
+    res = client.post(MCP_URL, headers=headers, json=call)
+    text = res.text
+    for line in text.split("\\n"):
+        if line.startswith("data: "):
+            data = json.loads(line[6:])
+            content = data.get("result", {}).get("content", [])
+            for item in content:
+                if isinstance(item, dict) and item.get("type") == "text":
+                    msg = item.get("text", "")
+                    if "Error" in msg:
+                        print(json.dumps({"success": False, "message": msg[:200]}))
+                    else:
+                        print(json.dumps({"success": True, "message": msg[:200]}))
+                    exit()
+    print(json.dumps({"success": False, "message": "no response from mdrag"}))
+`;
+
+  try {
+    const { stdout } = await execFileAsync(
+      "uv",
+      ["run", "--with", "httpx", "python", "-c", script],
+      { timeout: 120000 },
+    );
+    const result = JSON.parse(stdout.trim());
+    return result;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { success: false, message: `mdrag ingestion failed: ${msg}` };
+  }
 }
 
 // --- Mod ------------------------------------------------------------------
@@ -302,7 +411,7 @@ export default function activate(letta: {
       letta.tools.register({
         name: "resolve_doc_gap",
         description:
-          "Mark a documentation gap as resolved. Call this after you've created or extended documentation in knowledge-base/ to address the gap. Records the file path where the documentation was added.",
+          "Mark a documentation gap as resolved. Call this after you've created or extended documentation in knowledge-base/ to address the gap. Records the file path where the documentation was added. Automatically ingests the doc into mdrag so all agents can find it via domo_rag_query.",
         parameters: {
           type: "object",
           properties: {
@@ -312,7 +421,7 @@ export default function activate(letta: {
             },
             resolutionPath: {
               type: "string",
-              description: "Path to the documentation file created or extended (e.g., 'domo/gotchas/sftp-pgp.md')",
+              description: "Path to the documentation file created or extended (e.g., 'domo/gotchas/full-page-card.md')",
             },
             notes: {
               type: "string",
@@ -337,8 +446,27 @@ export default function activate(letta: {
           gap.resolvedAt = new Date().toISOString();
           saveState(state);
 
+          // Ingest the doc into mdrag so all agents can find it via domo_rag_query
+          const kbDir = getKnowledgeBaseDir();
+          const fullPath = join(kbDir, gap.resolutionPath);
+          let ingestionResult = "";
+          try {
+            if (existsSync(fullPath)) {
+              const title = gap.topic;
+              const tags = ["dug-community", "doc-gap", ...gap.topic.toLowerCase().split(/\s+/)];
+              const result = await ingestToMdrag(fullPath, title, tags);
+              ingestionResult = result.success
+                ? `\nmdrag ingestion: success — ${result.message}`
+                : `\nmdrag ingestion: failed — ${result.message}`;
+            } else {
+              ingestionResult = `\nmdrag ingestion: skipped (file not found at ${fullPath})`;
+            }
+          } catch (err) {
+            ingestionResult = `\nmdrag ingestion: error — ${err instanceof Error ? err.message : String(err)}`;
+          }
+
           const notes = ctx.args.notes ? `\nNotes: ${String(ctx.args.notes)}` : "";
-          return `Doc gap resolved: "${gap.topic}"\nDocumentation: ${gap.resolutionPath}\nResolved at: ${gap.resolvedAt}${notes}`;
+          return `Doc gap resolved: "${gap.topic}"\nDocumentation: ${gap.resolutionPath}\nResolved at: ${gap.resolvedAt}${notes}${ingestionResult}`;
         },
       }),
     );
