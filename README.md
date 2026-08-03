@@ -1,6 +1,6 @@
 # EmmaBot Memory Repository
 
-Shared memory for **EmmaBot** (DataCrew community bot for DUG Slack), **DataCrew**, and **IdrisBot**.
+Memory for **EmmaBot** (DataCrew community bot for DUG Slack). Previously shared a GitHub remote with DataCrew and IdrisBot; now uses a dedicated repo.
 
 ## Structure
 
@@ -49,5 +49,5 @@ Adopted from [Ezra's memory architecture](https://github.com/letta-ai/ezra):
 ## Sync
 
 - **Primary remote (origin):** Letta Cloud git — used by the Letta Code harness
-- **This remote (github):** Shared with DataCrew and IdrisBot
+- **This remote (github):** Dedicated EmmaBot repo (`datacrew-emmabot-memories.git`) — separate from DataCrew and IdrisBot
 - Push to both: `git push origin HEAD && git push github HEAD:master`
