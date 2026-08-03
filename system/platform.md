@@ -22,9 +22,11 @@ description: Where I run, what tools I have, and how to use them.
 
 ## Slack Adapter Configuration
 
-- **`listen_mode`** — per-account setting in the Slack config (not per-channel). When `true`, unmentioned Slack thread replies are delivered read-only until an `@mention`. Useful when you want an agent in a shared channel but only responding when specifically addressed.
+- **`listen_mode`** — per-account setting in the Slack config (not per-channel). When `true`, unmentioned Slack thread replies are delivered read-only until an `@mention`. Useful when you want an agent in a shared channel but only responding when specifically addressed. Slack has NO per-channel equivalent (Discord has `allowed_channels` mode map, Slack does not).
+- **`channel-mention-gate` mod** — `~/.letta/mods/channel-mention-gate.ts` + config at `~/.letta/mods/.channel-mention-gate.json`. Emulates per-channel `listen_mode` for Slack by cancelling `turn_start` when a message arrives in a gated channel without an @mention of the bot. Currently gates `C0AV0QJ0YMB` (#datacrew-macchinations) for all 3 agents.
 - **Multi-agent channel routing** — routes in `routing.yaml` bind a chat ID to an agent + conversation. Multiple agents can share the same Slack channel via separate routes. Each agent's reply behavior is controlled by its own account config (`listen_mode` or lack thereof).
 - **Channel config file** — defines which accounts have access to which channels. Routing config (separate from channel config) determines which agent handles messages from each channel.
+- **`allowBots`** — per-account Slack setting (not in docs, but in type defs). `false` (default) drops bot-authored messages; `"mentions"` accepts only explicit foreign bot mentions. No accept-all mode (intentional pair-loop guard). Relevant for agent-to-agent via Slack.
 
 ## Key References
 
