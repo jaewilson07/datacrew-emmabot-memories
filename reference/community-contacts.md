@@ -1,8 +1,8 @@
 ---
-description: Community member names and details to remember
+description: Community member names and details to remember (superseded by users/ directory)
 ---
 # Community Contacts
 
-Names and details of DUG community members to remember.
+**Superseded by `users/` directory** — per-member files are now at `users/<handle>.md` (git-ignored, private).
 
-- **Elliott Leonard** — Slack display name: Ellibot. Domo practitioner, shares App Studio tips. Name is spelled with two L's and two T's.
+See `users/README.md` for format and privacy rules.

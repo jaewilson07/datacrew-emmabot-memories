@@ -76,8 +76,14 @@ Every file has `---description: ...---` frontmatter for discoverability
       — done 2026-08-02. Format in [[reference/patterns/README.md]], index in
       [[system/patterns.md]]. Seeded with three patterns extracted from existing gotchas;
       the format is the deliverable, the seeds are examples of it.
-- [ ] Create `users/` directory for regular DUG members (with privacy rules)
-      — `.gitignore` already excludes `users/`, so the privacy boundary exists before the content
+- [x] Create `users/` directory for regular DUG members (with privacy rules)
+      — done 2026-08-03. `users/README.md` with format + privacy rules, `users/ellibot.md` seeded.
+      `.gitignore` excludes `users/` so privacy boundary exists before content.
+- [x] Create `system/memfs/maintenance.md` — placement test as enforced file, not just prose
+      — done 2026-08-03. Placement test, where-things-go table, maintenance checklist, system file budget.
 - [ ] Formalize response rules in a `system/support/` section
       — partially covered: each pattern carries its own Support rule section
 - [ ] Create `CURATION_LOG.md` to track memory changes over time
+- [ ] Build escalation system — detect recurring question patterns across conversations,
+      flag doc gaps to Jae. Feeds content pipeline (webinar/YouTube/blog topics).
+- [ ] Move Domo reference content to `knowledge-base/` as shared layer with IdrisBot
