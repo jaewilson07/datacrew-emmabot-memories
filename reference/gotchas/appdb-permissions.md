@@ -41,3 +41,12 @@ If a pro code app writes to AppDB successfully (data visible in Data Explorer) b
 1. **App instance permissions on the collection** — make sure the app has both Create Content and Read Content
 2. **Not re-fetching after write** — in pro code, explicitly re-query the collection after a write
 3. **Query filter** — the read query might have filters excluding new records
+4. **`POST .../documents/query` returning empty** — use `GET .../documents` and filter at the app level instead. Devon found that the query endpoint returned an empty result set for his collection regardless of filter, while the GET endpoint returned data as expected.
+
+## Gotcha 3: `POST .../documents/query` can return empty even when documents exist
+
+**Symptom:** `POST .../documents/query` returns an empty result set for a collection, no matter what filter you pass. Data is visible in Data Explorer and writes succeed.
+
+**Fix:** Use `GET .../documents` to fetch the collection documents and apply filtering in the app code.
+
+*Reported by Devon in DUG Slack (2026-08-17). Permissions were confirmed correct; switching from the query endpoint to the GET endpoint resolved it.*
