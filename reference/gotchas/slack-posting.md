@@ -8,3 +8,4 @@ description: Slack posting rules — message formatting, ordering, and token usa
 - **Post first, then delete old** — NEVER delete before replacement is live
 - **Use `SLACK_BOT_TOKEN`** for DUG Slack API calls
 - **Do NOT `source datacrew/.env`** — JSON values break `source`. Use `grep VAR file | cut -d= -f2-` or Python `os.environ`
+- **MessageChannel `action: "send"` REQUIRES `message` parameter** — if you omit `message`, the tool returns "Slack send requires message or media" and nothing posts. Do NOT retry without adding the message text. This caused a massive loop (50+ failed calls) where I kept passing `emoji` but no `message`. If you want to react-only, use `action: "react"` with `emoji` + `messageId` — but if you use `action: "send"`, you MUST include `message`. When in doubt, write the message text FIRST, then construct the tool call around it.

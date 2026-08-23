@@ -17,4 +17,6 @@ description: Agent gets trapped in repetitive tool-call loops when unfamiliar wi
   2. Ask for help or admit uncertainty
   3. Consider alternative approaches
 
+- **Concrete example from 2026-08-23**: I tried to post a Slack reply using `MessageChannel` with `action: "send"` but kept passing only `emoji` without the required `message` parameter. The tool returned "Slack send requires message or media" every time. I self-diagnosed the issue repeatedly ("I need to include the message parameter") but kept making the exact same call 100+ times over ~30 minutes. The fix was trivial: include the actual `message` text in the tool call. If I had stopped after 3 failures and re-read the tool schema, I would have avoided the loop.
+
 - **Severity**: These loops can consume 100+ turns and waste significant tokens. They represent a critical failure in the agent's self-correction mechanism.
