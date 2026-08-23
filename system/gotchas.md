@@ -5,6 +5,7 @@ description: Compact index of gotchas — one-liners with links to detailed refe
 
 Quick reminders. Details in `reference/gotchas/`.
 
+- **Tool-use loops**: agent gets trapped in repetitive tool-call cycles, self-aware but unable to break. If you've tried the same approach 3 times and failed, step back and check docs or ask for help → [[reference/gotchas/tool-use-loops.md]]
 - **Google Docs**: upsert tabs, never create-then-replace → [[reference/gotchas/google-docs.md]]
 - **Slack posting**: one post per item, post-then-delete, never `source .env` → [[reference/gotchas/slack-posting.md]]
 - **cboti**: `batch_update` ≠ `batch_update_values`, TableBlock cells need ContentBlock → [[reference/gotchas/cboti-patterns.md]]
