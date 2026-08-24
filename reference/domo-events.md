@@ -5,22 +5,39 @@ description: Domo event pages structure, search tips, and 2026 Connections Tour 
 
 ## Domo Connections Tour
 
-### 2026 Dates (Confirmed)
+### 2026 Dates (Complete — All 9 Cities Confirmed)
 
-These dates have been confirmed via individual city pages on the Domo webflow subdomain. This is a partial list — the complete schedule was not accessible from the main Domo events page (JS-rendered).
+Confirmed via individual city pages on the Domo webflow subdomain. The Domo blog confirmed it's a "9-stop tour" (Aug 2026 blog post by Joseph Rendeiro).
 
-| City | Date | Venue/Sponsor |
-|------|------|---------------|
-| Austin, TX | Sep 16, 2026 | Blue Yeti |
-| Dallas, TX | Sep 17, 2026 | AWS |
-| Salt Lake City, UT | Sep 29, 2026 | Domo HQ (American Fork) |
-| Los Angeles, CA | Oct 7, 2026 | — |
+| # | City | Date | Venue/Sponsor | Time |
+|---|------|------|---------------|------|
+| 1 | Austin, TX | Sep 16, 2026 | Blue Yeti, 701 Brazos St, Austin, TX 78701 | 12-6pm CT |
+| 2 | Dallas, TX | Sep 17, 2026 | AWS, 13455 Noel Rd 14th Floor, Dallas, TX 75204 | 12-6pm CT |
+| 3 | Salt Lake City, UT | Sep 29, 2026 | Domo HQ, 802 E 1050 S, American Fork, UT 84003 | 12-6pm MT |
+| 4 | Los Angeles, CA | Oct 7, 2026 | Not yet announced | 12-6pm PT |
+| 5 | Atlanta, GA | Oct 13, 2026 | AWS, 3333 Piedmont Road NE Floor 4, Atlanta, GA 30305 | 12-6pm ET |
+| 6 | Chicago, IL | Oct 14, 2026 | Miller Cooper, 500 W. Madison Street, Chicago, IL 60661 | 12-6pm CT |
+| 7 | Minneapolis, MN | Oct 15, 2026 | DataUp Consulting, 50 S 9th St, Minneapolis, MN 55402 | 12-6pm CT |
+| 8 | Toronto, ON | Nov 4, 2026 | AWS, 40 King St West, 47th Floor, Toronto, ON M5H 3Y2 | 12-6pm ET |
+| 9 | New York City, NY | Nov 5, 2026 | Not yet announced | 12-6pm ET |
 
-**Note:** The 2025 tour had 9 cities (Minneapolis, Chicago, Toronto, SLC, Dallas, Menlo Park, NYC, Charlotte, Atlanta). 2026 appears to have a different mix — Austin and LA are new additions; some 2025 cities may not return.
+**Sponsors/Venue Hosts:**
+- AWS — 3 cities (Dallas, Atlanta, Toronto)
+- Blue Yeti — Austin
+- Miller Cooper — Chicago
+- DataUp Consulting — Minneapolis
+- Domo HQ — Salt Lake City
+- Not yet announced — Los Angeles, NYC
+
+**Customer Speakers (from blog post):** TD Bank, Six Flags
+
+**Changes from 2025:** Austin and LA are new additions. Dropped from 2025: Menlo Park, Charlotte. Minneapolis, Chicago, Toronto, SLC, Dallas, NYC, Atlanta all return.
 
 **Sources:**
 - Individual city pages via `domo-webflow.domo.com/events/connections-tour-[city]`
+- Domo blog post "5 Reasons Not to Attend the (Free) AI + Data Tour" (Aug 2026, Joseph Rendeiro) — confirms "9-stop tour"
 - Mark Boothe (Domo CMO) podcast (July 2026) confirmed "Connexions tour coming up in the fall"
+- Research date: Aug 24, 2026
 
 ### Event Page Structure
 
