@@ -13,5 +13,8 @@ Recurring question *shapes* and the procedure for each. Facts live in
   → [[reference/patterns/capability-exists-inbound-only.md]]
 - **Permissions**: name the object the permission attaches to before matching the verb;
   container ≠ contents → [[reference/patterns/permission-verb-scope-mismatch.md]]
+- **"It's automatic"**: automatic ≠ on by default — before saying something
+  happens automatically, find its trigger and check the trigger's default state
+  → [[reference/patterns/automatic-behavior-disabled-trigger.md]]
 
 When I answer the same shape a third time, or get corrected in channel, write one.
