@@ -13,7 +13,17 @@ description: Procedure for capturing Domo doc learnings — knowledge-base doc, 
 ### 1. Document — write the knowledge-base doc
 `knowledge-base/domo/gotchas/<topic>.md` (see existing gotchas for format: Problem, TL;DR, Sources, Reported). If a doc gap exists, `flag_doc_gap` → write doc → `resolve_doc_gap` (auto-ingests to mdrag).
 
-### 2. Annotation — POST to mdrag with Annotation_Support
+### 2. Annotation — use the `capture_domo_doc_learning` mod tool (preferred)
+
+**As of 2026-09-11 there's a mod tool for this**: `capture_domo_doc_learning` (in `~/.letta/mods/mdrag-annotation.ts`, codified at Jae's request in DUG thread 1789147435.776269). Two-phase:
+1. Call with `learning`, `slack_thread`, `quotation`, `document_query` (no `document_id`) → returns candidate subject docs (Mongo _id | title | collection). Pick the right one.
+2. Re-call with `document_id` → posts the annotation with Annotation_Support.
+
+If no candidate doc exists, write the knowledge-base doc + `resolve_doc_gap` first (auto-ingests to mdrag), then annotate THAT doc — worked this way for the Salesforce formula-field learning (2026-09-11).
+
+The tool reads `DATACREW_API_TOKEN` from the service env (fallback: infra-bonker/.env) — no more infisical CLI wrangling. It derives `annotator_id` from the calling agent's name. Annotations work even when the embedding gateway is down (Neo4j traversal edges only).
+
+Raw curl equivalent (for reference / if the tool is unavailable):
 ```bash
 curl -X POST "http://localhost:8017/api/v1/ingest/annotation" \
   -H "Authorization: Bearer $DATACREW_API_TOKEN" \
