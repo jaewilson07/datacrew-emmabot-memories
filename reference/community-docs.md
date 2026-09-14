@@ -1,10 +1,9 @@
 ---
-description: Cross-link index to Domo community docs in knowledge-base/domo/.
+description: Cross-link index to Domo community docs from DUG Slack questions. Note: knowledge-base/domo/ directory is expected but missing from this repo.
 ---
 # Community Docs Index
 
-Docs created from DUG Slack community questions. Full content in `knowledge-base/domo/`.
-Also ingested into mdrag — query via `domo_rag_query` to find them.
+Docs created from DUG Slack community questions. Intended location: `knowledge-base/domo/` (directory is expected but currently missing from this memory repo). Also ingested into mdrag — query via `domo_rag_query` to find them.
 
 ## Domo Events
 

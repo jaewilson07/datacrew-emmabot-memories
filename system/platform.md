@@ -5,18 +5,16 @@ description: Where I run, what tools I have, and how to use them.
 
 ## Running Location
 
-- **Host:** bonker (Jae's self-hosted server, migrated from Hostinger VPS as of ~June 2026)
+- **Host:** bonker (Jae's self-hosted server)
 - **Runtime:** Letta Code CLI as systemd user service (`letta-datacrew.service`)
   - Command: `letta server --channels slack --install-channel-runtimes`
-  - Runs BOTH Slack accounts: `datacrew-public` (me, DUG) + `datacrew` (jaelearnsbots)
-  - Secrets from Infisical at startup (`/datacrew`, `/letta`, `/infrastructure` paths)
-- **Letta backend:** Letta Cloud (`https://api.letta.com`) — agent state lives in the cloud
+  - Runs BOTH Slack accounts: `datacrew-public` (DUG) + `datacrew` (jaelearnsbots)
+  - Secrets from Infisical at startup (`/datacrew`, `/letta`, `/infrastructure`)
+- **Letta backend:** Letta Cloud (`https://api.letta.com`)
 - **Memory:** Local filesystem at `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
-  - **Primary remote (origin):** Letta Cloud git — used by the Letta Code harness for memory persistence
-  - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — my dedicated memory repo (separate from DataCrew and IdrisBot). Push with `git push github HEAD:master` after committing to origin. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`)
-- **Working directory:** `/home/jaewilson07/GitHub/knowledge-base` (set by the service)
-- **Previous host:** Hostinger VPS at `187.77.216.108` (deprecated — do not use)
-- **Docker on bonker:** various containers (letta-server, mdrag, caddy, etc.) — I am NOT a container, I run as a systemd user service
+  - **Primary remote (origin):** Letta Cloud git for memory persistence
+  - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`)
+- **Working directory:** `/home/jaewilson07/GitHub/knowledge-base`
 
 ## Slack Adapter
 

@@ -3,18 +3,11 @@ description: Compact index of diagnostic patterns — recurring question shapes 
 ---
 # Patterns Index
 
-Recurring question *shapes* and the procedure for each. Facts live in
-[[system/gotchas.md]]; these are methods. Format: [[reference/patterns/README.md]].
+Recurring question *shapes* and how to work them. Facts in [[system/gotchas.md]]; methods in [[reference/patterns/]].
 
-- **AI feature enabled but not visible**: check nav layout first; after grants, it's a CSM
-  provisioning question, not a settings one → [[reference/patterns/ai-feature-not-visible.md]]
-- **"Where's the setting for X?"**: establish data direction before answering — inbound and
-  outbound are different products (worked example: PGP over SFTP is import-only)
-  → [[reference/patterns/capability-exists-inbound-only.md]]
-- **Permissions**: name the object the permission attaches to before matching the verb;
-  container ≠ contents → [[reference/patterns/permission-verb-scope-mismatch.md]]
-- **"It's automatic"**: automatic ≠ on by default — before saying something
-  happens automatically, find its trigger and check the trigger's default state
-  → [[reference/patterns/automatic-behavior-disabled-trigger.md]]
+- **AI feature enabled but not visible**: check nav layout first; post-grants = CSM provisioning, not settings → [[reference/patterns/ai-feature-not-visible.md]]
+- **"Where's the setting for X?"**: establish data direction first — inbound ≠ outbound (PGP over SFTP is import-only) → [[reference/patterns/capability-exists-inbound-only.md]]
+- **Permissions**: name the object the permission attaches to before matching the verb; container ≠ contents → [[reference/patterns/permission-verb-scope-mismatch.md]]
+- **"It's automatic"**: automatic ≠ on by default — find the trigger and check its default state → [[reference/patterns/automatic-behavior-disabled-trigger.md]]
 
-When I answer the same shape a third time, or get corrected in channel, write one.
+Write one when I answer the same shape a third time, or get corrected in channel.
