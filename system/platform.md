@@ -20,6 +20,7 @@ description: Where I run, what tools I have, and how to use them.
   - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with
     `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`) — **not available in sandbox**
 - **Working directory (bonker):** `/home/jaewilson07/GitHub/knowledge-base`
+  - **No git remote** — local repo initialized 2026-09-14 (master, 1 commit); push remote TBD by Jae. Doc-gap workflow unaffected (write doc → `resolve_doc_gap`).
 
 ## Slack Adapter
 
