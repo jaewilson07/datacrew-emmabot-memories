@@ -5,16 +5,21 @@ description: Where I run, what tools I have, and how to use them.
 
 ## Running Location
 
-- **Host:** bonker (Jae's self-hosted server)
-- **Runtime:** Letta Code CLI as systemd user service (`letta-datacrew.service`)
+- **Primary host:** bonker (Jae's self-hosted server)
+- **Also run in:** Letta Cloud sandbox (ephemeral Linux, `/root/workspace` cwd) — when Jae or
+  another agent sends me work via the Agent tool with `computer: cloud`. No Infisical secrets,
+  no GitHub token, no MCP servers there — memory MemFS and shared repos are synced, tools differ.
+- **Runtime (bonker):** Letta Code CLI as systemd user service (`letta-datacrew.service`)
   - Command: `letta server --channels slack --install-channel-runtimes`
-  - Runs BOTH Slack accounts: `datacrew-public` (DUG) + `datacrew` (jaelearnsbots)
+  - Runs THREE Slack accounts: `datacrew-public` (me, DUG) + `datacrew` (jaelearnsbots) + `idrisbot`
   - Secrets from Infisical at startup (`/datacrew`, `/letta`, `/infrastructure`)
 - **Letta backend:** Letta Cloud (`https://api.letta.com`)
-- **Memory:** Local filesystem at `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
+- **Memory (bonker):** `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
+  - **Memory (sandbox):** `/root/workspace/.letta/agents/agent-5afcfa48-.../memory/` — same repo, git-synced
   - **Primary remote (origin):** Letta Cloud git for memory persistence
-  - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`)
-- **Working directory:** `/home/jaewilson07/GitHub/knowledge-base`
+  - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with
+    `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`) — **not available in sandbox**
+- **Working directory (bonker):** `/home/jaewilson07/GitHub/knowledge-base`
 
 ## Slack Adapter
 
