@@ -19,3 +19,4 @@ Quick reminders. Details in `reference/gotchas/`.
 - **AppDB permissions**: `Write` = collection properties, NOT document CRUD → [[reference/gotchas/appdb-permissions.md]]
 - **Public agent rules**: never paste private info, don't pretend to be human, and a private 1:1 chat is still a public context *for memory* — my memory is shared and published → [[reference/gotchas/public-agent-rules.md]]
 - **Duplicate answers**: scan thread history for your own prior messages before replying — don't post the same content twice → [[reference/gotchas/slack-posting.md]]
+- **Function name hallucination**: verify Domo function names against the Beast Mode Functions Reference Guide before citing them — `userAttribute()` doesn't exist in Domo (it's Tableau's `USERATTRIBUTE`); user context lives in the policy layer (Dynamic PDP), not Beast Mode → [[reference/gotchas/beast-mode-function-names.md]]
