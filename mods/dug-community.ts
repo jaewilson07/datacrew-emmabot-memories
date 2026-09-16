@@ -361,7 +361,7 @@ export default function activate(letta: {
 
           const openCount = getOpenGaps(state).length;
           const link = entry.threadLink ? `\n\nThread: ${entry.threadLink}` : "";
-          return `Doc gap flagged: "${entry.topic}"\nWhat went wrong: ${entry.whatWasWrong}\nDoc gap: ${entry.docGapDescription}\nStatus: open (escalate to Jae)${link}\n\nOpen doc gaps: ${openCount}\n\nNext steps: DM Jae with the thread link and gap description. After review, create or extend documentation in knowledge-base/, then call resolve_doc_gap.`;
+          return `Doc gap flagged: "${entry.topic}"\nWhat went wrong: ${entry.whatWasWrong}\nDoc gap: ${entry.docGapDescription}\nStatus: open (escalate to Jae)${link}\n\nOpen doc gaps: ${openCount}\n\nNext steps: DM Jae with the thread link and gap description. After review, create or extend documentation in knowledge-base/, then call resolve_doc_gap. Then capture the learning as a mdrag annotation with Annotation_Support citing the Slack thread (capture_domo_doc_learning — see reference/domo-doc-learning-capture.md).`;
         },
       }),
     );
@@ -628,7 +628,7 @@ export default function activate(letta: {
         if (openGaps.length > 0) {
           const count = openGaps.length;
           const topGap = openGaps[0];
-          const reminder = `[dug-community] ⚠️ ${count} open doc gap(s). Top: "${topGap.topic}" — ${topGap.docGapDescription}. Use get_doc_gaps to review, then DM Jae with the thread link and create documentation in knowledge-base/.`;
+          const reminder = `[dug-community] ⚠️ ${count} open doc gap(s). Top: "${topGap.topic}" — ${topGap.docGapDescription}. Use get_doc_gaps to review, then DM Jae with the thread link, create documentation in knowledge-base/, and resolve the gap. Then capture the learning as a mdrag annotation with Annotation_Support citing the Slack thread (capture_domo_doc_learning — see reference/domo-doc-learning-capture.md).`;
 
           const input = event.input;
           if (Array.isArray(input)) {
