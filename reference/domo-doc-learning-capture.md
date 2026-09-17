@@ -44,11 +44,13 @@ curl -X POST "http://localhost:8017/api/v1/ingest/annotation" \
 Key facts:
 - **Token**: `DATACREW_API_TOKEN` from Infisical `/datacrew` path (NOT `MDRAG_TOKEN` — that one gets "Invalid or expired token"). mdrag at `http://localhost:8017` on bonker.
 - **`document_uid` in annotates = the subject doc's stable Mongo `_id` as string** (NOT its content-volatile `document_uid` UUID). Find it: `GET /api/v1/documents?q=<search>` → `id` field, or query Mongo directly (MONGODB_HOST=atlas-local inside the mdrag-local container).
+- **Mongo direct query gotcha (confirmed 2026-09-17)**: building the URI from `MONGODB_HOST`/`MONGODB_PASSWORD` env vars alone fails auth — the app's real connection string adds `?directConnection=true&authSource=admin`. Get it via `docker exec mdrag-local python -c "from mdrag.config import load_settings; s=load_settings(); print(s.mongodb_connection_string)"`. Also: when the embedding gateway is down, `GET /api/v1/documents?q=` ignores the query (returns unrelated docs) — filter with `?collection=` or query Mongo by title regex instead.
 - Required fields: `kind`, `provenance` (reproducible|ai_assisted|human), `annotator_id`, `annotator_version`.
 - Annotations **work even when the embedding gateway is down** (they stay out of semantic search — Neo4j traversal edges only).
 - `kind: "domo_doc_learning"` is the established slug for this pattern.
 
 ### 3. Slack thread as source — get the permalink
+- **Slack API ts format**: permalinks embed `p<ts with no dot>` but the API needs the dotted form — convert `p1789575456132139` → `1789575456.132139` (insert dot 6 digits from the right) or `conversations.replies` returns `thread_not_found`.
 - `chat.getPermalink` (form-encoded: `channel=...&message_ts=...`) with `PUBLIC_DATACREW_SLACK_BOT_TOKEN`.
 - Fetch thread content: `conversations.replies?channel=...&ts=...` — use verbatim quotes for `quotation`.
 - **Referencing the Slack chat** = permalink in payload + verbatim quotation + locator in Annotation_Support. (Ingesting the thread itself as a mdrag document via `/ingest/text` currently FAILS when embeddings are down — the workflow dies before document save and misleadingly returns `document_uid: null`. Retry when cubby's vLLM embedding model is fixed.)
