@@ -26,34 +26,44 @@ Last updated 7/1/2026.
 - For small datasets the virtual-row cost rounds to zero, but never say "free" — the framing
   "views cost no credits unless materialized" is false.
 
-## Bonus: Views Explorer — NO rank window button; use the Advanced SQL Editor
+## Bonus: Views Explorer window functions — supported, but UNDOCUMENTED and undiscoverable
 
-**Correction #2 (same thread):** I also claimed Views Explorer supports a "dynamic rank window."
-Member couldn't find it — because it doesn't exist in today's UI. The claim comes from Domo's
-**2021 release-marketing blog** ("Apply date windows and dynamic rank window"), which does not
-match the current product. The current Manage DataSet Views doc (360046074774, updated Feb 2025)
-lists only: Filter, Group, Sort, Limit, Joins, Unions, Calculated Columns, Add/Remove/Rename columns.
+**Final resolution (2026-09-17 #dataflows thread):** the Calculated Column editor in Views
+Explorer **does accept window functions** — member Ellibot demonstrated
+`rank() over (partition by \`region\` order by \`date_ymd\` desc)` working in it.
 
-**The real dedupe-in-a-view path:** the **Advanced SQL Editor** (2024 Release 1,
-https://www.domo.com/product/new-features/dataset-views-advanced-sql-editor-with-ai-assistant).
-Views Explorer → SQL Editor → Enable (warns: discards existing view properties) → write SQL:
+**Undocumented quirks:**
+- The **FUNCTIONS autocomplete does not surface** window functions — typing "rank" gives no
+  matches, but typing the full expression by hand works anyway. Supported by the engine,
+  invisible to discovery. Jim's own words: "when I typed 'rank' it didn't give me any matches,
+  so I assumed it wasn't supported." (Autocorrect behavior also seen in Beast Mode editor.)
+- The Manage DataSet Views KB article (360046074774, updated Feb 2025) documents the Calculated
+  Column editor but never mentions window function support.
+- **Doc gap filed** — this needs to be in the KB article.
 
-```sql
-SELECT * FROM (
-  SELECT t.*, ROW_NUMBER() OVER (PARTITION BY `grp` ORDER BY `ts` DESC) AS rn
-  FROM `dataset` t
-) ranked WHERE rn = 1
-```
+**Canonical dedupe-in-a-view recipe** (simplest path, no SQL editor):
+1. Add Calculated Column: `rank() over (partition by \`region\` order by \`ts\` desc)`
+   — use `row_number()` instead of `rank()` when ties must produce exactly one row
+2. Filter the new column = 1 (steps are sequential)
+3. Save As a DataSet View; swap downstream ETL inputs to the view
 
-Requires Edit permission on the view; the AI Assistant additionally needs the "Use AI Services"
-grant (and OpenAI models enabled in the AI Service Layer).
+**The Advanced SQL Editor** (2024 Release 1) also works for this — Views Explorer → SQL Editor →
+Enable (warns: discards existing view properties) — but it's the heavier path; only needed if the
+formula editor's window support proves insufficient. Requires Edit permission; AI Assistant
+additionally needs "Use AI Services" grant + OpenAI models enabled in the AI Service Layer.
+
+**Corrections I made in-thread:**
+1. Claimed views are credit-free unless materialized → WRONG (virtual rows: 1/2M per month).
+2. Claimed a "dynamic rank window" button exists per 2021 marketing → no such button; then
+   Ellibot showed window functions work in the Calculated Column editor itself. The 2021
+   marketing phrase presumably referred to this formula support, not a dedicated UI tile.
 
 ## Lessons
 
-1. Before making a credit/cost claim, check domo.com/consumption-terms — it's the contract-level
-   source and it's short. "Virtual" ≠ "free."
-2. **Release-marketing pages ≠ product docs.** Domo's /blog and /product/new-features pages
-   describe capabilities at announcement time and go stale (or never shipped as described).
-   Verify against the current Knowledge Base article (domo-support.domo.com) before telling a
-   member a button exists — and describe WHERE in the UI it lives, because that's exactly what
-   a member will go looking for.
+1. Before making a credit/cost claim, check domo.com/consumption-terms — contract-level source.
+   "Virtual" ≠ "free."
+2. **Absence from the FUNCTIONS autocomplete ≠ unsupported.** Domo's formula engines (Beast Mode,
+   Calculated Columns) accept functions the UI doesn't suggest. When a member says "I typed X
+   and got no matches," that is NOT proof the function doesn't exist — test the full expression.
+3. **Release-marketing pages ≠ product docs.** Verify features against the current KB article
+   before telling a member a button exists — and describe WHERE in the UI it lives.
