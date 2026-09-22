@@ -23,6 +23,7 @@ The tool reads `DATACREW_API_TOKEN` from the service env (fallback: infra-bonker
 
 Raw curl equivalent (for reference / if the tool is unavailable):
 ```bash
+**Annotation_summary (findability row)**: when Jae asks for "annotation + annotation_summary", mint a second annotation with `kind: "summary"` via the same `/api/v1/ingest/annotation` endpoint, keyed on the LEARNING annotation's stable Mongo `_id` (not its content-volatile document_uid — mdrag#662/#677): `source_url: "annotation:summary:<learning_mongo_id>"`, title `"Summary — <learning title>"`, annotates → the learning annotation with a verbatim quotation from its body. Content = 1-paragraph summary + "## Key points" bullets (mirrors `SummaryAnnotationService._render_markdown`). Rationale: with the embedding gateway down, learning annotations stay out of semantic search — the summary row gives full-text/browse a compact hit. The auto `SummaryAnnotationService` refuses to summarize annotation subjects (mdrag#1227), so this must be minted by hand. Get the learning annotation's Mongo _id via the direct-Mongo recipe below (document_uid from the capture tool → `_id`).
 curl -X POST "http://localhost:8017/api/v1/ingest/annotation" \
   -H "Authorization: Bearer $DATACREW_API_TOKEN" \
   -H "Content-Type: application/json" -d '{
