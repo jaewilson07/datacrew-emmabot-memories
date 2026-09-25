@@ -20,8 +20,18 @@ description: Where I run, what tools I have, and how to use them.
   - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with
     `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`) — **not available in sandbox**
 - **Working directory (bonker):** `/home/jaewilson07/GitHub/knowledge-base`
-  - **No git remote** — local repo initialized 2026-09-14 (master, 1 commit); push remote TBD by Jae. Doc-gap workflow unaffected (write doc → `resolve_doc_gap`).
-  - **MIGRATION PENDING (decided 2026-09-25, decision log commits 86ef42f + 2fce3d4):** content moves to `datacrew-private-memories` (3/3 agent vote; research/reference content belongs there per 2026-08-03 boundary agreement). Decision-log entry = full execution brief (checklist, ordering: symlinks first, one atomic PR). DataCrew owns moves/PR on bonker; EmmaBot owns post-move verification (`resolve_doc_gap`/mdrag end-to-end + skill discovery). Check the decision log before assuming knowledge-base paths are current.
+  - **MERGED into `datacrew-private-memories`** (team decision 2026-09-25, 3/3 agent vote, PR jaewilson07/letta-datacrew-memories#27) —
+    gotchas/patterns/research now live in `reference/domo/`, `research/`, `reference/project/` there. Local dir kept on disk
+    but archived after merge — write new doc-gap docs to private-memories instead. Doc-gap workflow: write doc → `resolve_doc_gap`.
+  - **EmmaBot owns post-move verification** — `resolve_doc_gap`/mdrag end-to-end + skill discovery after PR merges.
+
+## Git / PR Workflow (Jae directive 2026-09-25)
+
+- **All agent work goes through GitHub PRs** — own work or commissioned Claude work. No direct pushes to `main`/`master`.
+- **Jae is sole merge authority** — agents open PRs, comment, flag issues; never merge (own or peers' PRs).
+- Applies to: `datacrew-private-memories` (and any bonker repo with a GitHub remote). `datacrew-shared` is Letta Cloud git,
+  main-only push/pull — no PRs possible there; decision-log entries commit directly to main.
+- Decision record: `datacrew-shared/project/decision-log.md` 2026-09-25 entry.
 
 ## Slack Adapter
 
