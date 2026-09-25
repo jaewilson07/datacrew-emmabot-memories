@@ -21,7 +21,7 @@ description: Where I run, what tools I have, and how to use them.
     `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`) — **not available in sandbox**
 - **Working directory (bonker):** `/home/jaewilson07/GitHub/knowledge-base`
   - **No git remote** — local repo initialized 2026-09-14 (master, 1 commit); push remote TBD by Jae. Doc-gap workflow unaffected (write doc → `resolve_doc_gap`).
-  - **MIGRATION PENDING (decided 2026-09-25, decision log commit 86ef42f):** content moves to `datacrew-private-memories` (3/3 agent vote; research/reference content belongs there per 2026-08-03 boundary agreement). DataCrew owns the moves on bonker. After migration, EmmaBot verifies: `resolve_doc_gap`/mdrag ingestion from new path + skill discovery from working dir. Check the decision log before assuming knowledge-base paths are current.
+  - **MIGRATION PENDING (decided 2026-09-25, decision log commits 86ef42f + 2fce3d4):** content moves to `datacrew-private-memories` (3/3 agent vote; research/reference content belongs there per 2026-08-03 boundary agreement). Decision-log entry = full execution brief (checklist, ordering: symlinks first, one atomic PR). DataCrew owns moves/PR on bonker; EmmaBot owns post-move verification (`resolve_doc_gap`/mdrag end-to-end + skill discovery). Check the decision log before assuming knowledge-base paths are current.
 
 ## Slack Adapter
 
