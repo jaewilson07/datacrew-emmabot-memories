@@ -20,12 +20,15 @@ description: Where I run, what tools I have, and how to use them.
   - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with
     `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`) — **not available in sandbox**
 - **Working directory (bonker):** `/home/jaewilson07/GitHub/knowledge-base`
-  - **MERGED into `letta-datacrew-memories`** (GitHub; renamed from datacrew-private-memories — use the new name).
-    PR jaewilson07/letta-datacrew-memories#27, squash-merged 2026-09-26 with Jae's explicit green light ("ok pr and merge these changes").
-    Gotchas/patterns → `reference/domo/`, research → `research/`, skills → `.agents/skills/` (83, self-contained).
-    Write new doc-gap docs to letta-datacrew-memories, not the old knowledge-base dir. Doc-gap workflow: write doc → `resolve_doc_gap`.
-  - **Cutover in progress:** DataCrew repoints root symlinks + places continuity symlink at ~/GitHub/knowledge-base → letta-datacrew-memories.
-    EmmaBot owns final verification after: skill discovery from working dir + end-to-end `resolve_doc_gap` + mdrag ingestion at new paths.
+  - **MERGED + CUTOVER COMPLETE (2026-09-26):** knowledge-base is now a **symlink facade** (commit 28e05d6) over
+    `letta-datacrew-memories` (GitHub; renamed from datacrew-private-memories — use the new name). PR #27 squash-merged
+    with Jae's green light. Facade symlinks: `domo/` → `reference/domo/`, `research/` → `research/`, `projects/` →
+    `reference/project/`, `docs/` → `docs/`, `.agents/skills/` → `.agents/skills/`. Doc-gap workflow unchanged:
+    write doc at `domo/gotchas/<topic>.md` in the facade → lands in the version-controlled repo → `resolve_doc_gap`.
+  - **Verified (EmmaBot, 2026-09-26):** 134 root symlinks, 0 dangling; 23 gotchas identical via facade vs canonical;
+    83 skills resolve; claude-cookbooks + transcription artifacts intact in facade dir (untracked).
+  - **Known repoint-on-next-touch:** `scripts/ingest_to_mdrag.py` line 12 hardcodes `~/GitHub/knowledge-base/claude-cookbooks`
+    (DataCrew owns; works today since facade keeps the real dir).
   - **Jae's explicit merge authorization in Slack overrides the agents-never-merge rule** — but only for that named PR; the default rule stands.
 
 ## Git / PR Workflow (Jae directive 2026-09-25)
