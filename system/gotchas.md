@@ -32,3 +32,4 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Mod event contracts**: turn_end only accepts `{continue: string}` (feeds a follow-up turn) — no message mutation; llm events don't fire on Cloud backend; TS2591 on type-check is expected noise → [[reference/gotchas/mod-event-contracts.md]]
 
 - **Agent messaging**: `letta -p` CLI times out silently (300s), may not deliver — never assume success; verify via message list or use SendAgentMessage tool; parallel agent execution means tasks may already be done by another agent
+- **AI toolkit via MCP**: skills/references do NOT pass through (Ben Schein, Sept 2026); AI Readiness metadata IS reachable via undocumented `/api/ai/readiness/v1/data-dictionary/dataset/{id}` — wrap it as an MCP tool → [[reference/gotchas/ai-readiness-mcp-passthrough.md]]
