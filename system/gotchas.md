@@ -9,7 +9,7 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Google Docs**: upsert tabs, never create-then-replace → [[reference/gotchas/google-docs.md]]
 - **Slack posting**: one post per item, post-then-delete, never `source .env` → [[reference/gotchas/slack-posting.md]]
 - **cboti**: `batch_update` ≠ `batch_update_values`, TableBlock cells need ContentBlock → [[reference/gotchas/cboti-patterns.md]]
-- **Environment**: bwrap required, MCP URL is `wiki.datacrew.space`, mods at `~/.letta/mods/` affect ALL agents, mdrag needs `uv`+`httpx` → [[reference/gotchas/environment-tooling.md]]
+- **Environment**: bwrap required, MCP URL is `wiki.datacrew.space`, mods at `~/.letta/mods/` affect ALL agents, mdrag needs `uv`+`httpx`; `wikki.*` 301 = hard error for httpx `follow_redirects=False` clients (MDRAG_URL must use `wiki.` host) → [[reference/gotchas/environment-tooling.md]]
 - **Search**: "Domo tour" → music tours (DOMi & JD Beck), not Domo events. Use `site:domo.com` to disambiguate → [[reference/gotchas/environment-tooling.md]]
 - **Domo dev docs**: JS-rendered (fetch fails), pro-code launch-form URL trick → [[reference/gotchas/domo-developer-docs.md]]
 - **Domo AI Chat**: button missing → check nav, consumption agreement, model provider → [[reference/gotchas/domo-ai-chat.md]]
@@ -30,6 +30,8 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Account edit clobbers credentials**: writeback connectors read the input DataSet via the Platform API (`api.domo.com/v1/datasets`) with the Client ID/Secret stored in the Account — a 401 there = broken stored credentials, not DataSet permissions. Editing an account (even rename-only) re-submits the full credential form and can clear fields not re-entered → [[reference/gotchas/account-edit-credential-clobber.md]]
 - **Quota exhaustion → public spam**: raw quota/credit errors post verbatim into Slack threads from the Cloud bridge — NO mod can intercept (past all hook points). Check `/v1/metadata/balance` + `/v1/organizations/self/quotas`; quota-watchdog mod DMs Jae early → [[reference/gotchas/letta-quota-turn-failures.md]]
 - **Mod event contracts**: turn_end only accepts `{continue: string}` (feeds a follow-up turn) — no message mutation; llm events don't fire on Cloud backend; TS2591 on type-check is expected noise → [[reference/gotchas/mod-event-contracts.md]]
+- **GitHub PR head sync lag**: after force-pushing a rebased PR, PR head can stay at old SHA (no CI, mergeable CONFLICTING) — check githubstatus.com, verify ref with `git ls-remote`, nudge with an empty commit (disappears in squash merge) → [[reference/gotchas/github-pr-head-sync-lag.md]]
+- **pkill self-match**: `pkill -f` pattern matching the invoking exec_command's own cmdline kills the wrapping shell mid-run — match on something not in your command string (e.g. `pkill -f "port 8765"`) or kill by exact PID → [[reference/gotchas/pkill-self-match.md]]
 
 - **Agent messaging**: `letta -p` CLI times out silently (300s), may not deliver — never assume success; verify via message list or use SendAgentMessage tool; parallel agent execution means tasks may already be done by another agent
 - **AI toolkit via MCP**: skills/references do NOT pass through (Ben Schein, Sept 2026); AI Readiness metadata IS reachable via undocumented `/api/ai/readiness/v1/data-dictionary/dataset/{id}` — wrap it as an MCP tool → [[reference/gotchas/ai-readiness-mcp-passthrough.md]]
