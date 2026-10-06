@@ -1,5 +1,5 @@
 ---
-description: Environment and tooling gotchas — bwrap, MCP server, mod scoping, env var safety, mdrag ingestion.
+description: Environment and tooling gotchas — bwrap, MCP server, mod scoping, env var safety, mdrag ingestion, bash pitfalls, URL redirects.
 ---
 # Environment / Tooling Gotchas
 
@@ -21,3 +21,5 @@ description: Environment and tooling gotchas — bwrap, MCP server, mod scoping,
 
 - **Web search name collisions** — searching for "Domo" + "tour" returns music tours (DOMi & JD Beck, a jazz duo with a 25-city fall 2026 tour) instead of the Domo Connections Tour. Use `site:domo.com` or `"Domo Connections" "AI Data Tour"` to disambiguate. This pattern applies broadly: any company name that could overlap with entertainment/brand names will pollute search results.
 - **JS-rendered pages return minimal HTML** — Domo events pages (main tour page, events hub) are JS-rendered. `curl`/`fetch` returns empty agenda/location sections. JSON-LD structured data may be present but often contains stale data. Prefer scraping individual city pages on the webflow subdomain (`domo-webflow.domo.com`) which have richer metadata.
+
+- **`pkill` matches its own wrapping shell** — when `pkill <pattern>` is run inside a compound Bash command where the pattern string appears in the command itself (e.g., `pkill uvicorn; nohup uvicorn ... &`), `pkill` can match and kill the wrapping shell process, terminating the entire compound command before subsequent commands (`nohup ...`) can start. Fix: use a more specific pattern like `pkill -f "uvicorn --port 8765"` with unique flags, or use `fuser -k <port>/tcp` to kill by port instead. Alternative: `kill $(lsof -ti:8765)` to target specific PIDs.

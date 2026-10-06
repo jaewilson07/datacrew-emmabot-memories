@@ -35,3 +35,6 @@ Quick reminders. Details in `reference/gotchas/`.
 
 - **Agent messaging**: `letta -p` CLI times out silently (300s), may not deliver — never assume success; verify via message list or use SendAgentMessage tool; parallel agent execution means tasks may already be done by another agent
 - **AI toolkit via MCP**: skills/references do NOT pass through (Ben Schein, Sept 2026); AI Readiness metadata IS reachable via undocumented `/api/ai/readiness/v1/data-dictionary/dataset/{id}` — wrap it as an MCP tool → [[reference/gotchas/ai-readiness-mcp-passthrough.md]]
+- **GitHub PR sync lag**: after force-push during GitHub incidents, PR head can stay stuck at old SHA with no CI triggered — nudge with an empty commit push → [[reference/gotchas/github-pr-sync-lag.md]]
+- **pkill self-kill**: `pkill <pattern>` can match its own wrapping shell when the pattern appears in a compound command — use port-based kill (`fuser -k <port>/tcp`) or a more specific pattern → [[reference/gotchas/environment-tooling.md]]
+
