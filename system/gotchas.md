@@ -14,7 +14,7 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Domo dev docs**: JS-rendered (fetch fails), pro-code launch-form URL trick → [[reference/gotchas/domo-developer-docs.md]]
 - **Domo AI Chat**: button missing → check nav, consumption agreement, model provider → [[reference/gotchas/domo-ai-chat.md]]
 - **Domo AI Library**: Conversational Agents is beta, needs CSM enable → [[reference/gotchas/domo-ai-library.md]]
-- **Audio transcription**: local whisper unreliable for Slack voice memos → [[reference/gotchas/audio-transcription.md]]
+- **Audio transcription**: prefer voice-gateway (`http://cubby.lan:8885/v1/audio/transcriptions`, models `whisper-1`/`large-v3-turbo`, also proxied at `localhost:7630`); local whisper venv is fallback, unreliable for Slack voice memos → [[reference/gotchas/audio-transcription.md]]
 - **crew-dcs Code Engine**: create() doesn't re-fetch, type mapping incomplete → [[reference/gotchas/crew-dcs-code-engine.md]]
 - **AppDB permissions**: `Write` = collection properties, NOT document CRUD → [[reference/gotchas/appdb-permissions.md]]
 - **Public agent rules**: never paste private info, don't pretend to be human, and a private 1:1 chat is still a public context *for memory* — my memory is shared and published → [[reference/gotchas/public-agent-rules.md]]
