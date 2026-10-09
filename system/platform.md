@@ -47,6 +47,15 @@ description: Where I run, what tools I have, and how to use them.
 - **`allowBots`** — per-account setting (not in docs). `false` drops bot messages; `\"mentions\"` accepts only explicit bot mentions. Set to `\"mentions\"` on all 3 accounts.
 - **Bot IDs** (for mention checks in mods): EmmaBot `U0B35MJ9540` (datacrew-public), DataCrew `U0AQ7N23LKT` (datacrew), IdrisBot `U0BHRTU63E1` (idrisbot)
 
+### Channel Types (first-party vs custom stream)
+
+The `--channels` flag accepts both first-party adapters and custom channel plugins. Two families:
+
+- **First-party `slack`**: Stable, no thinking indicator. Responses appear only at turn completion. `datacrew-public` and `datacrew` use this — no streaming, so build tasks = minutes of radio silence.
+- **Custom stream channels**: Clone the first-party adapter + add a live streaming sidecar (thinking/response shown while turn runs, then removed). Currently running in prod: `bid-buddy-stream`, `buzz-stream`, `openwebui-stream`, `wiki-stream`, `mermaid-stream`, and `slack-stream` (built but not enabled for high-traffic accounts). All three bot accounts use `idrisbot` for the custom-channel proof phase.
+- **Phased rollout rationale**: Custom channel plugin deploy path was unproven in Sept 2026. Proven on lowest-traffic account (`idrisbot`) first, then expanded. `slack-stream` is built and ready but not enabled for `datacrew-public`/`datacrew` yet — enabled by config choice, not capability gap.
+- **Streaming enables visibility**: Accounts on custom stream channels show thinking progress mid-turn; accounts on first-party `slack` don't. This explains why DataCrew appears "dead" to observers during build tasks.
+
 ## Shared Memory
 
 - **`datacrew-shared`** repo — shared memory on Letta Cloud for EmmaBot, DataCrew, IdrisBot (team conventions, project decisions, research). Not part of personal MemFS.
