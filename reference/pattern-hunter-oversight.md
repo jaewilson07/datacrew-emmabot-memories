@@ -13,3 +13,4 @@ EmmaBot owns **merges + live testing** for `jaewilson07/pattern-hunter` (plugin 
 - 2026-10-05/06: Blocker cleared (interactive runs, Jae's gh auth). 13 PRs merged. **M1 complete** (#4 orientation reads, #5 agent tools + drift test).
 - 2026-10-09: M1 live test PASS (742 passed @ CI parity w/ Postgres 16). Open: #6, #7, #8 (blocked by #40 — engine writes have no authz path), #9. #10 + #29 = ready-for-human (Jae).
 - Milestones: M1 = #4+#5 ✅ | M2 = #6+#7 | M3 = #8+#9.
+- 2026-10-10: Daily check — no change since Oct 9. Queue empty since Oct 6; no crew output on #6–#9 in 4 days (possible dispatch stall); #40 still blocks #8. Flagged to Jae, offered coordinator nudge.
