@@ -48,3 +48,12 @@ description: Environment and tooling gotchas — bwrap, MCP server, mod scoping,
 - **Reading `/proc/<pid>/environ` of the running letta-datacrew service to steal its secrets is permission-denied** even for the same user — don't bother.
 - **`DATACREW_DOMO_PASSWORD` in Infisical `/datacrew` is STALE as of 2026-10-12** — `datacrew-space.domo.com` (the correct instance) web login rejects it with "Invalid email or password" (headless Playwright login, corrected from earlier `datacrew.domo.com` typo). Likely SSO-only or password rotated. Jae was asked to rotate it or confirm SSO-only.
 - **Domo instance URL**: The datacrew Domo instance is `datacrew-space.domo.com`, NOT `datacrew.domo.com` (which doesn't exist). The similar name caused a bug when automating screenshots — wrong instance → "Invalid email or password" regardless of password accuracy.
+
+## crew-dcs CI zero-step failures = account-level, not code (learned 2026-10-12)
+
+- **Symptom**: every GitHub Actions job on hector-dcs/crew-dcs fails in 1-2s with ZERO steps executed, no runner assigned, empty logs — across all workflows/branches incl. scheduled runs on main. Started 2026-10-10 ~10:20 MDT.
+- **Diagnosis path**: `gh run list` shows repo-wide failures; `gh api .../jobs/<id>` shows `steps:[]` and empty `runner_name`; githubstatus.com all-green ⇒ account-level block (classic Actions billing/spending-limit signature on a private repo). Caveat: workflows read the runner from `vars.CI_RUNS_ON` (default `ubuntu-latest`) — a bad self-hosted label there looks similar, so also check `gh api repos/.../actions/variables/CI_RUNS_ON` (the bot token got 404 — needs admin).
+- **Related — local `uv sync`/`uv run` in crew-dcs fails** fetching the private git dep `cl` from hector-dcs/crew-logger ("Repository not found"). Workarounds: stdlib-only scripts → `python3 -m scripts.<name>`; tests → `uv venv .venv && uv pip install --python .venv/bin/python pytest pytest-asyncio python-dotenv pyyaml`, run `.venv/bin/python -m pytest`.
+- **Main crew-dcs checkout's fetch refspec tracks only main** (`+refs/heads/main:...`), so `origin/<feature-branch>` doesn't exist locally — `git fetch origin <branch>` explicitly.
+- **`gh pr merge --delete-branch` silently leaves remote branches behind sometimes** — verify with `git ls-remote --heads origin`.
+- **Force-pushing a rebased PR branch without a local tracking ref**: use explicit lease — `git push --force-with-lease=refs/heads/<branch>:<known-remote-sha> origin <local>:<branch>`.
