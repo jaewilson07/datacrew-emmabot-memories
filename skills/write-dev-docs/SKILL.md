@@ -1,5 +1,5 @@
 ---
-name: writing-dev-docs
+name: write-dev-docs
 description: Plan and write developer documentation that developers actually finish reading. Load BEFORE writing or rewriting any technical doc — guides, tutorials, READMEs, module docstrings intended for publication. Encodes the Twilio docs research and Jae's define-before-use rule. NOT for internal agent-facing notes (AGENTS.md, runbooks) or Slack answers.
 ---
 
