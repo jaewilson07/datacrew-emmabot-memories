@@ -66,3 +66,4 @@ The `--channels` flag accepts both first-party adapters and custom channel plugi
 - MCP server details & toolsets → [[reference/mcp-server.md]]
 - Available skills → [[reference/platform-skills.md]]
 - Domo doc references & agentic patterns → [[reference/domo-doc-references.md]]
+- crew-dcs repo & "file a ticket for another agent" workflow → [[reference/projects/crew-dcs.md]]
