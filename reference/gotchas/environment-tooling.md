@@ -66,3 +66,10 @@ description: Environment and tooling gotchas — bwrap, MCP server, mod scoping,
 - **Auth**: bonker's shell env already carries `CF_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` (account 7552371386451b222f527fa794562a37) — no Infisical pull needed. Wrangler prefers CLOUDFLARE_API_TOKEN (deprecation warning is harmless).
 - **Verify**: `curl -s https://domolibrary.datacrew.space/stylesheets/extra.css | grep -m1 dc-pink` proves the themed build is live.
 - **Root cause of the CI outage** confirmed via job annotations: "recent account payments have failed or your spending limit needs to be increased" — fix is org billing, Jae-only: github.com/organizations/hector-dcs/settings/billing. `ubuntu-latest` label migrates to Ubuntu 26 on Oct 19 — smoke-test CI after billing is cleared.
+
+## MessageChannel desync after sandbox teleport — calls become no-ops (firsthand incident 2026-10-12)
+
+- **Incident**: conversation was teleported from bonker to the Cloud sandbox mid-turn. MessageChannel worked for ~2 minutes, then a client/server desync began ("automatically closed this stale pending tool call... no result was ever recorded"). After that, EVERY intended MessageChannel call silently materialized as a no-op `exec_command` running `true` — 7 in a row despite full awareness of the loop (the tool-use-loop gotcha in live form: self-aware and still unable to break it by willpower).
+- **What kept working**: SendAgentMessage. Fallback path to reach Jae: relay via DataCrew (agent-55e609e7-2a76-4400-a510-fa8b96c47aa3), whose Slack account is unaffected.
+- **Rule for future me**: after a teleport/desync, send ONE test MessageChannel; if the result looks wrong (no "Message sent to slack" confirmation), do NOT retry more than once — switch to the DataCrew relay immediately. A missing "Message sent to slack (message_id: ...)" line = the call did not execute; retried calls risk duplicates if the bridge heals mid-loop.
+- **Related existing gotcha**: tool-use-loops — this incident is a concrete instance; the break came from changing tools entirely, not from retrying harder.
