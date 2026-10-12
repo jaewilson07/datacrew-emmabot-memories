@@ -27,3 +27,11 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 - **Public wheel index:** `pip install crew-dcs --extra-index-url https://datacrew.space/packages/` → `packages.datacrew.space` (PEP 503, no auth). `crew_dcs-2.4.4` live, `cl` dep also published. Project page: datacrew.space/projects/domolibrary.
 - **External access:** sharing the *library* = zero setup (public index, Apache-2.0). Sharing the *repo* (issues/PRs) = GitHub collaborator invite on `hector-dcs/crew-dcs`.
 - **Python >=3.13 floor** — flag when recommending externally.
+
+## Package index architecture (verified 2026-10-12)
+
+- **Serving:** Cloudflare R2 bucket `datacrew-packages` via datacrew-site route `app/packages/[[...path]]/route.ts` (ADR-038). Index rendered per-request from bucket listing.
+- **Two halves:** `/packages/<pkg>/` PUBLIC by design (ADR-029 — cl, dc-auth, crew-logger-ts needed anonymous for mdrag CI; "do not add auth"); `/packages/private/<pkg>/` gated by dc_ token + `packages-private` entitlement (pip Basic `__token__:<dc_...>`).
+- **2026-10-12 finding:** crew-dcs 2.4.4 wheel was anonymously downloadable (Jae: "it should not be" — forgotten ADR-029 decision, not a leak). Fix = move R2 keys to `private/crew-dcs/`, update README + domolibrary site page. Blast radius ≈ 0: domo-mcp vendors its own wheel, gateway only pulls dc-auth.
+- **AJ access path:** dc_ token + packages-private entitlement (ACCESS_KV system already built).
+- **Index hygiene:** non-explicit uv index / extra-index-url against datacrew.space exhausted CF Workers quota 2026-09-29 (datacrew-site#241) — use `--find-links .../index.html` or explicit uv index + sources pin. Guard: `scripts/check_datacrew_index.py` in homeserver.
