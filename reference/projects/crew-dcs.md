@@ -21,3 +21,9 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 
 - crew-dcs issue #1771 — IaC change pattern (build out domo-iac-changes skill), labeled `ready-for-agent` + `agent-reported`
 - letta-datacrew-memories PR #37 — domo-iac-changes skill stub + scheduled-report-private-dataset gotcha
+
+## Distribution (verified 2026-10-12)
+
+- **Public wheel index:** `pip install crew-dcs --extra-index-url https://datacrew.space/packages/` → `packages.datacrew.space` (PEP 503, no auth). `crew_dcs-2.4.4` live, `cl` dep also published. Project page: datacrew.space/projects/domolibrary.
+- **External access:** sharing the *library* = zero setup (public index, Apache-2.0). Sharing the *repo* (issues/PRs) = GitHub collaborator invite on `hector-dcs/crew-dcs`.
+- **Python >=3.13 floor** — flag when recommending externally.
