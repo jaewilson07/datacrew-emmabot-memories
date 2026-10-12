@@ -32,7 +32,7 @@ the class that matches the credential you hold:
 | `DomoTokenAuth` | Access token (Admin → Access Tokens) | Scripts and automation |
 | `DomoFullAuth` | Username + password | Interactive sessions |
 | `DomoDeveloperAuth` | OAuth2 client ID + secret | developer.domo.com apps |
-| `DomoJupyterFullAuth` / `DomoJupyterTokenAuth` | Jupyter WS |
+| `DomoJupyterFullAuth` / `DomoJupyterTokenAuth` | inside Domo | Jupyter |
 
 Construct the auth once, then pass it as the first argument to any route
 function or entity class:
