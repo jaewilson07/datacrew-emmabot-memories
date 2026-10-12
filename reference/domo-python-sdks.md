@@ -2,6 +2,8 @@
 description: Domo Python SDKs and libraries (crew-dcs, domolibrary) with dataflow API capabilities and programmatic dataflow creation reference.
 ---
 
+**Note (2026-10-12):** crew-dcs moved from public to token-gated distribution. Community members asking for install help should be directed to DataCrew for access.
+
 # Domo Python SDKs & Libraries
 
 Reference for Domo Python libraries that come up in DUG Slack questions.
@@ -11,10 +13,10 @@ Reference for Domo Python libraries that come up in DUG Slack questions.
 - **What:** DataCrew's open-source Python SDK that wraps the Domo API
 - **Maintained by:** Jae Wilson / DataCrew
 - **GitHub:** `https://github.com/hector-dcs/crew-dcs.git`
-- **Install:** `pip install crew-dcs --index-url https://datacrew.space/packages/` (NOT on standard PyPI — uses DataCrew's custom package index)
-- **Package index:** `https://datacrew.space/packages/`
+- **Install:** Token-gated since 2026-10-12. Entitled users: `pip install crew-dcs --index-url "https://__token__:<dc_token>@datacrew.space/packages/private/crew-dcs/"` (needs dc_ token + `packages-private` entitlement). Community members should contact DataCrew for access.
+- **Package index:** `datacrew.space/packages/` hosts public packages (`cl`, `dc-auth`, `crew-logger-ts`) and gated private packages (`crew-dcs` since 2026-10-12). See [[reference/projects/crew-dcs.md]] for full architecture.
 - **Blog post with examples:** `datacrew.space/blog/trigger-report-builder-from-domo-workflows` (Scheduled Reports API examples)
-- **Notes:** Newer SDK. Documented examples mainly cover Scheduled Reports API so far. May have broader Domo API coverage since it wraps the API generally.
+- **Notes:** Newer SDK. Documented examples mainly cover Scheduled Reports API so far. May have broader Domo API coverage since it wraps the API generally. Now requires access token for install (gated since 2026-10-12).
 
 ### crew-dcs Code Engine Support
 
