@@ -57,3 +57,12 @@ description: Environment and tooling gotchas — bwrap, MCP server, mod scoping,
 - **Main crew-dcs checkout's fetch refspec tracks only main** (`+refs/heads/main:...`), so `origin/<feature-branch>` doesn't exist locally — `git fetch origin <branch>` explicitly.
 - **`gh pr merge --delete-branch` silently leaves remote branches behind sometimes** — verify with `git ls-remote --heads origin`.
 - **Force-pushing a rebased PR branch without a local tracking ref**: use explicit lease — `git push --force-with-lease=refs/heads/<branch>:<known-remote-sha> origin <local>:<branch>`.
+
+## Manual docs deploy while GitHub Actions is billing-locked (learned 2026-10-12)
+
+- The crew-dcs docs site (domolibrary.datacrew.space, Cloudflare Pages project `domolibrary-docs`) can be deployed by hand from bonker, replicating the `deploy-docs` job in `.github/workflows/ci.yml`:
+  1. Build: `cd /home/jaewilson07/GitHub/crew-dcs && .letta/worktrees/crosslink-1731/.venv/bin/mkdocs build --clean` (that worktree venv has all docs deps; `uv run` fails on the private `cl` dep)
+  2. Deploy: `npx --yes wrangler pages deploy site --project-name=domolibrary-docs --branch=main`
+- **Auth**: bonker's shell env already carries `CF_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` (account 7552371386451b222f527fa794562a37) — no Infisical pull needed. Wrangler prefers CLOUDFLARE_API_TOKEN (deprecation warning is harmless).
+- **Verify**: `curl -s https://domolibrary.datacrew.space/stylesheets/extra.css | grep -m1 dc-pink` proves the themed build is live.
+- **Root cause of the CI outage** confirmed via job annotations: "recent account payments have failed or your spending limit needs to be increased" — fix is org billing, Jae-only: github.com/organizations/hector-dcs/settings/billing. `ubuntu-latest` label migrates to Ubuntu 26 on Oct 19 — smoke-test CI after billing is cleared.
