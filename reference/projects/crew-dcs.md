@@ -25,6 +25,7 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 ## Distribution (as of 2026-10-12 — crew-dcs now PRIVATE)
 
 - **crew-dcs is token-gated.** Public copies deleted + edge-blocked 2026-10-12 (Jae: downloads must be attributable — "the whole point was to make it private so we could know who's downloading the library").
+- **Community token policy (Jae, 2026-10-12):** 90-day TTL on issued dc_ tokens.
 - **Install (entitled users):** `pip install crew-dcs --index-url "https://__token__:<dc_token>@datacrew.space/packages/private/"  (index URL = root; client appends /crew-dcs/ — validated end-to-end with uv 2026-10-12)` — needs dc_ token + `packages-private` entitlement (ACCESS_KV; Jae issues; site has `/api/library-access/request`).
 - **Still public (intentional, mdrag CI installs anonymously):** `cl`, `dc-auth`, `crew-logger-ts` via `packages.datacrew.space/<pkg>/`.
 - **Python >=3.13 floor** — flag when recommending externally.
