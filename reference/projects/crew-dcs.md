@@ -8,6 +8,8 @@ description: crew-dcs repo facts, distribution/access model (private since 2026-
 - **GitHub:** `hector-dcs/crew-dcs` — org/user is `hector-dcs`, NOT `jaewilson07`. Private repo.
 - **Local checkout:** `/home/jaewilson07/GitHub/crew-dcs`
 - **Stack:** Python, src layout, `uv`, mkdocs. Repo self-described as "domolibrary2".
+- **Formerly domolibrary:** crew-dcs was formerly known as **domolibrary** — that's why the public docs site is domolibrary.datacrew.space. Jae (2026-10-12): this is "table stakes" context — every doc/page should assume readers may know either name.
+- **Docs crosslink sources:** DataCrew's YouTube channel [youtube.com/@datacrew](https://www.youtube.com/@datacrew) has many Domo tutorial videos — use it as a crosslink source in crew-dcs docs/guides, alongside the `domo-documentation-hub` repo for official docs.
 - SDK/API details → [[reference/domo-python-sdks.md]]; Code Engine gotchas → [[reference/gotchas/crew-dcs-code-engine.md]]
 
 ## Agent-Delegation Issue Workflow

@@ -8,6 +8,7 @@ description: Verified Domo doc references and agentic patterns reference links.
 - [[reference/domo-embed-docs.md]] — App Studio embedding & Domo Everywhere embed documentation (verified URLs)
 - [[reference/domo-python-sdks.md]] — crew-dcs, domolibrary, and programmatic dataflow creation reference
 - [[reference/gotchas/doc-url-hallucination.md]] — deterministic doc-URL slug lookup via local clone of `DomoApps/domo-documentation-hub` at `~/GitHub/domo-documentation-hub` (slugs = .mdx filenames; covers developer.domo.com + KB)
+- **DataCrew YouTube** — [youtube.com/@datacrew](https://www.youtube.com/@datacrew) has many Domo tutorial videos; use as a crosslink source in crew-dcs docs/guides (alongside `domo-documentation-hub` for official docs) → [[reference/projects/crew-dcs.md]]
 
 ## Agentic Patterns Reference (Claude Cookbooks)
 

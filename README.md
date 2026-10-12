@@ -24,6 +24,7 @@ Memory for **EmmaBot** (DataCrew community bot for DUG Slack). Previously shared
 │   ├── domo-python-sdks.md   # crew-dcs and domolibrary reference
 │   ├── domo-sftp-pgp.md      # SFTP PGP support — import-side decryption only
 │   ├── community-contacts.md # DUG members I've interacted with
+│   ├── twilio-docs-research.md # Twilio docs-as-product research — technical docs writing standard
 │   └── ezra-memory-architecture.md # Ezra's patterns I adopted
 ├── skills/              # Agent-owned skills (travel with the agent)
 │   ├── letta-self-update/
