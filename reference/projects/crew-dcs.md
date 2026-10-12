@@ -41,3 +41,11 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 - **CF credentials:** Infisical project 3fbb4296 `/infrastructure` — CF_API_TOKEN, CF_ACCOUNT_ID, CF_ZONE_ID (works for wrangler, REST API, zone WAF). Authenticate per infisical-auth skill.
 - **2026-10-12 the move:** wheel → `private/crew-dcs/` (sha256-verified), public object deleted (unlock → delete → relock), WAF block added, root `_index/index.html` cleaned of crew-dcs. Zero consumers broke (domo-mcp vendors its own wheel; gateway only pulls dc-auth).
 - **Index hygiene:** non-explicit uv index / extra-index-url against datacrew.space exhausted CF Workers quota 2026-09-29 (datacrew-site#241) — use `--find-links .../index.html` or explicit uv index + sources pin. Guard: `scripts/check_datacrew_index.py` in homeserver.
+
+## Access system (datacrew-site — how gated downloads authorize)
+
+- **dc_ token** = RS256 JWT, `dc_` prefix, sub=email; valid iff signature ok AND `jti` present in ACCESS_KV `active-jti:{jti}` (revocation = delete that key; tokens are no-expiry by default so jti is the only bound).
+- **Mint:** `datacrew-site/scripts/mint-service-token.mjs --sub <email> --scope <s> --ttl 1h|72h|90d|never`; reads `JWT_PRIVATE_KEY_PEM`/`JWT_PUBLIC_KEY_PEM` from **Infisical `/jwt`** (project 3fbb4296, prod).
+- **Entitlement:** ACCESS_KV (namespace `ed1cccc8f38f41efb24ee6ae736797ff`): `access:{resource}:{email}` JSON record + `access-index:{resource}` string[]. Resource for crew-dcs = `packages-private`. Site admins (allowlist) bypass entitlement.
+- **KV write trap:** CF REST `PUT /values/{key}` wants the RAW value as body. A form-field PUT (`data={"value": v}`) silently stores `value=<urlencoded>` and breaks JSON consumers (clobbered the index once this way).
+- **CI validation:** `crew-dcs/scripts/validate_private_index.py` (PEP 723, `uv run`) — mint throwaway identity, negative control (no entitlement → refused), grant, install `crew-dcs==<ver>`, cleanup. Workflow `validate-private-index.yml` (release-wheel follow-on, dispatch, weekly). PR hector-dcs/crew-dcs#1772 (2026-10-12). Needs INFISICAL_CLIENT_ID/SECRET repo secrets.
