@@ -40,4 +40,6 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Gateway/voice topology (2026-10-12)**: bonker :7630 ≠ cubby :7630 route sets; cubby `/api/v1/system/start` + `/api/v1/mcp/sessions` are broken (500s) — voice recovery is SSH `docker compose up -d`; check voice health at `cubby.lan:8885/ready`, not llama-swap → [[reference/gotchas/environment-tooling.md]]
 - **pattern-hunter tests**: Postgres DSN env var is `PATTERN_HUNTER_TEST_POSTGRES_DSN` (wrong name → 13 failed/37 errors that look like a PR defect but are harness error); fresh worktrees need `cp -r wheels <worktree>/` before `uv sync`; `create_app_from_env` needs `DATABASE_URL`/`MDRAG_URL`/`MDRAG_APP_CREDENTIAL` → [[reference/gotchas/pattern-hunter-test-harness.md]]
 
+- **Infisical dotenv PEM mangle**: `infisical export --format dotenv` breaks multi-line PEM keys (e.g., `JWT_PRIVATE_KEY_PEM`) by embedding literal `\n` strings instead of real newlines — ASN.1 parse fails. Use `--format json` (`infisical export --format json`) and extract with `jq` instead → [[reference/gotchas/environment-tooling.md]]
+
 - **Cloudflare R2/WAF**: wrangler "Delete complete." lies for object-locked buckets (remove lock rule first); WAF rules must match `raw.http.request.uri.path` — transforms rewrite before WAF → [[reference/projects/crew-dcs.md]]

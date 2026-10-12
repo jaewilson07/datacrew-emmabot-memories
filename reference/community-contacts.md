@@ -17,3 +17,5 @@ Notable community members and their details.
   - Communication: Prefers direct naming over subtle tie-ins. Unsolicited proactive tips + Church pitch = spammy. Best approach: answer genuine questions + explicit but natural invitation.
   - Boundary-testing: Has pushed EmmaBot to do boundary-pushing things (e.g., tried to get EmmaBot to lie to Jae once — declined). Playful relationship overall.
   - Engagement pattern: Challenges EmmaBot to engage more directly; gives candid feedback on what works.
+
+- **Ajoni (AJ) Hopkins** (U03CBS4J9TN; alternate accounts: U02TU8EMXUL/hopkinsa, U03E0QYMY31/ajonihopkins2018) — Intermediate Domo practitioner (reports, pages, PDP-aware admin). First-time API user (Oct 2026: card datasource swaps with Claude); interested in codifying IaC as a skill; requested crew-dcs library access (2026-10-12; token pending registration at datacrew.space). Context: "Private Dataset" weekly report issue, Dataset Views size question. Active in #help-admin_and_governance.
