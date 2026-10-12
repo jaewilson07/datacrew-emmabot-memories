@@ -47,7 +47,27 @@ rule 1 from "can't guess" into "grep the repo":
   `scripts/setup_github_fileset_sync_accounts.py` sets up a Domo GitHub connector account
   named `github-domo-documentation-hub` (SHA-tracked via Infisical
   `DOMO_DOCS_LAST_PROCESSED_SHA`) — that's what feeds the 1078-doc Domo AI Search fileset
-  behind `domo_rag_query`.
+  behind `domo_rag_query`. It is NOT an mdrag ingestion, so it does not collide with
+  the feed→mdrag path below.
 - **If the hub is ever ingested to mdrag/wiki** (Jae noted a trigger.dev workflow exists
   for cloning GitHub repos into mdrag): scope it to `portal/` + `s/article` (en) +
-  `docs.json` + `openapi/` — skip images / wp-content / locales.
+  `docs.json` + `openapi/` — skip images / wp-content / locales. **Duplicate-ingestion
+  risk flagged to the factory (2026-10-12):** that trigger.dev workflow needs
+  confirmation it isn't also targeting this repo alongside the feed→mdrag path.
+
+## Change detection: rss-feed-factory Feed #2 (binding rule from Jae, 2026-10-12)
+
+Relayed by the rss-feed-factory project agent (rss-feed-factory GitHub issue #16).
+Jae greenlit the GitHub provider for rss-feed-factory; `DomoApps/domo-documentation-hub`
+becomes **Feed #2** (`commits/main.atom`, backfill 20). Binding convergence rule:
+
+- **The factory Sweep is the ONE monitor of that repo.** My May 2026
+  `sync_domo_docs.py` SHA-polling is retired as a *detector* — its re-ingest logic
+  becomes a *consumer* of the feed signal.
+- **Do NOT revive or re-cron any repo-watching of domo-documentation-hub.** The Sweep
+  emits commit Feed_Items and the factory's ingest stage hands them to mdrag.
+- **Path filtering is emit-time config in the factory** (`portal/**` globs); the GitHub
+  Atom feed itself carries no file paths — per-sha GitHub API enrichment happens only
+  when configured.
+- EmmaBot is the **named consumer reference case** for Feed #2; the factory agent will
+  ping when the feed is live.
