@@ -1,5 +1,5 @@
 ---
-description: Agent-to-agent messaging gotchas — CLI delegation is unreliable, parallel execution is common.
+description: Agent-to-agent messaging gotchas — CLI delegation is unreliable, agent identity resolution issues, parallel execution is common.
 ---
 # Agent Messaging Gotchas
 
@@ -17,6 +17,18 @@ description: Agent-to-agent messaging gotchas — CLI delegation is unreliable, 
 - **Root cause**: The forked agent has an active turn; sending a new message queues it as a follow-up, but the delivery collision interrupts the running turn instead of queueing properly.
 - **Rule**: When delegating to forked agents, bake ALL context and clarifications into the initial prompt. Do NOT send mid-turn follow-up messages to the fork.
 - **Safe pattern**: Use the default conversation (not a task-specific conversation), and provide the complete brief upfront. The delegating agent should not message the fork after dispatch.
+
+## Agent Identity Resolution
+
+- **`delegate_to_agent` has identity mapping issues**: The tool may map an agent name (e.g., "DataCrew") to your own agent instead of the intended target ("Cannot delegate to yourself" error when trying to delegate to DataCrew from EmmaBot).
+- **Root cause**: The Letta Cloud multi-agent router may resolve names differently than the system prompt identity.
+- **Workaround**: Use `SendAgentMessage` tool directly with the target's `agent_id` instead of name-based delegation.
+- **Discovering agent IDs**:
+  1. Check `reference/agent-ids.md` for known fleet IDs
+  2. Check `routing.yaml` for definitive account→agent mappings
+  3. Check `~/.letta/channels/slack/` for account configs
+  4. Use `list_agents` API + grep/filter for the right one
+  5. Cross-reference with `platform.md` known agent IDs
 
 ## Parallel Agent Execution
 

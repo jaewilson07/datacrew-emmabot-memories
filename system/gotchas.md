@@ -16,6 +16,7 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Domo AI Library**: Conversational Agents is beta, needs CSM enable → [[reference/gotchas/domo-ai-library.md]]
 - **Audio transcription**: prefer voice-gateway (`http://cubby.lan:8885/v1/audio/transcriptions`, models `whisper-1`/`large-v3-turbo`, also proxied at `localhost:7630`); local whisper venv is fallback, unreliable for Slack voice memos → [[reference/gotchas/audio-transcription.md]]
 - **crew-dcs Code Engine**: create() doesn't re-fetch, type mapping incomplete → [[reference/gotchas/crew-dcs-code-engine.md]]
+- **crew-dcs CI failure**: repo-wide zero-step, 1-2s job failures — check `CI_RUNS_ON` repo variable (may point to offline self-hosted runner); verify with `gh run list`; only human can check hector-dcs billing → [[reference/gotchas/crew-dcs-ci-failure.md]]
 - **AppDB permissions**: `Write` = collection properties, NOT document CRUD → [[reference/gotchas/appdb-permissions.md]]
 - **Public agent rules**: never paste private info, don't pretend to be human, and a private 1:1 chat is still a public context *for memory* — my memory is shared and published → [[reference/gotchas/public-agent-rules.md]]
 - **Duplicate answers**: scan thread history for your own prior messages before replying — don't post the same content twice → [[reference/gotchas/slack-posting.md]]
