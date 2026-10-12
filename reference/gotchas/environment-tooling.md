@@ -1,5 +1,5 @@
 ---
-description: Environment and tooling gotchas — bwrap, MCP server, mod scoping, env var safety, mdrag ingestion, bash pitfalls, URL redirects.
+description: Environment and tooling gotchas — bwrap, MCP server, mod scoping, env var safety, mdrag ingestion, bash pitfalls, URL redirects, Infisical CLI auth.
 ---
 # Environment / Tooling Gotchas
 
@@ -33,3 +33,17 @@ description: Environment and tooling gotchas — bwrap, MCP server, mod scoping,
 - **llama-swap model status `unloaded` for faster-whisper/cosyvoice does NOT mean the voice path is down** — faster-whisper and cosyvoice are always-on compose containers on cubby (voice-gateway proxies to them directly at `faster-whisper:8886` / `cosyvoice:8887` per `/ready`). llama-swap only proxies chat/embed engines. Verify voice health via `http://cubby.lan:8885/ready`, not llama-swap.
 - **Cubby MCP session proxy is broken** (as of 2026-10-12): `POST /api/v1/mcp/sessions` → 500. Upstream comfyui-mcp at `cubby.lan:8299/mcp` is up but 401 auth-gated; the gateway proxy has no/expired token. This breaks the `voice_plus_tools` mode in the voice-conversation skill.
 - **`curl --fail-with-body` is the right flag for documented curl commands agents run blind**: without it, HTTP 4xx/5xx exits 0 and error bodies can be mistaken for success output (Codex review catch on letta-datacrew-memories PR #35; also note the voice-gateway wraps upstream STT 400s as 502s — read the body for the real cause).
+
+## Infisical CLI auth from an ad-hoc shell (burned ~10 min of failed attempts 2026-10-12)
+
+- **The Infisical instance is SELF-HOSTED at `https://infisical.datacrew.space`** — `infisical login --method=universal-auth` without `--domain` targets app.infisical.com and fails with "Check your credentials". Every command (login AND export) needs `--domain "https://infisical.datacrew.space"`.
+- **Full working pattern** (used by `~/GitHub/infra-bonker/apps/letta-code-channels-datacrew-public/start-bare.sh`):
+  ```bash
+  set -a; source ~/GitHub/infra-bonker/.env; set +a   # provides INFISICAL_CLIENT_ID / INFISICAL_CLIENT_SECRET
+  export INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id="$INFISICAL_CLIENT_ID" --client-secret="$INFISICAL_CLIENT_SECRET" --domain "https://infisical.datacrew.space" --silent --plain)
+  infisical export --path /datacrew --env prod --projectId 3fbb4296-d4e6-4c17-83ee-b852a57a5e50 --domain "https://infisical.datacrew.space" --format json | jq -r '.[] | select(.key=="KEY_NAME") | .value'
+  ```
+- **`infisical secrets get ... --plain` emits interactive TUI escape codes when not fully authed** — useless in scripts. Use `export --format json` + jq. The export is an ARRAY of `{key,value,...}`, so use `.[] | select(.key=="X") | .value`, NOT `.X`.
+- **`infisical secrets` without `--projectId` fails** with "Please either run infisical init or pass --projectId" outside a project dir. Project id for homeserver/datacrew secrets: `3fbb4296-d4e6-4c17-83ee-b852a57a5e50`.
+- **Reading `/proc/<pid>/environ` of the running letta-datacrew service to steal its secrets is permission-denied** even for the same user — don't bother.
+- **`DATACREW_DOMO_PASSWORD` in Infisical `/datacrew` is STALE as of 2026-10-12** — datacrew.domo.com web login rejects it with "Invalid email or password" (headless Playwright login attempt, retried carefully). Jae was asked to rotate it or confirm SSO-only.
