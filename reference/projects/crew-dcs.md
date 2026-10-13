@@ -24,6 +24,17 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 - crew-dcs issue #1771 — IaC change pattern (build out domo-iac-changes skill), labeled `ready-for-agent` + `agent-reported`
 - letta-datacrew-memories PR #37 — domo-iac-changes skill stub + scheduled-report-private-dataset gotcha
 
+## CI & GitHub Actions (as of 2026-10-12)
+
+- **GitHub Free tier, 2,000 monthly Actions minutes** — exhausted ~Oct 10 by ownership sprint (PR #1731) + daily scheduled postman-monitor. **No payment method on file** → GitHub $0-limit refusal. Jobs fail in 1-2s with zero steps before step 1. Signature: billing annotation in run list, not a card failure.
+- **5 workflows disabled** (to preserve remaining minutes): CI, Postman API Register Monitor, Upload Python Package, Release wheel to the datacrew.space package index, Semantic Versioning Auto-Tag. Copilot left active (event-rare, not CI noise).
+- **Re-enable**: `gh workflow enable <workflow-id>` (IDs documented in crew-dcs CI failure gotcha).
+- **PR #1772 held**: CI infra validation for private-index end-to-end testing. Fate depends on billing/CI direction (fix billing vs. migrate to local CI).
+- **`operate-without-ci` skill** (PR #1776, merged 2026-10-12): covers local gating + manual deploy for CI-less landing. Located in `.agents/skills/operate-without-ci/`.
+- **PR #1773 merged**: Dribbble design tokens, auth + jupyter guides, architecture docstrings. Conflict was two doc-writing passes over the same docstrings (main's Sphinx→autorefs conversion vs branch's architecture docstrings).
+- **PR #1769, #1770, #1774, #1775 merged**: design tokens, rebase verification, docs crosslinking.
+- **Docs site**: domolibrary.datacrew.space uses mkdocs with theme on main (via PR #1774/1775). Deployed manually when CI is unavailable.
+
 ## Distribution (as of 2026-10-12 — crew-dcs now PRIVATE)
 
 - **crew-dcs is token-gated.** Public copies deleted + edge-blocked 2026-10-12 (Jae: downloads must be attributable — "the whole point was to make it private so we could know who's downloading the library").
