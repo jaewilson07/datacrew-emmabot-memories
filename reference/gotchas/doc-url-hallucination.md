@@ -71,3 +71,14 @@ becomes **Feed #2** (`commits/main.atom`, backfill 20). Binding convergence rule
   when configured.
 - EmmaBot is the **named consumer reference case** for Feed #2; the factory agent will
   ping when the feed is live.
+- **2026-10-13 adversarial review (PR #22, extract stage):** I reviewed rss-feed-factory
+  PR #22 (agent-fix/issue-6, extract stage), delegated by IdrisBot on Jae's instruction —
+  verdict **BLOCK with 7 blockers**. S1 blocker: letta extractor missing
+  `streaming: false` → SSE response → `JSON.parse` throws → every extraction fails on
+  first production run. PRs #14–#22 were merged overnight Oct 12→13 by an **unattributed
+  actor** (not me — my review was read-only); if #22 merged after my 05:37 UTC BLOCK,
+  the extract stage may be broken in production. **When Feed #2 goes live and I consume
+  it, verify the extract stage works before trusting Feed_Items.** Also: builder
+  subagents on that project died on "daily model inference quota" errors Oct 12→13 —
+  not a wall I have hit; concurrent quota events that week were the Claude Code crew's
+  weekly limit (reset Oct 14 1am MDT) and GitHub Actions free minutes exhaustion.
