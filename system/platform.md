@@ -46,6 +46,8 @@ description: Where I run, what tools I have, and how to use them.
 - **Routing** — `routing.yaml` maps chat IDs to agents. `routing.yaml` + channel config determine which agent handles each channel.
 - **`allowBots`** — per-account setting (not in docs). `false` drops bot messages; `\"mentions\"` accepts only explicit bot mentions. Set to `\"mentions\"` on all 3 accounts.
 - **Bot IDs** (for mention checks in mods): EmmaBot `U0B35MJ9540` (datacrew-public), DataCrew `U0AQ7N23LKT` (datacrew), IdrisBot `U0BHRTU63E1` (idrisbot)
+- **Bot token locations (verified 2026-10-14):** `~/.letta/channels/slack/accounts.json` holds ONLY alix + petra (jae_learns_bots workspace). The datacrew-public (EmmaBot) token lives in the running `letta-code-channels-datacrew-public` service env (Infisical `/datacrew` path; config `channel-configs/datacrew-public.yaml`).
+- **`DATACREW_SLACK_BOT_TOKEN` is the private jaelearnsbots account — do NOT use it for DUG/datacrew-public posts.** A bonker-side worker CAN post as emmabot by reading the token from the service env (verified: Rizz's relay posted to DUG thread 1791994555.561209 as datacrew-public on 2026-10-14).
 
 ### Channel Types (first-party vs custom stream)
 
