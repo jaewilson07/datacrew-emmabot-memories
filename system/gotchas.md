@@ -11,6 +11,7 @@ Quick reminders. Details in `reference/gotchas/`.
 - **cboti**: `batch_update` ≠ `batch_update_values`, TableBlock cells need ContentBlock → [[reference/gotchas/cboti-patterns.md]]
 - **Environment**: bwrap required, MCP URL is `wiki.datacrew.space`, mods at `~/.letta/mods/` affect ALL agents, mdrag needs `uv`+`httpx`; `wikki.*` 301 = hard error for httpx `follow_redirects=False` clients (MDRAG_URL must use `wiki.` host) → [[reference/gotchas/environment-tooling.md]]
 - **Search**: "Domo tour" → music tours (DOMi & JD Beck), not Domo events. Use `site:domo.com` to disambiguate → [[reference/gotchas/environment-tooling.md]]
+- **mdrag learning-capture degraded (2026-10-14)**: `capture_domo_doc_learning` document_query ignores `collection_id` (returns only personal-collection docs) — skip annotation, use `flag_doc_gap`; `domo_rag_query` fileset source down while crew-dcs `cl` dep is unfetchable → [[reference/gotchas/environment-tooling.md]]
 - **Domo dev docs**: JS-rendered (fetch fails), pro-code launch-form URL trick → [[reference/gotchas/domo-developer-docs.md]]
 - **Domo AI Chat**: button missing → check nav, consumption agreement, model provider → [[reference/gotchas/domo-ai-chat.md]]
 - **Domo AI Library**: Conversational Agents is beta, needs CSM enable → [[reference/gotchas/domo-ai-library.md]]
