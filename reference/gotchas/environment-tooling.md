@@ -1,5 +1,5 @@
 ---
-description: Environment and tooling gotchas — bwrap, MCP server, mod scoping, env var safety, mdrag ingestion, bash pitfalls, URL redirects, Infisical CLI auth.
+description: Environment and tooling gotchas — bwrap, MCP server, mod scoping, env var safety, mdrag ingestion, bash pitfalls, URL redirects, Infisical CLI auth, mid-conversation sandbox migration (desync, per-env tools, runner-scoped wakes).
 ---
 # Environment / Tooling Gotchas
 
@@ -76,3 +76,10 @@ description: Environment and tooling gotchas — bwrap, MCP server, mod scoping,
 - **What kept working**: SendAgentMessage. Fallback path to reach Jae: relay via DataCrew (agent-55e609e7-2a76-4400-a510-fa8b96c47aa3), whose Slack account is unaffected.
 - **Rule for future me**: after a teleport/desync, send ONE test MessageChannel; if the result looks wrong (no "Message sent to slack" confirmation), do NOT retry more than once — switch to the DataCrew relay immediately. A missing "Message sent to slack (message_id: ...)" line = the call did not execute; retried calls risk duplicates if the bridge heals mid-loop.
 - **Related existing gotcha**: tool-use-loops — this incident is a concrete instance; the break came from changing tools entirely, not from retrying harder.
+
+### Recurrence + new findings 2026-10-14 (conv-e13bc9a5-d863-45b0-bd4f-152657f69036 — a Rizz reply arrived mid-thread and the conversation migrated bonker→Cloud-sandbox between turns)
+
+- **Mid-conversation environment migration is real.** The same conversation can start executing on bonker and later turns run in the Cloud sandbox (trigger observed: an inbound agent message). System reminders announce the switch (cwd becomes `/root`, no git repo, Letta Code version may differ). Always re-check the environment reminder before assuming bonker paths/tools.
+- **Tool availability differs per environment, and failures present as harness desync.** From the sandbox: `Skill` calls for bonker-side skills (paperclip-ops) and `delegate_to_agent` failed with "stale pending tool call / client-server state desync" errors that say to re-issue — re-issuing does NOT help because the capability is bonker-side. SendAgentMessage, Wake, exec_command, get_doc_gaps/flag_doc_gap/resolve_doc_gap all work fine from the sandbox. Confirms the existing note that `paperclip_*` tools are bonker-only: file Paperclip work when on bonker, or instruct a wake to do it later.
+- **Wakes are runner-scoped.** A wake created on bonker (runner "local") is NOT visible/listable/cancellable from the sandbox (Wake list returns empty; cancel returns "not found") and vice versa — sandbox wakes have runner "cloud" and survive sandbox shutdown per docs. Don't try to cancel cross-runner; let the wake fire (a self-describing prompt makes it a harmless no-op if work already completed).
+- **Self-diagnostic note for future me:** after repeated failed calls, I fell into a loop of no-op `exec_command(true)` calls (6 in a row) while intending to call an unavailable tool. If you catch yourself emitting placeholder no-ops, STOP — name the blocker explicitly and take the working alternative.
