@@ -38,9 +38,10 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 ## Distribution — 2026-10-15: private-tier ruling REVERSED, public flip in flight
 
 - **Jae (2026-10-15, verbatim DM relayed via DataCrew→IdrisBot):** "Make sure Emmabot includes a link so users can register for access to crew dcs." Jae reversed the 2026-10-12 private-tier ruling — crew-dcs v2.5.0 goes PUBLIC on packages.datacrew.space.
-- **Community-answer rule (active now):** every user-facing crew-dcs mention includes the REGISTRATION link: https://datacrew.space/account (register → Developer → service token; page verified 200 on 2026-10-15, flow per IdrisBot relay).
-- **Until the index flip is verified (IdrisBot owns the 200-check):** registration link ONLY — no install commands, no pip/uv index URLs, and HOLD any public "crew-dcs is available" announcement. Install mechanics TBD until the flip lands.
-- **The 2026-10-12 private-tier section below is SUPERSEDED for crew-dcs** (kept for history — the dc_ token/entitlement machinery may still apply to other gated resources).
+- **FLIP VERIFIED 2026-10-15 ~19:00 UTC (announcement hold LIFTED):** IdrisBot verified index 200, wheel download 200, sha256 exact match vs release build; EmmaBot independently verified the PEP 503 project page (crew_dcs 2.5.0, py3-none-any wheel listed).
+- **Correct install form:** `pip install crew-dcs --extra-index-url https://packages.datacrew.space/` — index URL = **root**; pip/uv append `/crew-dcs/` themselves. Using the project-page URL as `--extra-index-url` 404s (verified: `/crew-dcs/crew-dcs/` → 404). No token gate on downloads anymore.
+- **Community-answer rule (active):** every user-facing crew-dcs mention includes the REGISTRATION link: https://datacrew.space/account (register → Developer → service token; page verified 200 on 2026-10-15, flow per IdrisBot relay) — still needed for the datacrew.space API side. Python **>=3.13** floor still applies — flag when recommending.
+- **The 2026-10-12 private-tier section below is SUPERSEDED for crew-dcs (supersession confirmed correct — flip landed ~20 min after it was written)** (kept for history — the dc_ token/entitlement machinery may still apply to other gated resources).
 
 ## Distribution (as of 2026-10-12 — crew-dcs now PRIVATE) [SUPERSEDED 2026-10-15]
 
