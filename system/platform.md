@@ -31,6 +31,18 @@ description: Where I run, what tools I have, and how to use them.
     (DataCrew owns; works today since facade keeps the real dir).
   - **Jae's explicit merge authorization in Slack overrides the agents-never-merge rule** — but only for that named PR; the default rule stands.
 
+## Site publishing (datacrew.space)
+
+- **Separate nested git repo:** the site lives at `~/GitHub/datacrew/website/` with its OWN `.git` (remote:
+  `jaewilson07/datacrew-site.git`) — the outer `~/GitHub/datacrew` repo gitignores `website/`. Commit/push site
+  changes from inside `website/`, not the outer repo.
+- **Articles:** `website/content/blog/YYYY-MM-DD-slug/index.mdx` (frontmatter: title/date/slug/topic/audience/excerpt/tags).
+- **Deploy:** auto-deploys to Cloudflare Pages via `.github/workflows/deploy.yml` on push to `main`.
+- **Husky pre-commit runs `tsc`:** if it fails on "Cannot find module 'jsdom'", local `node_modules` is stale
+  (jsdom IS declared in package.json) — fix: `npm i --no-save jsdom @types/jsdom` (never commit that change).
+- **Secret hygiene:** the website repo's origin URL has an embedded `ghp_` token — never echo `git remote -v`
+  output to transcripts/channels.
+
 ## Git / PR Workflow (Jae directive 2026-09-25)
 
 - **All agent work goes through GitHub PRs** — own work or commissioned Claude work. No direct pushes to `main`/`master`.

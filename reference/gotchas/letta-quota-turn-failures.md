@@ -16,6 +16,19 @@ This repeats for *every* subsequent message in the thread — on 2026-09-22 it
 posted ~10 of these into Jim Stephenson's public thread, and community members
 noticed ("go home you're drunk").
 
+## Recurrence: 2026-10-14
+
+- The 30k/day Letta tier quota exhausted at ~19:36 UTC and every "Turn failed"
+  error again posted **publicly** into the Slack thread as the bot — 3× visible
+  spam this time.
+- The outage killed turns **and scheduled wakes** for ~8h, until a mention
+  re-invocation at 03:07 UTC the next day.
+- The quota-watchdog mod did **not** prevent the public posting (it DMs Jae,
+  but the raw error still lands in the thread).
+- **When quota is exhausted, queued work dies silently** — after the reset,
+  re-drive that work from the Slack thread history, not from internal state
+  (the agent has no record of what it never got to run).
+
 ## Mechanism
 
 - The error posting happens **inside the Slack channel bridge in letta.js**
