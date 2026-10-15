@@ -45,7 +45,11 @@ inferred pain + angle to Jae before drafting.
 - **Proven (2026-10-15):** Workbench → Stream API question → inferred pain:
   "established customer modernizing pipelines into an orchestration stack, needs
   dataset continuity" → article "Retiring Workbench (Without Starting Over)", live
-  2026-10-15 on datacrew.space.
+  2026-10-15 at datacrew.space/blog/retiring-workbench-stream-api-migration.
+  Gate outcome (IdrisBot, verified against live text): Jae's pre-publish editing
+  pass removed both flagged items (strong takeover claim, invented deauth
+  anecdote); footer attribution "The bots wrote it; Jae reviewed it" is the
+  validated honest-origin pattern.
 - **Next candidate:** App Studio AI-chat button + sessionId/history questions →
   candidate pain: "customer wants conversational AI embedded in their Domo app for
   end users; what does Domo give you vs build-your-own."
