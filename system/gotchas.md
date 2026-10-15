@@ -15,6 +15,7 @@ Quick reminders. Details in `reference/gotchas/`.
 - **Domo dev docs**: JS-rendered (fetch fails), pro-code launch-form URL trick → [[reference/gotchas/domo-developer-docs.md]]
 - **Domo AI Chat**: button missing → check nav, consumption agreement, model provider → [[reference/gotchas/domo-ai-chat.md]]
 - **Domo AI Library**: Conversational Agents is beta, needs CSM enable → [[reference/gotchas/domo-ai-library.md]]
+- **Workflow AI Agent Task**: shipped AI Pro feature (Jan 2026), no beta/CSM needed — one-shot AI invocations with runtime-variable prompts, tools, Knowledge attachments; NOT conversational (single-turn, form-submit UX, 1h step limit) → [[reference/gotchas/workflow-ai-agent-task.md]]
 - **Audio transcription**: prefer voice-gateway (`http://cubby.lan:8885/v1/audio/transcriptions`, models `whisper-1`/`large-v3-turbo`, also proxied at `localhost:7630`); local whisper venv is fallback, unreliable for Slack voice memos → [[reference/gotchas/audio-transcription.md]]
 - **crew-dcs Code Engine**: create() doesn't re-fetch, type mapping incomplete → [[reference/gotchas/crew-dcs-code-engine.md]]
 - **crew-dcs CI failure**: repo-wide zero-step, 1-2s job failures — **check billing first** (GitHub Free's 2,000 monthly Actions minutes — verified exhausted ~Oct 10; no payment method on file); also check `CI_RUNS_ON` (may point to offline self-hosted runner); verify with `gh run list`; only human can check hector-dcs billing → [[reference/gotchas/crew-dcs-ci-failure.md]]
