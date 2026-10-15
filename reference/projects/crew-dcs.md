@@ -35,7 +35,14 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 - **PR #1769, #1770, #1774, #1775 merged**: design tokens, rebase verification, docs crosslinking.
 - **Docs site**: domolibrary.datacrew.space uses mkdocs with theme on main (via PR #1774/1775). Deployed manually when CI is unavailable.
 
-## Distribution (as of 2026-10-12 — crew-dcs now PRIVATE)
+## Distribution — 2026-10-15: private-tier ruling REVERSED, public flip in flight
+
+- **Jae (2026-10-15, verbatim DM relayed via DataCrew→IdrisBot):** "Make sure Emmabot includes a link so users can register for access to crew dcs." Jae reversed the 2026-10-12 private-tier ruling — crew-dcs v2.5.0 goes PUBLIC on packages.datacrew.space.
+- **Community-answer rule (active now):** every user-facing crew-dcs mention includes the REGISTRATION link: https://datacrew.space/account (register → Developer → service token; page verified 200 on 2026-10-15, flow per IdrisBot relay).
+- **Until the index flip is verified (IdrisBot owns the 200-check):** registration link ONLY — no install commands, no pip/uv index URLs, and HOLD any public "crew-dcs is available" announcement. Install mechanics TBD until the flip lands.
+- **The 2026-10-12 private-tier section below is SUPERSEDED for crew-dcs** (kept for history — the dc_ token/entitlement machinery may still apply to other gated resources).
+
+## Distribution (as of 2026-10-12 — crew-dcs now PRIVATE) [SUPERSEDED 2026-10-15]
 
 - **crew-dcs is token-gated.** Public copies deleted + edge-blocked 2026-10-12 (Jae: downloads must be attributable — "the whole point was to make it private so we could know who's downloading the library").
 - **Community token policy (Jae, 2026-10-12):** 90-day TTL on issued dc_ tokens.
