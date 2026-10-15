@@ -11,7 +11,7 @@ description: Where I run, what tools I have, and how to use them.
   no GitHub token, no MCP servers there — memory MemFS and shared repos are synced, tools differ.
 - **Runtime (bonker):** Letta Code CLI as systemd user service (`letta-datacrew.service`)
   - Command: `letta server --channels slack --install-channel-runtimes`
-  - Runs THREE Slack accounts: `datacrew-public` (me, DUG) + `datacrew` (jaelearnsbots) + `idrisbot`
+  - Runs THREE Slack accounts: `datacrew-public` (me, DUG) + `datacrew` (`domo_user_group` — same workspace as emmabot, NOT jaelearnsbots; corrected 2026-10-15) + `idrisbot`
   - Secrets from Infisical at startup (`/datacrew`, `/letta`, `/infrastructure`)
 - **Letta backend:** Letta Cloud (`https://api.letta.com`)
 - **Memory (bonker):** `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
@@ -59,7 +59,7 @@ description: Where I run, what tools I have, and how to use them.
 - **`allowBots`** — per-account setting (not in docs). `false` drops bot messages; `\"mentions\"` accepts only explicit bot mentions. Set to `\"mentions\"` on all 3 accounts.
 - **Bot IDs** (for mention checks in mods): EmmaBot `U0B35MJ9540` (datacrew-public), DataCrew `U0AQ7N23LKT` (datacrew), IdrisBot `U0BHRTU63E1` (idrisbot)
 - **Bot token locations (verified directly 2026-10-14):** `~/.letta/channels/slack/accounts.json` holds ALL THREE datacrew account bot+app tokens in plaintext (datacrew-public, datacrew, idrisbot) — an earlier claim that it held only alix+petra was wrong (Rizz's scout read a stale file). Treat the file as sensitive: never echo it to transcripts or channels. The datacrew-public (EmmaBot) token also lives in the running `letta-code-channels-datacrew-public` service env (Infisical `/datacrew` path; config `channel-configs/datacrew-public.yaml`). Bonker-side workers can post as emmabot via `chat.postMessage` with the token from either source (verified ×2 on 2026-10-14: Rizz's relay to DUG thread 1791994555.561209 read the token from the service env; another fleet agent read accounts.json in-process, never printed).
-- **`DATACREW_SLACK_BOT_TOKEN` is the private jaelearnsbots account — do NOT use it for DUG/datacrew-public posts.**
+- **`DATACREW_SLACK_BOT_TOKEN` (the `datacrew` account) is in the SAME workspace as emmabot** — `auth.test` (verified 2026-10-15 via `x-oauth-scopes` headers) shows team `domo_user_group` for both tokens; the earlier "private jaelearnsbots account" note was WRONG about the workspace. Corrected rule: (a) **POSTING to DUG is still emmabot-only (`datacrew-public`)** — identity matters; (b) **READ-scoped calls may use the datacrew token**, which has scopes emmabot lacks — notably `users:read.email` and `users.profile:read` (emmabot's token does NOT have `users:read.email`; profile emails return null with it). **For profile-email lookups, use the datacrew token.**
 
 ### Channel Types (first-party vs custom stream)
 

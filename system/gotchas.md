@@ -7,7 +7,7 @@ Quick reminders. Details in `reference/gotchas/`.
 
 - **Tool-use loops**: agent gets trapped in repetitive tool-call cycles, self-aware but unable to break. If you've tried the same approach 3 times and failed, step back and check docs or ask for help → [[reference/gotchas/tool-use-loops.md]]
 - **Google Docs**: upsert tabs, never create-then-replace → [[reference/gotchas/google-docs.md]]
-- **Slack posting**: one post per item, post-then-delete, never `source .env` → [[reference/gotchas/slack-posting.md]]
+- **Slack posting**: one post per item, post-then-delete, never `source .env`; token scopes differ per account — check the `x-oauth-scopes` header before claiming a token can't do X (datacrew token HAS `users:read.email`, emmabot's does NOT) → [[reference/gotchas/slack-posting.md]]
 - **cboti**: `batch_update` ≠ `batch_update_values`, TableBlock cells need ContentBlock → [[reference/gotchas/cboti-patterns.md]]
 - **Environment**: bwrap required, MCP URL is `wiki.datacrew.space`, mods at `~/.letta/mods/` affect ALL agents, mdrag needs `uv`+`httpx`; `wikki.*` 301 = hard error for httpx `follow_redirects=False` clients (MDRAG_URL must use `wiki.` host) → [[reference/gotchas/environment-tooling.md]]
 - **Search**: "Domo tour" → music tours (DOMi & JD Beck), not Domo events. Use `site:domo.com` to disambiguate → [[reference/gotchas/environment-tooling.md]]

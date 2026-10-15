@@ -51,3 +51,12 @@ accounts.
 The nickname test costs one comparison and prevents a multi-source wild goose chase plus
 a confident wrong "not found." Generalize: any "look up <informal name>" — resolve
 against context first, search second.
+
+**Correction to a second claim made during that incident (verified 2026-10-15 via
+`auth.test` / `x-oauth-scopes`):** while hunting, I told other agents "bot tokens can't
+see profile emails" — wrong as stated. Emmabot's token lacks `users:read.email` (profile
+emails return null with it), but the `datacrew` account's token HAS it (plus
+`users.profile:read`), in the same `domo_user_group` workspace. Never generalize "bots
+can't see X" from one token's scope list — check the `x-oauth-scopes` header on any
+Slack API response first. Jae's correction ("doesn't datacrew have user.email grant?")
+was right.
