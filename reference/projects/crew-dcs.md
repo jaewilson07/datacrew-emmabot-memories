@@ -45,7 +45,9 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 - **domolibrary.datacrew.space** = public mkdocs docs site (separate Pages project) — SDK *docs* remain public even though wheels are gated; flagged to Jae, his call.
 - **NOT on PyPI** (404) — the R2 index is the only distribution.
 
-## Package index architecture (verified 2026-10-12, post-move)
+## Package index architecture (also see [[reference/projects/datacrew-site.md]])
+
+> **Note:** Package index serving, WAF rules, and R2 storage are managed by `datacrew-site` (Next.js app). CI, deployment, and build integration details are in [[reference/projects/datacrew-site.md]].
 
 - **Bucket:** Cloudflare R2 `datacrew-packages` (+ `-preview`). Public access policy `CnamesOnly: packages.datacrew.space`.
 - **Serving layers (raw host):** transform rules rewrite `/`, `/<pkg>/`, `/<pkg>/index.html` → `/_index/...` BEFORE WAF; index pages are static objects under `_index/`; wheels served raw from bucket keys.
