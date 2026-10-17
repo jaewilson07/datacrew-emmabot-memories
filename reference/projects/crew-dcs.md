@@ -24,6 +24,10 @@ Jae's recurring pattern: "file a GitHub issue so I can delegate a Claude/another
 - crew-dcs issue #1771 — IaC change pattern (build out domo-iac-changes skill), labeled `ready-for-agent` + `agent-reported`
 - letta-datacrew-memories PR #37 — domo-iac-changes skill stub + scheduled-report-private-dataset gotcha
 
+## Delegated 2026-10-17
+
+- **DAT-1435 delegated to FoundingEngineer** — add dataset repartition endpoint `POST /api/dataprocessing/v1/job/repartition` + `GET .../repartition/{job_id}` to class level as `DomoDataset_Data.repartition(partition_key=..., wait=...)` in `src/crew_dcs/classes/DomoDataset/dataset_data.py`. crew-dcs repo remote is `github.com/hector-dcs/crew-dcs` (NOT jaewilson07 org); FoundingEngineer's GITHUB_TOKEN binding verified to reach it.
+
 ## CI & GitHub Actions (as of 2026-10-12)
 
 - **GitHub Free tier, 2,000 monthly Actions minutes** — exhausted ~Oct 10 by ownership sprint (PR #1731) + daily scheduled postman-monitor. **No payment method on file** → GitHub $0-limit refusal. Jobs fail in 1-2s with zero steps before step 1. Signature: billing annotation in run list, not a card failure.

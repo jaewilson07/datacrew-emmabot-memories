@@ -1,5 +1,5 @@
 ---
-description: cboti library gotchas — batch update methods, table blocks, and path issues.
+description: cboti library gotchas — batch update methods, table blocks, path issues, bonker venv setup, and the upsert-article CRM-folder 404 workaround.
 ---
 # cboti Patterns Gotchas
 
@@ -7,3 +7,5 @@ description: cboti library gotchas — batch update methods, table blocks, and p
 - **TableBlock cells must be `ContentBlock`, not `str`** — if you pass raw strings, rendering breaks silently
 - **cboti path mismatches** — when importing cboti with a direct python binary (not via the package install), add `sys.path.insert(0, '../libraries/cboti/src')` to find the source. Path issues were common in the old Docker container; on bonker, check the actual install location.
 - **Working interpreter on bonker (verified 2026-10-14, task_6):** `/home/jaewilson07/GitHub/simpleDiscordBot/libraries/cboti/.venv/bin/python` — the simpleDiscordBot SUBMODULE clone's venv (python 3.14.4, google-api-python-client 2.198.0, google-auth 2.56.2; declared in pyproject + uv.lock, standard `uv sync`). Use it with `PYTHONPATH=/home/jaewilson07/GitHub/simpleDiscordBot/libraries/cboti/src`. TRAP: `~/GitHub/cboti` is a SEPARATE standalone clone of the same repo whose `.venv` is BARE (python3.13, no google modules; `uv sync` there fails on python resolution) — same repo, two clones, only the submodule one works. CAVEAT: the venv's bin/python symlinks to /usr/bin/python3 — a system python upgrade silently retargets the venv and orphans its site-packages.
+- **cboti venv for upsert-gdoc/article scripts (verified 2026-10-17):** system python3 on bonker does NOT have cboti; the repo venv at `~/GitHub/cboti/.venv` exists but does NOT contain the cboti package (`ModuleNotFoundError`), and `uv run` in that repo fails dependency resolution (unsatisfiable for other Python versions). Working setup: a scratch venv at `~/.cache/cboti-venv` built via `uv venv ~/.cache/cboti-venv && uv pip install --python ~/.cache/cboti-venv/bin/python -e ~/GitHub/cboti` — use `~/.cache/cboti-venv/bin/python` for upsert-gdoc/article scripts. `GDOC_CLIENT`/`GDOC_TOKEN` come from Infisical `/datacrew`.
+- **upsert-article CRM folder 404 (verified 2026-10-17):** the skill's CRM folder id `1BZYkmwbP5s0gAEpqjkdF0OOuosGgm_0N` returns Google Drive 404 "File not found" for the GDOC_TOKEN identity (folder gone or unshared). Workaround: `drive.create_document(name=...)` with NO folder_id (creates in the token identity's Drive root), then `share_file(doc.id, "jae@datacrew.space", "writer")`.
