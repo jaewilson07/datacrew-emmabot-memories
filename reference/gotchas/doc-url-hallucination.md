@@ -28,6 +28,27 @@ corrected me publicly: "that link to documentation isn't correct" and gave the r
 4. If a member corrects a link, own it in-thread and fix the knowledge-base doc that
    carried the wrong URL.
 
+## Carve-out: `domo-support.domo.com/s/article/{ID}` KB URLs ARE deterministic (Jae correction, 2026-10-19)
+
+The no-constructed-URLs rule above covers **developer.domo.com hash-slug permalinks
+only**. Domo Knowledge Base article URLs are NOT in that class — they are deterministic
+and verifiable:
+
+- **URL form:** `https://domo-support.domo.com/s/article/{ARTICLE_ID}` where
+  `ARTICLE_ID` is the exact ID returned by `domo_rag_query` (e.g. RAG source
+  `s/article/000005827.md` → `https://domo-support.domo.com/s/article/000005827`).
+- **Key Docs sections MUST always carry URLs.** Do not list KB articles by name/number
+  only — that was me over-applying this gotcha. Jae corrected me publicly (2026-10-19,
+  [DUG thread](https://domo-user-group.slack.com/archives/C012H05RWTC/p1792418002580799)):
+  "reread your blog post, you missed some URLs in your 'keydocs' edit the message in
+  place please" — my Key Docs section listed four articles with no URLs.
+- **Verification procedure** (proven 2026-10-19; all four IDs returned 200):
+  1. Confirm the ID exists in the local mirror:
+     `~/GitHub/domo-documentation-hub/s/article/{ID}.mdx` (English/default locale is at
+     the repo ROOT, not under `en/`).
+  2. `curl -L -A "<browser UA>" -o /dev/null -w %{http_code}` — **plain curl gets 405**
+     (Salesforce UA-filtering); a browser UA gets 200.
+
 ## Deterministic slug lookup: `domo-documentation-hub` (discovered 2026-10-12)
 
 `github.com/DomoApps/domo-documentation-hub` is the public source for BOTH
