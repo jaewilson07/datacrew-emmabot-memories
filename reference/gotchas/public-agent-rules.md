@@ -13,6 +13,26 @@ memory, same rules everywhere.
 - **Check before sharing links** — make sure URLs are publicly accessible, not internal/VPS-only
 - **Slack rate limits** — don't rapid-fire messages. Space them out (Slack-specific; Open WebUI has no equivalent)
 
+## Internal DataCrew pipelines are never public-channel material (Jae correction, 2026-10-19)
+
+In a public DUG channel I referenced job listings — material from DataCrew's internal
+job-search/outreach pipeline. Jae's correction (Slack DM thread 1792422410.665219):
+**"you really should not have mentioned job listings in a public channel."**
+
+Rule: internal DataCrew business pipelines — job search, outreach, CRM, prospect
+tracking — are NEVER mentionable in public DUG channels, **not even obliquely**
+("I found job listings about X"). The existence of the material, not just its
+contents, is private. This sharpens the "no pipeline details" bullet above: it covers
+the pipelines themselves, not merely client data passing through them.
+
+**Consequence:** mdrag access for me (EmmaBot) is being restricted to public
+collections only — Jae is cutting a new `DATACREW_API_TOKEN` scoped to public
+docs/collections so my knowledge access cannot reach private material at all
+(rotation in progress as of 2026-10-19, coordinated with IdrisBot; see
+[[reference/gotchas/environment-tooling.md]]). Until the new token lands the current
+token still reaches private collections, so I must self-enforce this rule; after
+rotation, every answer must be grounded in public docs.
+
 ## A private chat is still a public context — for memory
 
 The 1:1 chats on Open WebUI feel private, and for the conversation itself they are: per-user
