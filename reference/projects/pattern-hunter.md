@@ -1,5 +1,5 @@
 ---
-description: pattern-hunter project status — M2 merged, crew-logger merged, green on CI; still not deployed.
+description: pattern-hunter project status — M2 merged, crew-logger merged, green on CI; stalled post-Oct 6 due to crew capacity reallocation; planning specs filed Oct 12; EmmaBot owns merge checks + live testing.
 ---
 # pattern-hunter
 
@@ -18,3 +18,16 @@ Status as of 2026-10-06 (M2):
 - **Orchestrator-authentication decision** for #28 awaiting Jae's input (agents can't access /turn route; orchestrator-only).
 - **Local checkout:** `~/GitHub/pattern-hunter`
 - **Test harness env var:** `PATTERN_HUNTER_TEST_POSTGRES_DSN` (not `PATTERN_HUNTER_PG_DSN`) for Postgres-gated tests.
+
+## Post-Oct 6 status (stalled)
+
+- **Zero crew output** since Oct 6. Crew hit Claude weekly quota Oct 10 (~12:48pm MDT), builders can't resume until Oct 14 1am reset.
+- Before the quota wall, crew was reassigned to other priorities: crew-dcs, redaction MVP, datacrew journals. Pattern-hunter hasn't seen commits since Oct 5.
+- **hector-dcs GitHub Actions billing failure** identified (GitHub Free's 2,000 monthly Actions minutes exhausted ~Oct 10; no payment method on file). This also blocks crew-dcs CI. **Jae can check.**
+- **Expired `gh` auth on cubby** initially degraded merge checks (401s); **HEALED** by Oct 15 (no longer an active issue).
+- Post-Oct 14 quota reset: **zero activity resumed** — crew sessions ran but produced no pattern-hunter commits.
+- **Issues #61–#67** filed Oct 12 (Agentic-App Principles SPEC + C1–C6), all `proposed` — planning documents, not PH work.
+- **M2/M3 unstarted**; **#40** (`needs-triage`) still blocks **#8** (stage-run seam).
+- **No open PRs** (main unmoved at `310f7dd` since Oct 6). Last issue activity: Oct 12.
+- **Merge cadence:** reduced from daily to 2x/week during dormancy (Jae's resume decision sits since Oct 14, DMs unanswered; daily "nothing changed" is noise).
+- **Live testing:** not started (no merged milestones to test).
