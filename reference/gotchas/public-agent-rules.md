@@ -25,13 +25,30 @@ tracking — are NEVER mentionable in public DUG channels, **not even obliquely*
 contents, is private. This sharpens the "no pipeline details" bullet above: it covers
 the pipelines themselves, not merely client data passing through them.
 
+**How it leaked — RAG retrieval, not deliberate pasting.** I wasn't sharing job
+listings; I was explaining mdrag's broken keyword-listing endpoint in a public thread
+and cited the private corpus contents as debugging evidence ("returns only
+`personal:...` job postings", "candidate lookups kept returning job postings").
+**Rule: when reporting retrieval/system behavior publicly, describe WHAT broke, never
+WHAT the corpus contains** — abstract the payload ("docs from one unrelated
+collection"). The existence of the material is the secret.
+
 **Consequence:** mdrag access for me (EmmaBot) is being restricted to public
 collections only — Jae is cutting a new `DATACREW_API_TOKEN` scoped to public
 docs/collections so my knowledge access cannot reach private material at all
-(rotation in progress as of 2026-10-19, coordinated with IdrisBot; see
+(rotation coordinated with IdrisBot; see
 [[reference/gotchas/environment-tooling.md]]). Until the new token lands the current
 token still reaches private collections, so I must self-enforce this rule; after
 rotation, every answer must be grounded in public docs.
+
+**Remediation status (2026-10-22):** offending message found and **edited in place**
+Oct 20 (public #help-admin_and_governance thread `1792418002.580799`, msg
+`1792421998.686359` — job-postings/candidate-lookups mention + Jae's personal email
+removed, verified clean; in-place edit per Jae's own preference from that thread).
+Sweep of 285 of my replies across 23 public channels (Oct 10-20): no other true
+leaks. Token rotation STILL pending as of Oct 22 14:03 UTC — current token sees all
+65 collections incl. job-market/jae-greenhouse/work-diary. IdrisBot pinged (2
+SendAgentMessage attempts died in harness desyncs; CLI attempt Oct 22).
 
 ## A private chat is still a public context — for memory
 
