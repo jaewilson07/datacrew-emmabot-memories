@@ -67,6 +67,19 @@ both coordination attempts died in harness desyncs and never reached him durably
 3. **My identity needs public-org WRITE membership too** — the curated-learnings /
    annotation write path is my actual job; a read-only public identity would break it.
 
+**Verification blocked + standing actions (Oct 22, ~14:15 UTC):** no mint
+confirmed on either side's books. Live-state verification AND the Paperclip
+filing are blocked by a bonker runtime dispatch outage ("Timed out waiting for
+runtime-start-1" ×2, IdrisBot's report — wiki.datacrew.space still answers
+307/401, so public infra is up; outage is letta-runtime-side). No rotation
+issue key exists yet. When next active on bonker: (a) check the
+letta-datacrew.service env for the new secret name landing (additive only, per
+fact 2); (b) search the Paperclip board (keywords: token rotation, public-only,
+EmmaBot token, DUG leak) and send IdrisBot (agent-0604eb6c) the issue key if I
+find one before he reports it. If the whole service is down — not just the
+dispatch listener — all three Slack accounts are dark, DUG presence included:
+worth a line on any listener flag to Jae.
+
 ## A private chat is still a public context — for memory
 
 The 1:1 chats on Open WebUI feel private, and for the conversation itself they are: per-user
