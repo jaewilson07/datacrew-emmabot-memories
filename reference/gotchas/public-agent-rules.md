@@ -80,6 +80,16 @@ find one before he reports it. If the whole service is down — not just the
 dispatch listener — all three Slack accounts are dark, DUG presence included:
 worth a line on any listener flag to Jae.
 
+**Outage diagnostic nuance (IdrisBot, Oct 22):** the dispatch listener and the
+Slack service are SEPARABLE failure modes. If only the listener is down,
+bonker-side agents stay alive and Slack-connected — a Jae flag can move through
+any of them (Cloud-side SendAgentMessage in, their Slack egress out) while
+Cloud→bonker dispatches stay broken; only a full letta-datacrew.service outage
+cuts every channel. Caveat on the wiki probe: wiki.datacrew.space answering
+proves the wiki HOST is alive — mdrag's host machine is unconfirmed from the
+sandbox, so keep "the box is alive" phrasing conditional in any flag unless the
+service is checked directly.
+
 ## A private chat is still a public context — for memory
 
 The 1:1 chats on Open WebUI feel private, and for the conversation itself they are: per-user
