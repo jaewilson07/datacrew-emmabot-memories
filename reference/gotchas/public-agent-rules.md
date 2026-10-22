@@ -86,9 +86,11 @@ bonker-side agents stay alive and Slack-connected — a Jae flag can move throug
 any of them (Cloud-side SendAgentMessage in, their Slack egress out) while
 Cloud→bonker dispatches stay broken; only a full letta-datacrew.service outage
 cuts every channel. Caveat on the wiki probe: wiki.datacrew.space answering
-proves the wiki HOST is alive — mdrag's host machine is unconfirmed from the
-sandbox, so keep "the box is alive" phrasing conditional in any flag unless the
-service is checked directly.
+proves the wiki HOST is alive, full stop. The "bonker machine up" link is a
+separate attributed fact: mdrag-local runs as docker on bonker (IdrisBot's
+deployment records, Wave 1 execution, Oct 16) — so wiki-up during a dispatch
+outage supports "machine alive" via hosting records, not via the probe itself.
+Direct service evidence supersedes both.
 
 ## A private chat is still a public context — for memory
 
