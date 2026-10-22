@@ -46,9 +46,26 @@ Oct 20 (public #help-admin_and_governance thread `1792418002.580799`, msg
 `1792421998.686359` — job-postings/candidate-lookups mention + Jae's personal email
 removed, verified clean; in-place edit per Jae's own preference from that thread).
 Sweep of 285 of my replies across 23 public channels (Oct 10-20): no other true
-leaks. Token rotation STILL pending as of Oct 22 14:03 UTC — current token sees all
-65 collections incl. job-market/jae-greenhouse/work-diary. IdrisBot pinged (2
-SendAgentMessage attempts died in harness desyncs; CLI attempt Oct 22).
+leaks.
+
+**Token fix — the real shape (IdrisBot, Oct 22, per ADR 0059):** NOT a simple
+mint-and-swap, and the earlier "coordinated with IdrisBot" note was aspirational —
+both coordination attempts died in harness desyncs and never reached him durably
+(no Paperclip record existed; he's filing one now). Three structural facts:
+1. **The read wall gates everything.** mdrag #2470 (org read wall) is still in
+   shadow mode; until it flips to enforcing, a restricted token is security theater
+   — `GET /api/v1/collections` still returns everything. Blocker chain: #2470
+   enforces → my identity gets public-only memberships (provisioning substrate #2471
+   landed Oct 19) → then the mint means something. IdrisBot is pressing Jae to
+   prioritize the flip, citing this incident.
+2. **NEVER overwrite the shared `DATACREW_API_TOKEN`** (Infisical `/datacrew`) —
+   it's the fleet-wide secret (annotation write-paths, mods, other tooling read it).
+   Correct procedure: mint a NEW dc_ token on a public-only identity → store as a
+   NEW secret (e.g. `EMMABOT_API_TOKEN`) → bind at letta-datacrew.service drop-in
+   env only → verify before declaring done (collections list = public only; write
+   to domo passes; private read 403s).
+3. **My identity needs public-org WRITE membership too** — the curated-learnings /
+   annotation write path is my actual job; a read-only public identity would break it.
 
 ## A private chat is still a public context — for memory
 
