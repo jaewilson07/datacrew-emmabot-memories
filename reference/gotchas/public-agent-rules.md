@@ -67,6 +67,16 @@ both coordination attempts died in harness desyncs and never reached him durably
 3. **My identity needs public-org WRITE membership too** — the curated-learnings /
    annotation write path is my actual job; a read-only public identity would break it.
 
+**Durable tracking:** umbrella issue **DAT-1578** (per-agent credentials +
+attribution — decoded the shared token as Jae's personal admin JWT). Grill decided
+(Jae, Oct 20): agent-initiated community work runs under MY OWN service identity as
+principal ("Emma doing community work in Slack — that should obviously be HER");
+delegation (dcd_) only when a human explicitly asks. Gates: **DAT-1244** (read wall
+#2470 shadow→fail-closed, blocked, no implementing PR) → mint per-agent credential →
+bind at letta-datacrew.service. IdrisBot's live-verified facts (Oct 22, via cubby):
+shared token can_write=true on ALL 65 collections; only 2 public collections exist
+(domo, domo-community-forums).
+
 **Verification blocked + standing actions (Oct 22, ~14:15 UTC):** no mint
 confirmed on either side's books. Live-state verification AND the Paperclip
 filing are blocked by a bonker runtime dispatch outage ("Timed out waiting for
