@@ -116,7 +116,7 @@ function getMemoryDir(): string {
 }
 
 function getKnowledgeBaseDir(): string {
-  return process.env.KNOWLEDGE_BASE_DIR || "/home/jaewilson07/GitHub/knowledge-base";
+  return process.env.KNOWLEDGE_BASE_DIR || "/home/jaewilson07/GitHub/datacrew-private-memories";
 }
 
 function generateId(): string {
@@ -131,7 +131,7 @@ function getOpenGaps(state: ModState): DocGap[] {
 
 const CREW_DCS_DIR = "/tmp/crew-dcs";
 const ENV_FILE = "/home/jaewilson07/GitHub/homeserver/.env";
-const MDRAG_COLLECTION = "domo-official-docs";
+const MDRAG_COLLECTION = "domo";
 
 function loadEnv(): Record<string, string> {
   try {
@@ -411,7 +411,7 @@ export default function activate(letta: {
       letta.tools.register({
         name: "resolve_doc_gap",
         description:
-          "Mark a documentation gap as resolved. Call this after you've created or extended documentation in knowledge-base/ to address the gap. Records the file path where the documentation was added. Automatically ingests the doc into mdrag so all agents can find it via domo_rag_query.",
+          "Mark a documentation gap as resolved. Call this after you've created or extended documentation in the knowledge base repo to address the gap. Records the file path where the documentation was added. Automatically ingests the doc into mdrag so all agents can find it via domo_rag_query.",
         parameters: {
           type: "object",
           properties: {
@@ -421,7 +421,7 @@ export default function activate(letta: {
             },
             resolutionPath: {
               type: "string",
-              description: "Path to the documentation file created or extended (e.g., 'domo/gotchas/full-page-card.md')",
+              description: "Path to the documentation file created or extended (e.g., 'reference/domo/gotchas/full-page-card.md')",
             },
             notes: {
               type: "string",
@@ -448,10 +448,14 @@ export default function activate(letta: {
 
           // Ingest the doc into mdrag so all agents can find it via domo_rag_query
           const kbDir = getKnowledgeBaseDir();
-          const fullPath = join(kbDir, gap.resolutionPath);
+          // Old-layout ledger records store paths without the "reference/" prefix
+          // (pre-consolidation layout); probe both the direct and prefixed paths.
+          const directPath = join(kbDir, gap.resolutionPath);
+          const prefixedPath = join(kbDir, "reference", gap.resolutionPath);
+          const fullPath = existsSync(directPath) ? directPath : existsSync(prefixedPath) ? prefixedPath : null;
           let ingestionResult = "";
           try {
-            if (existsSync(fullPath)) {
+            if (fullPath) {
               const title = gap.topic;
               const tags = ["dug-community", "doc-gap", ...gap.topic.toLowerCase().split(/\s+/)];
               const result = await ingestToMdrag(fullPath, title, tags);
@@ -459,7 +463,7 @@ export default function activate(letta: {
                 ? `\nmdrag ingestion: success — ${result.message}`
                 : `\nmdrag ingestion: failed — ${result.message}`;
             } else {
-              ingestionResult = `\nmdrag ingestion: skipped (file not found at ${fullPath})`;
+              ingestionResult = `\nmdrag ingestion: SKIPPED — file not found. Tried:\n  - ${directPath}\n  - ${prefixedPath}\nCheck the resolutionPath or KB root (KNOWLEDGE_BASE_DIR).`;
             }
           } catch (err) {
             ingestionResult = `\nmdrag ingestion: error — ${err instanceof Error ? err.message : String(err)}`;
