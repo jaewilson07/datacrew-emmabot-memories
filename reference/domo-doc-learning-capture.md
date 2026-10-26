@@ -9,7 +9,7 @@ description: Procedure for capturing Domo doc learnings — knowledge-base doc, 
 ## The procedure (all four steps, every time)
 
 ### 1. Document — write the knowledge-base doc
-`knowledge-base/domo/gotchas/<topic>.md` (see existing gotchas for format: Problem, TL;DR, Sources, Reported). If a doc gap exists, `flag_doc_gap` → write doc → `resolve_doc_gap` (auto-ingests to mdrag).
+`reference/domo/gotchas/<topic>.md` in the **real repo** (`~/GitHub/datacrew-private-memories`) — NOT the facade (`~/GitHub/knowledge-base/`, wiped 2026-10-25). If a doc gap exists, `flag_doc_gap` → write doc → `resolve_doc_gap` (auto-ingests to mdrag). **NOTE (2026-10-26):** `resolve_doc_gap` auto-ingest is currently broken (two bugs tracked as DAT-1775: KB root points at wiped facade, stale `MDRAG_COLLECTION` constant). Workaround: after resolving the gap, manually ingest via `POST https://wiki.datacrew.space/api/v1/ingest/text` with JSON `{"content": <full markdown>, "source_title", "source_url", "collection_id": "6a34c9220c958fca1b9df8a3"}`. Or set `export KNOWLEDGE_BASE_DIR=~/GitHub/datacrew-private-memories` before running `resolve_doc_gap`.
 
 ### 2. Annotation — use the `capture_domo_doc_learning` mod tool (preferred)
 

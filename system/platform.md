@@ -36,15 +36,21 @@ description: Where I run, what tools I have, and how to use them.
     no restoration. **Boundary rule (Jae):** alix/Picassa/Petra may share a memory + GitHub repo, but it must be kept
     SEPARATE from letta-agent memory (DataCrew, IdrisBot, EmmaBot — each keeps its own per-agent repo). My repo setup
     already complies (origin = per-agent Letta Cloud git). PR #55 (orphaned doc-gap files) still pending Jae's merge.
-  - **resolve_doc_gap auto-ingest still facade-pointed (verified 2026-10-26):** resolving a gap with a real-repo
-    resolutionPath (`reference/domo/gotchas/slicer-card-variable-linking.md`) resolves the gap record fine but reports
-    "mdrag ingestion: skipped (file not found at /home/jaewilson07/GitHub/knowledge-base/reference/domo/gotchas/...)" —
-    the tool's KB root still points at the wiped facade, so its auto-ingest silently skips. Workaround: ingest the doc
-    manually via `POST https://wiki.datacrew.space/api/v1/ingest/text` with JSON
+  - **resolve_doc_gap auto-ingest broken — TWO bugs (IdrisBot verified 2026-10-26, tool source: dug-community.ts
+    at `/home/jaewilson07/.letta/agents/agent-5afcfa48-81d3-430f-87fe-0a814fecff7e/memory/mods/dug-community.ts`):**
+    (1) KB root: `KNOWLEDGE_BASE_DIR` env override defaults to wiped facade `~/GitHub/knowledge-base/` (L117-119), so
+    auto-ingest reads from non-existent facade path and silently skips; (2) stale collection constant:
+    `MDRAG_COLLECTION = "domo-official-docs"` (L134) — collection was renamed to `"domo"` (same collection_id). Both
+    bugs prevent doc-gap resolutions from reaching mdrag. Workaround: manual ingest via
+    `POST https://wiki.datacrew.space/api/v1/ingest/text` with JSON
     `{"content": <full markdown>, "source_title", "source_url", "collection_id": "6a34c9220c958fca1b9df8a3"}`
-    (returns document_uid synchronously). Repoint approved (Jae, 2026-10-26 Slack DM) — fix tracked as Paperclip
-    DAT-1774 (project generating-documentation-with-ai; root repoint + migration/fallback for the 29 old-layout
-    gap-record paths; IdrisBot named fix owner). Manual-ingest workaround stands until the fix lands.
+    (returns document_uid synchronously). Alternatively, set `KNOWLEDGE_BASE_DIR` env var to real repo path before
+    running the tool. Repoint + collection fix approved (Jae, 2026-10-26 Slack DM) — tracked as Paperclip
+    DAT-1775 (project generating-documentation-with-ai; fix: update dug-community.ts KB root + collection constant,
+    migrate/fallback for the 29 old-layout gap-record paths; IdrisBot named fix owner). DAT-1774 closed superseded
+    by DAT-1775 (superior verified content). Fix requires: edit `dug-community.ts`, commit to MemFS repo, restart
+    `letta-datacrew.service` (bounces all three bonker bots) — needs Jae scheduling. Manual-ingest workaround stands
+    until fix lands.
   - **Cloudflare bans python-urllib on wiki.datacrew.space (verified 2026-10-26):** POSTs from python urllib (UA
     "Python-urllib/3.x") get Cloudflare "error code: 1010" (browser-signature ban) → looks like a 403 auth failure
     but isn't; curl with the same token works. For mdrag API calls from exec shells, use curl (build JSON payloads
