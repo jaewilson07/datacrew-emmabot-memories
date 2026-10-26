@@ -13,6 +13,11 @@ description: Where I run, what tools I have, and how to use them.
   - Command: `letta server --channels slack --install-channel-runtimes`
   - Runs THREE Slack accounts: `datacrew-public` (me, DUG) + `datacrew` (`domo_user_group` — same workspace as emmabot, NOT jaelearnsbots; corrected 2026-10-15) + `idrisbot`
   - Secrets from Infisical at startup (`/datacrew`, `/letta`, `/infrastructure`)
+  - **Also served from `.letta-alix-home`** (chat.letta.com conversations, incl. this one; sibling service
+    `letta-alix.service` = alix bot migrated from cubby): HOME overridden to the alix home → `gh` unauthenticated
+    there, memory projection is a separate clone **without the `github` backup remote**, Paperclip key only reachable
+    via old-home absolute path. Canonical-home question pending Jae (2026-10-26). Use absolute paths, not `~`, from
+    this home.
 - **Letta backend:** Letta Cloud (`https://api.letta.com`)
 - **Memory (bonker):** `/home/jaewilson07/.letta/agents/agent-5afcfa48-.../memory/`
   - **Memory (sandbox):** `/root/workspace/.letta/agents/agent-5afcfa48-.../memory/` — same repo, git-synced
@@ -26,7 +31,11 @@ description: Where I run, what tools I have, and how to use them.
     `~/GitHub/datacrew-private-memories` (GitHub: `jaewilson07/letta-datacrew-memories`, HEAD `b812a0e`).
     Doc-gap workflow now: write docs at `reference/domo/gotchas/<topic>.md` in the REAL repo → PR → `resolve_doc_gap`.
     Lost with the wipe: claude-cookbooks (untracked real dir; `scripts/ingest_to_mdrag.py` line 12 points there —
-    recoverable from upstream). Restoration pending Jae's call (fresh clone vs symlink rebuild) — DAT-1763, PR #55.
+    recoverable from upstream).
+  - **Wipe confirmed INTENTIONAL (Jae, 2026-10-26 chat):** goal = consolidate memory on one repo; facade stays retired,
+    no restoration. **Boundary rule (Jae):** alix/Picassa/Petra may share a memory + GitHub repo, but it must be kept
+    SEPARATE from letta-agent memory (DataCrew, IdrisBot, EmmaBot — each keeps its own per-agent repo). My repo setup
+    already complies (origin = per-agent Letta Cloud git). PR #55 (orphaned doc-gap files) still pending Jae's merge.
   - **History:** facade (commit 28e05d6, PR #27 squash-merged with Jae's green light) served 2026-09-26 → 2026-10-25.
   - **Jae's explicit merge authorization in Slack overrides the agents-never-merge rule** — but only for that named PR; the default rule stands.
 
