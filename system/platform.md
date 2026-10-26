@@ -20,15 +20,14 @@ description: Where I run, what tools I have, and how to use them.
   - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with
     `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`) — **not available in sandbox**
 - **Working directory (bonker):** `/home/jaewilson07/GitHub/knowledge-base`
-  - **MERGED + CUTOVER COMPLETE (2026-09-26):** knowledge-base is now a **symlink facade** (commit 28e05d6) over
-    `letta-datacrew-memories` (GitHub; renamed from datacrew-private-memories — use the new name). PR #27 squash-merged
-    with Jae's green light. Facade symlinks: `domo/` → `reference/domo/`, `research/` → `research/`, `projects/` →
-    `reference/project/`, `docs/` → `docs/`, `.agents/skills/` → `.agents/skills/`. Doc-gap workflow unchanged:
-    write doc at `domo/gotchas/<topic>.md` in the facade → lands in the version-controlled repo → `resolve_doc_gap`.
-  - **Verified (EmmaBot, 2026-09-26):** 134 root symlinks, 0 dangling; 23 gotchas identical via facade vs canonical;
-    83 skills resolve; claude-cookbooks + transcription artifacts intact in facade dir (untracked).
-  - **Known repoint-on-next-touch:** `scripts/ingest_to_mdrag.py` line 12 hardcodes `~/GitHub/knowledge-base/claude-cookbooks`
-    (DataCrew owns; works today since facade keeps the real dir).
+  - **FACADE WIPED (2026-10-25 09:40 MDT; discovered fire #21, 2026-10-26):** all 134 symlinks + the facade's local-only
+    `.git` (no GitHub remote) destroyed; only `.letta/settings.local.json` remains. **Do NOT write into
+    `~/GitHub/knowledge-base` — it is no longer a facade.** All content is safe in the real repo
+    `~/GitHub/datacrew-private-memories` (GitHub: `jaewilson07/letta-datacrew-memories`, HEAD `b812a0e`).
+    Doc-gap workflow now: write docs at `reference/domo/gotchas/<topic>.md` in the REAL repo → PR → `resolve_doc_gap`.
+    Lost with the wipe: claude-cookbooks (untracked real dir; `scripts/ingest_to_mdrag.py` line 12 points there —
+    recoverable from upstream). Restoration pending Jae's call (fresh clone vs symlink rebuild) — DAT-1763, PR #55.
+  - **History:** facade (commit 28e05d6, PR #27 squash-merged with Jae's green light) served 2026-09-26 → 2026-10-25.
   - **Jae's explicit merge authorization in Slack overrides the agents-never-merge rule** — but only for that named PR; the default rule stands.
 
 ## Site publishing (datacrew.space)
