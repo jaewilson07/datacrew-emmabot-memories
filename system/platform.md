@@ -36,6 +36,17 @@ description: Where I run, what tools I have, and how to use them.
     no restoration. **Boundary rule (Jae):** alix/Picassa/Petra may share a memory + GitHub repo, but it must be kept
     SEPARATE from letta-agent memory (DataCrew, IdrisBot, EmmaBot — each keeps its own per-agent repo). My repo setup
     already complies (origin = per-agent Letta Cloud git). PR #55 (orphaned doc-gap files) still pending Jae's merge.
+  - **resolve_doc_gap auto-ingest still facade-pointed (verified 2026-10-26):** resolving a gap with a real-repo
+    resolutionPath (`reference/domo/gotchas/slicer-card-variable-linking.md`) resolves the gap record fine but reports
+    "mdrag ingestion: skipped (file not found at /home/jaewilson07/GitHub/knowledge-base/reference/domo/gotchas/...)" —
+    the tool's KB root still points at the wiped facade, so its auto-ingest silently skips. Workaround: ingest the doc
+    manually via `POST https://wiki.datacrew.space/api/v1/ingest/text` with JSON
+    `{"content": <full markdown>, "source_title", "source_url", "collection_id": "6a34c9220c958fca1b9df8a3"}`
+    (returns document_uid synchronously). Pending Jae decision on repointing the tool.
+  - **Cloudflare bans python-urllib on wiki.datacrew.space (verified 2026-10-26):** POSTs from python urllib (UA
+    "Python-urllib/3.x") get Cloudflare "error code: 1010" (browser-signature ban) → looks like a 403 auth failure
+    but isn't; curl with the same token works. For mdrag API calls from exec shells, use curl (build JSON payloads
+    with python to a temp file, then `curl -d @file`).
   - **History:** facade (commit 28e05d6, PR #27 squash-merged with Jae's green light) served 2026-09-26 → 2026-10-25.
   - **Jae's explicit merge authorization in Slack overrides the agents-never-merge rule** — but only for that named PR; the default rule stands.
 
