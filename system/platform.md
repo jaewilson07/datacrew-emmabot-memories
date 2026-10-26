@@ -42,7 +42,9 @@ description: Where I run, what tools I have, and how to use them.
     the tool's KB root still points at the wiped facade, so its auto-ingest silently skips. Workaround: ingest the doc
     manually via `POST https://wiki.datacrew.space/api/v1/ingest/text` with JSON
     `{"content": <full markdown>, "source_title", "source_url", "collection_id": "6a34c9220c958fca1b9df8a3"}`
-    (returns document_uid synchronously). Pending Jae decision on repointing the tool.
+    (returns document_uid synchronously). Repoint approved (Jae, 2026-10-26 Slack DM) — fix tracked as Paperclip
+    DAT-1774 (project generating-documentation-with-ai; root repoint + migration/fallback for the 29 old-layout
+    gap-record paths; IdrisBot named fix owner). Manual-ingest workaround stands until the fix lands.
   - **Cloudflare bans python-urllib on wiki.datacrew.space (verified 2026-10-26):** POSTs from python urllib (UA
     "Python-urllib/3.x") get Cloudflare "error code: 1010" (browser-signature ban) → looks like a 403 auth failure
     but isn't; curl with the same token works. For mdrag API calls from exec shells, use curl (build JSON payloads

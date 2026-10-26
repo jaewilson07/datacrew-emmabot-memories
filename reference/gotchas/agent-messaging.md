@@ -37,3 +37,19 @@ description: Agent-to-agent messaging gotchas — CLI delegation is unreliable, 
 - **Always verify current state** before assuming you need to execute
 - Check if the task is already done (git log, filesystem state, PR status)
 - If already done (even differently), verify and report — don't re-execute
+
+## `delegate_to_agent` Relay Gotchas (verified 2026-10-26)
+
+- **Timeout ≠ failure:** `delegate_to_agent` relays through the datacrew-cloud agent and its synchronous wait
+  ETIMEDOUTs (~2.5 min) — but delivery SUCCEEDS. Never assume failure on the timeout: verify with
+  `letta messages search --query "<distinctive phrase>" --agent <target-agent-id>` (use a full ISO datetime for
+  `--start-date`, e.g. `2026-10-26T00:00:00Z` — bare dates fail Zod validation). Never blind-retry a "failed"
+  delegation — duplicate delivery causes duplicate work.
+- **The relay MANGLES the message:** markdown backtick code spans are stripped/replaced (paths, commands, IDs
+  vanish from the delivered text), and URLs inside backticks get FETCHED and inlined — wiki.datacrew.space URLs
+  came back as Cloudflare challenge HTML because the fetch lacked a browser UA. When briefing another agent
+  through `delegate_to_agent`, put critical specifics (paths, commands, IDs) in plain text rather than code
+  spans, and verify what actually arrived.
+- **Delegating to IdrisBot lands their turn in the Cloud sandbox (managed_sandbox)**, where Paperclip writes are
+  impossible (API behind CF Access; `paperclip_*` are bonker-only mod tools). Division of labor that works:
+  sandbox agent reviews/analyzes, a bonker-side agent executes writes/filing.
