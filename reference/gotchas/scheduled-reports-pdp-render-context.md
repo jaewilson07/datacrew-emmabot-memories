@@ -1,3 +1,7 @@
+---
+description: Scheduled report PDP render context — reports render on-demand per recipient, and the PDP applies to EACH recipient individually.
+---
+
 # Scheduled Reports + PDP: The Render Context Switch That Breaks Emails
 
 **Source:** DUG Slack thread, 2026-09-16 — Marirose Mazza's "Private Dataset" in scheduled

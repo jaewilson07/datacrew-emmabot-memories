@@ -1,3 +1,7 @@
+---
+description: Beast Mode function-name verification — verify against the Functions Reference Guide before citing; userAttribute() doesn't exist in Domo (Tableau's USERATTRIBUTE).
+---
+
 # Gotcha: Function Name Hallucination (Beast Mode / Domo functions)
 
 ## What Happened

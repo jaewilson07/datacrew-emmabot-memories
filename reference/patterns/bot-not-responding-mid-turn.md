@@ -1,3 +1,7 @@
+---
+description: Diagnostic pattern — DUG members report EmmaBot/DataCrew 'isn't responding'; usually mid-turn on a build task, not dead. Check the last_run_completion API probe first.
+---
+
 # Pattern — "Bot isn't responding in Slack" (usually mid-turn, not dead)
 
 **Symptom**: Jae (or a member) reports a bot (DataCrew/IdrisBot) isn't responding in Slack.

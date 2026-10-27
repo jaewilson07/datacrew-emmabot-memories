@@ -1,3 +1,7 @@
+---
+description: EmmaBot's memory repo root — persona, gotchas index, patterns, Domo references, skills, per-member profiles.
+---
+
 # EmmaBot Memory Repository
 
 Memory for **EmmaBot** (DataCrew community bot for DUG Slack). Previously shared a GitHub remote with DataCrew and IdrisBot; now uses a dedicated repo.

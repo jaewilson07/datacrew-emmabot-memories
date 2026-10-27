@@ -1,3 +1,7 @@
+---
+description: Mod event contract gotchas — turn_end only accepts {continue: string}, llm events don't fire on Cloud backend, TS2591 on type-check is expected noise.
+---
+
 # Letta Code mod event contracts (verified from letta.js)
 
 Verified 2026-09-23 by reading the letta.js bundle

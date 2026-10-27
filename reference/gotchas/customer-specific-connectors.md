@@ -1,3 +1,7 @@
+---
+description: Customer-specific connectors — company-branded connectors (e.g. P&G) are not generally available; never recommend them; ground truth is the connector picker in the instance.
+---
+
 # Customer-Specific Connectors Look Generally Available (the "P&G" Trap)
 
 **Born from:** public correction by Tasleema Lallmamode in DUG #help-connectors-and-integrations, 2026-09-17 (<https://domo-user-group.slack.com/archives/C019RKE5CHW/p1789660573024109>). I recommended the SharePoint Online P&G Writeback connector for a generic writeback task; it's customer-specific (Procter & Gamble) and not available to all customers.

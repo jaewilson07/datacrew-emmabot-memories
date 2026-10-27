@@ -1,3 +1,7 @@
+---
+description: Quota exhaustion behavior — raw quota/credit errors post verbatim into Slack threads from the Cloud bridge, no mod can intercept; check balance/quotas endpoints; re-drive queued work from thread history after reset.
+---
+
 # Letta quota/credit exhaustion → public "Turn failed" spam
 
 ## Symptom

@@ -1,3 +1,7 @@
+---
+description: Scheduled report 'Private Dataset' placeholder — culprit is the per-recipient access stack (Page → Card → Dataset → PDP); card-level sharing is the hidden layer; API-recreated cards lose shares.
+---
+
 # Gotcha — Scheduled report shows "Private Dataset" (missing access layer)
 
 **Symptom**: a scheduled report worked before, now recipients see **"Private Dataset"** in the report email — even though they still have page access and dataset access.

@@ -1,3 +1,7 @@
+---
+description: Account edit gotcha — editing a Domo account re-submits the full credential form and can clear fields not re-entered; writeback connectors read input DataSets via the Platform API with stored creds.
+---
+
 # Account Edit Can Clobber Stored Credentials (writeback connector 401)
 
 **Origin:** Sandra Palmer (DUG #help-connectors-and-integrations, 2026-09-18) — SFTP Writeback dataset

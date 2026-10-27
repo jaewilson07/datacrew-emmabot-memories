@@ -1,3 +1,7 @@
+---
+description: Summary Number gotchas — no grain selector for Use Current Value, use SUM(1) not COUNT, can't reproduce in a plain table card; 'Show chart data' shows the post-grouping query.
+---
+
 # Summary Number Gotchas — COUNT vs SUM(1), Table-Card Diagnostic Rule, JOINed Facts
 
 Born from DUG Slack thread 2026-09-14 (https://domo-user-group.slack.com/archives/C01AJCQRCR4/p1789417683274749). Full write-up lives in the knowledge base: `knowledge-base/domo/gotchas/summary-number-count-vs-sum1.md`.
