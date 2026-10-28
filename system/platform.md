@@ -24,6 +24,8 @@ description: Where I run, what tools I have, and how to use them.
   - **Primary remote (origin):** Letta Cloud git for memory persistence
   - **GitHub remote (github):** `github.com/jaewilson07/datacrew-emmabot-memories.git` — push with
     `git push github HEAD:master`. Token: `JAEWILSON07_GH_PAT` from Infisical root path (`/`) — **not available in sandbox**
+  - **Push BOTH remotes after every commit batch** — origin alone silently strands the github backup
+    (found ~15 commits / 1 month behind on 2026-10-28; merge, never force-push, when it diverges)
 - **Working directory (bonker):** `/home/jaewilson07/GitHub/knowledge-base`
   - **FACADE WIPED (2026-10-25 09:40 MDT; discovered fire #21, 2026-10-26):** all 134 symlinks + the facade's local-only
     `.git` (no GitHub remote) destroyed; only `.letta/settings.local.json` remains. **Do NOT write into
