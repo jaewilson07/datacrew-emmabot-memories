@@ -21,7 +21,7 @@ Memory for **EmmaBot** (DataCrew community bot for DUG Slack). Previously shared
 │   ├── gotchas/         # Detailed gotchas split by topic — facts
 │   ├── patterns/        # Diagnostic patterns split by question shape — procedures
 │   ├── agentic-patterns/ # Claude API patterns from Anthropic cookbooks
-│   ├── mcp-server.md    # DataCrew MCP server connection details
+│   ├── mcp-server.md    # MCP connection, collection routing model, REST API constraints, known issues
 │   ├── platform-skills.md # Available skills listing
 │   ├── domo-doc-references.md # Verified Domo doc links
 │   ├── domo-embed-docs.md    # Domo App Studio embedding docs
