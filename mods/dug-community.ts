@@ -131,7 +131,7 @@ function getOpenGaps(state: ModState): DocGap[] {
 
 const CREW_DCS_DIR = "/tmp/crew-dcs";
 const ENV_FILE = "/home/jaewilson07/GitHub/homeserver/.env";
-const MDRAG_COLLECTION = "domo";
+const MDRAG_COLLECTION = "domo-curated";
 
 function loadEnv(): Record<string, string> {
   try {

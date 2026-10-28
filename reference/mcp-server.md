@@ -21,7 +21,7 @@ description: DataCrew MCP Server (wiki) — connection details, toolsets, collec
 
 ## Collections & Routing Model
 
-**Status (2026-10-28):** The `domo` collection is being reorganized — official Domo sources should reside in `domo-official-documentation`, while YouTube videos, learning annotations, and DataCrew analysis belong in `domo-curated`, and community content in `domo-community-forums`. The cleanup plan (2,660 docs classified, awaiting execution) → [[reference/mcp-server.md#collection-cleanup-plan]].
+**Status (2026-10-28):** The `domo` collection has been reorganized (2026-10-28): official Domo sources now reside in `domo-official-documentation`, while YouTube videos, learning annotations, and DataCrew analysis are in `domo-curated`, and community content is in `domo-community-forums`. Cleanup completed: 1,976 docs in domo-official-documentation, 699 in domo-curated, 1 in domo-community-forums. → [[reference/mcp-server.md#collection-cleanup-plan]].
 
 Three collections handle Domo-related documents, each with a clear content boundary:
 
@@ -29,9 +29,9 @@ Three collections handle Domo-related documents, each with a clear content bound
 |---|---|---|---|---|
 | `domo-official-documentation` | `6a34c9220c958fca1b9df8a3` | public | Only Domo official sources + annotations of them | domo.com/docs, Domo Support KB articles, domo.com API reference, official Domo blog |
 | `domo-curated` | `6add6bb1b6d85a2e772d7aff` | public | DataCrew's own analysis, guidance, community captures | YouTube videos (Jae's), learning annotations (domo_doc_learning), cross-link annotations, gotcha docs, `item_concept` seeds |
-| `domo-community-forums` | *exists (check list)* | public | Domo community-forums.domo.com posts | VanillaForums threads scraped from community-forums.domo.com |
+| `domo-community-forums` | `6a78011bebca85fd17cbe211` | public | Domo community-forums.domo.com posts | VanillaForums threads scraped from community-forums.domo.com |
 
-**Old name:** `domo-official-docs` was MERGED/renamed to `domo` (same collection_id `6a34c9220c958fca1b9df8a3`). The capture tool default is still correct.
+**Name history:** `domo-official-docs` → `domo` → `domo-official-documentation` (same collection_id `6a34c9220c958fca1b9df8a3`). Renamed 2026-10-28. The capture tool default still points to the correct collection.
 
 **Visibility:** Collections have a `visibility` field — `public` vs `private`. The `datacrew` collection is private (internal use only).
 
