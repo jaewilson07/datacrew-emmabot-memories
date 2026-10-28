@@ -35,11 +35,11 @@ Three collections handle Domo-related documents, each with a clear content bound
 
 **Visibility:** Collections have a `visibility` field — `public` vs `private`. The `datacrew` collection is private (internal use only).
 
-**Routing principle:** `query_rag` / `domo_rag_query` uses the `domo` collection by default. Other collections require explicit targeting.
+**Routing principle:** `query_rag` / `domo_rag_query` uses the `domo-official-documentation` collection by default. Other collections require explicit targeting.
 
-### Collection cleanup plan (created 2026-10-28, awaiting Jae's approval)
+### Collection cleanup plan (completed 2026-10-28)
 
-The `domo` collection (2,660 docs) contains mixed official and unofficial content that should be redistributed:
+**Original scope:** The `domo` collection (2,660 docs) contained mixed official and unofficial content. Planned redistribution:
 
 | What | Count | Destination |
 |---|---|---|
@@ -57,7 +57,7 @@ The `domo` collection (2,660 docs) contains mixed official and unofficial conten
 
 **Key discovery:** Moving a parent document with `confirm=true` does NOT cascade dependent annotations — the move returns 409 with a dependency list instead (mdrag #1222). Annotations must be moved BEFORE their parents.
 
-**Total moves:** ~685 docs → `domo-curated`, 1 → `domo-community-forums`, 1 → `datacrew`, 1 archive. **Rename:** `domo` → `domo-official-documentation` (not a reserved name).
+**Total moves executed:** ~685 docs → `domo-curated`, 1 → `domo-community-forums`, 1 → `datacrew`, 1 archive. **Rename executed:** `domo` → `domo-official-documentation`. **Result:** 1,976 docs in domo-official-documentation, 699 in domo-curated, 1 in domo-community-forums.
 
 ## REST API Access Constraints
 
