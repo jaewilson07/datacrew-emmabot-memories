@@ -1,5 +1,5 @@
 ---
-description: DataCrew MCP Server (wiki) — connection details, toolsets, collection routing model, REST API constraints, and known issues.
+description: DataCrew MCP Server (wiki) — connection details, toolsets, collection routing model (domo-official-documentation / domo-curated / domo-community-forums; 2026-10-28 cleanup plan), REST API constraints (X-DC-Token vs Bearer auth), move dependency guard (#1222), and known issues.
 ---
 # DataCrew MCP Server (wiki)
 
@@ -21,38 +21,80 @@ description: DataCrew MCP Server (wiki) — connection details, toolsets, collec
 
 ## Collections & Routing Model
 
+**Status (2026-10-28):** The `domo` collection is being reorganized — official Domo sources should reside in `domo-official-documentation`, while YouTube videos, learning annotations, and DataCrew analysis belong in `domo-curated`, and community content in `domo-community-forums`. The cleanup plan (2,660 docs classified, awaiting execution) → [[reference/mcp-server.md#collection-cleanup-plan]].
+
 Three collections handle Domo-related documents, each with a clear content boundary:
 
-| Collection | ID | Content scope | Example sources |
-|---|---|---|---|
-| `domo` | `6a34c9220c958fca1b9df8a3` | Only Domo official sources + annotations of them | domo.com/docs, Domo Support KB articles, domo.com API reference, official Domo blog/YouTube |
-| `domo-curated` | TBD (create if needed) | DataCrew's own analysis, guidance, internal docs | crew-dcs templates, codeengine workflows, DataCrew methodology docs |
-| `domo-community-forums` | TBD (create if needed) | DUG Slack threads, domo community-forums.domo.com posts | DUG Slack questions, community forum discussions |
+| Collection | ID | Visibility | Content scope | Example sources |
+|---|---|---|---|---|
+| `domo-official-documentation` | `6a34c9220c958fca1b9df8a3` | public | Only Domo official sources + annotations of them | domo.com/docs, Domo Support KB articles, domo.com API reference, official Domo blog |
+| `domo-curated` | `6add6bb1b6d85a2e772d7aff` | public | DataCrew's own analysis, guidance, community captures | YouTube videos (Jae's), learning annotations (domo_doc_learning), cross-link annotations, gotcha docs, `item_concept` seeds |
+| `domo-community-forums` | *exists (check list)* | public | Domo community-forums.domo.com posts | VanillaForums threads scraped from community-forums.domo.com |
 
 **Old name:** `domo-official-docs` was MERGED/renamed to `domo` (same collection_id `6a34c9220c958fca1b9df8a3`). The capture tool default is still correct.
 
+**Visibility:** Collections have a `visibility` field — `public` vs `private`. The `datacrew` collection is private (internal use only).
+
 **Routing principle:** `query_rag` / `domo_rag_query` uses the `domo` collection by default. Other collections require explicit targeting.
+
+### Collection cleanup plan (created 2026-10-28, awaiting Jae's approval)
+
+The `domo` collection (2,660 docs) contains mixed official and unofficial content that should be redistributed:
+
+| What | Count | Destination |
+|---|---|---|
+| Official DomoDocs/GitHub (DomoApps + domo.com/docs) | ~1,923 | STAY in `domo-official-documentation` |
+| YouTube videos (Jae's Domo content) | 225 | → `domo-curated` |
+| Auto-summaries of YouTube videos | 219 | → `domo-curated` (must move BEFORE parents; dependency guard) |
+| `item_concept` pipeline seeds | 212 | → `domo-curated` (auto-extraction artifacts, not real annotations) |
+| Learning annotations (domo_doc_learning) | 5 | → `domo-curated` |
+| Cross-link annotations | 1 | → `domo-curated` |
+| KB gotcha docs (dug-community uploads) | ~20 | → `domo-curated` |
+| DUG Slack thread captures | 1 | → `domo-curated` |
+| Community-forums thread (VanillaForums) | 1 | → `domo-community-forums` |
+| Project doc (crew-dcs) | 1 | → private `datacrew` collection |
+| Test doc | 1 | Archive |
+
+**Key discovery:** Moving a parent document with `confirm=true` does NOT cascade dependent annotations — the move returns 409 with a dependency list instead (mdrag #1222). Annotations must be moved BEFORE their parents.
+
+**Total moves:** ~685 docs → `domo-curated`, 1 → `domo-community-forums`, 1 → `datacrew`, 1 archive. **Rename:** `domo` → `domo-official-documentation` (not a reserved name).
 
 ## REST API Access Constraints
 
-The `dc_` Bearer token (`$DATACREW_API_TOKEN`) has **limited access** to the mdrag REST API:
+**Two auth patterns on wiki.datacrew.space REST API:**
+
+- **`Authorization: Bearer $DATACREW_API_TOKEN`** — limited access. Works for `/health`, MCP `tools/call`, and `POST /api/v1/ingest/text`.
+- **`X-DC-Token: $DATACREW_API_TOKEN`** — broader access. Discovered 2026-10-28. Works for `/api/v1/collections`, `/api/v1/documents`, move/archive endpoints where Bearer fails. **Use this for document enumeration, moves, and collection management.**
+
+> ⚠️ Both headers carry the same token value but grant different access levels. The `X-DC-Token` header is the one used by MCP server auth; it extends to REST endpoints that Bearer token cannot reach.
 
 | Endpoint | Access | Notes |
 |---|---|---|
-| `GET /api/v1/health` | ✅ Bearer token | Returns `{"status":"healthy","mongodb":"connected"}` |
-| MCP `tools/call` | ✅ Bearer token | `save_text_to_knowledge`, `save_url_to_knowledge`, `query_rag` all work |
-| `POST /api/v1/ingest/text` | ✅ Bearer token | For raw text ingestion |
-| `GET /api/v1/collections` | ❌ Wikki-session gated | Requires signed-in browser session, not Bearer token |
-| `GET /api/v1/documents` | ❌ Wikki-session gated | Cannot enumerate documents via REST with Bearer token alone |
-| `POST /api/v1/search` | ✅ Bearer token | Semantic search works (keyword listing may be degraded) |
-| `POST /api/v1/documents/{uid}/move` | ✅ Bearer token | Move between collections (see below) |
+| `GET /api/v1/health` | ✅ Bearer | Returns `{"status":"healthy","mongodb":"connected"}` |
+| MCP `tools/call` | ✅ Bearer | `save_text_to_knowledge`, `save_url_to_knowledge`, `query_rag` all work |
+| `POST /api/v1/ingest/text` | ✅ Bearer | For raw text ingestion |
+| `GET /api/v1/collections` | ✅ X-DC-Token | Full list with `visibility` field (⚠️ Bearer fails — returns 401) |
+| `GET /api/v1/documents` | ✅ X-DC-Token | Can enumerate/search docs (⚠️ Bearer fails — Wikki-session gated) |
+| `POST /api/v1/search` | ✅ Bearer | Semantic search works (keyword listing may be degraded) |
+| `POST /api/v1/documents/{uid}/move` | ✅ X-DC-Token | Move between collections; dependency guard returns 409 if dependents exist |
+| `POST /api/v1/documents/{uid}/archive` | ✅ X-DC-Token | Soft-delete with reason |
+| `PATCH /api/v1/collections/{id}` | ✅ X-DC-Token | Rename a collection |
+| `PUT /api/v1/documents/{uid}` | ✅ Bearer/X-DC-Token | Version a doc (content update) |
 
-**Implication:** You cannot enumerate what documents exist in a collection via REST with the Bearer token. Use MCP tools (`query_rag`) or Wikki session auth instead.
+**Cloudflare WAF note:** `curl` to wiki.datacrew.space may need a browser User-Agent (`-A "Mozilla/5.0 ..."`) if the default UA is blocked (error 1010). Python `urllib` is blocked; `httpx` and `requests` may pass.
+
+**Move endpoint dependency guard:** `POST /documents/{uid}/move` with `confirm=true` does NOT cascade dependent annotations — returns 409 with dependency list. Move annotations BEFORE parents.
 
 ## Collection Management
 
 - **Targeting collections:** MCP ingestion tools (`save_text_to_knowledge`, `save_url_to_knowledge`) target collections by **name**, not ID
-- **Moving documents:** `POST /api/v1/documents/{document_uid}/move` with body `{"target_collection_id":"...","confirm":true}` — where `document_uid` is the stable Mongo `_id` (not the content-volatile document UUID)
+- **Moving documents:** `POST /api/v1/documents/{document_uid}/move` with body `{"target_collection_id":"...","confirm":true}` — where `document_uid` is the stable Mongo `_id` (not the content-volatile document UUID). **Use `X-DC-Token` header, not Bearer.**
+- **Move dependency guard (2026-10-28):** Moving a parent document does NOT cascade dependent annotations — instead returns HTTP 409 with the dependency list. **Always move annotations/children BEFORE parents.** This is mdrag #1222.
+- **Renaming collections:** `PATCH /api/v1/collections/{id}` with `{"name": "new-name"}` — use `X-DC-Token`. Only `personal:` and `learn:` prefixes are reserved.
+- **Archive:** `POST /api/v1/documents/{uid}/archive` with `{"reason": "..."}` — use `X-DC-Token`
 - **Creating documents:** MCP tools create with `document_uid` from response
 - **Provenance tracking:** Use `source_label` in ingestion tools to track where content came from (e.g., `"dug-community"`, `"api-reference"`)
-- **Wikki session gap:** To enumerate collection contents (e.g., audit what's in `domo`), you need either a Wikki browser session cookie or an MCP listing tool — neither is currently available with Bearer token alone. Workarounds: read from local file inventory (private repo), or use semantic search (`POST /api/v1/search`) to probe for documents
+- **Enumerating documents:** Use `X-DC-Token` for `/api/v1/documents?search=` and `GET /api/v1/collections` — no longer need Wikki session or local file inventory
+- **Collection IDs (2026-10-28):**
+  - `domo-official-documentation` (was `domo`): `6a34c9220c958fca1b9df8a3`
+  - `domo-curated`: `6add6bb1b6d85a2e772d7aff`
