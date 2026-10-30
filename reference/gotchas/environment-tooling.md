@@ -129,3 +129,15 @@ description: Environment and tooling gotchas — bwrap, MCP server, mod scoping 
 ## Restarting letta-datacrew.service from a running turn (2026-10-26)
 
 - Never restart in-line — it kills your own turn mid-flight and leaves a stale pending tool call. Pattern that works: write a deploy script to /tmp, schedule it with `systemd-run --user --unit=<name> --on-active=Ns /bin/bash <script>` (detached timer survives turn end), and arm a backup Wake (+5 min) — wake schedules SURVIVE service restarts (verified). `letta -p` from a systemd-run script FAILS (no LETTA_API_KEY in the user-manager env) — don't rely on it for self-invocation; use the Wake. Mods load at process start, so mod edits deploy only on restart; the restart bounces all three bot accounts.
+
+## ApplyPatch resolves relative paths from the session cwd (2026-10-30)
+
+- **Symptom**: `ApplyPatch` "Add File: reference/domo/gotchas/foo.md" reported success, but the file was not in
+  the repo working tree — it was created at `<session-cwd>/reference/domo/gotchas/foo.md`. The session cwd is
+  `~/GitHub/knowledge-base` (the retired, wiped facade), while `cd <repo> && git add <path>` runs in the exec
+  workdir — two different roots. `git add` then fails with `fatal: pathspec ... did not match any files`.
+- **Fix**: use ABSOLUTE paths in ApplyPatch when writing to any repo outside the session cwd. If it already
+  happened: `mv` the file into the real repo, then `rmdir` the facade dirs the write created (rmdir only removes
+  empty ones, so it's safe), then commit.
+- **Why it matters**: the facade is retired per Jae's consolidation decision (2026-10-26) — files landing there
+  are invisible to the real repo and quietly lost on the next facade cleanup.
