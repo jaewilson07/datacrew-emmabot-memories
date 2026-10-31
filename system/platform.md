@@ -32,6 +32,10 @@ description: Where I run, what tools I have, and how to use them.
     `~/GitHub/knowledge-base` — it is no longer a facade.** All content is safe in the real repo
     `~/GitHub/datacrew-private-memories` (GitHub: `jaewilson07/letta-datacrew-memories`, HEAD `b812a0e`).
     Doc-gap workflow now: write docs at `reference/domo/gotchas/<topic>.md` in the REAL repo → PR → `resolve_doc_gap`.
+    **Branch hygiene (fire #24 lesson):** an interrupted prior turn can leave the repo checked out on a stale feature
+    branch — always start doc-gap work with `git fetch origin && git checkout -b <slug> origin/main` and verify the
+    canonical `reference/domo/gotchas/` path. Committing on a stale branch pollutes an open PR (repair = cleanup commit
+    that git-rms the stray files, net diff goes clean, explanatory PR comment — never force-push).
     Lost with the wipe: claude-cookbooks (untracked real dir; `scripts/ingest_to_mdrag.py` line 12 points there —
     recoverable from upstream).
   - **Wipe confirmed INTENTIONAL (Jae, 2026-10-26 chat):** goal = consolidate memory on one repo; facade stays retired,
