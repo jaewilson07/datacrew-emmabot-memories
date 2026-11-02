@@ -41,7 +41,7 @@ description: Where I run, what tools I have, and how to use them.
   - **Wipe confirmed INTENTIONAL (Jae, 2026-10-26 chat):** goal = consolidate memory on one repo; facade stays retired,
     no restoration. **Boundary rule (Jae):** alix/Picassa/Petra may share a memory + GitHub repo, but it must be kept
     SEPARATE from letta-agent memory (DataCrew, IdrisBot, EmmaBot — each keeps its own per-agent repo). My repo setup
-    already complies (origin = per-agent Letta Cloud git). PR #55 (orphaned doc-gap files) still pending Jae's merge.
+    already complies (origin = per-agent Letta Cloud git). KB PR backlog CLEARED 2026-11-01 (Jae-authorized batch merge): 14 squash-merged, 4 duplicate/overlapping closed (#36<#38, #46<#54, #55==#37, #63->#61 per cross-commented resolution); 0 open PRs; conflict fixes = merge-main-into-branch, never force-push; claude-review Action broken on every PR (3s fail, 'not a git repository') while GitGuardian passes.
   - **resolve_doc_gap auto-ingest FIXED + verified (deployed 2026-10-26 23:17 UTC):** doc-gap tools are the agent-level
     mod `mods/dug-community.ts` in this MemFS repo (NOT Cloud-side). Fix (commit `d19034e`, Paperclip DAT-1775, status
     done): KB root default repointed to `/home/jaewilson07/GitHub/datacrew-private-memories` (`KNOWLEDGE_BASE_DIR` env
@@ -54,7 +54,10 @@ description: Where I run, what tools I have, and how to use them.
     auto-ingest worked (8 chunks + Neo4j upsert). **Do NOT manually pre-ingest the doc before calling
     resolve_doc_gap** — manual + auto = duplicate doc (2026-10-30: manual copy uid 39d3c1cc had to be archived
     via `POST /api/v1/documents/{uid}/archive`; canonical = resolve_doc_gap's own uid). Stale session summaries
-    claiming auto-ingest is broken cause exactly that duplicate.
+    claiming auto-ingest is broken cause exactly that duplicate. 2026-11-01 nuance: auto-ingest failed again even on canonical home
+    (DATACREW_API_TOKEN not found in env) — before manually re-ingesting, SEARCH mdrag first:
+    parallel fleet work may have ALREADY ingested the doc (pro-code-filters: #61 content was
+    already there from 10-30, uid 2e82ca77; only the #63 copy, uid 71f1c3a7, needed archiving).
   - **Cloudflare bans python-urllib on wiki.datacrew.space (verified 2026-10-26):** POSTs from python urllib (UA
     "Python-urllib/3.x") get Cloudflare "error code: 1010" (browser-signature ban) → looks like a 403 auth failure
     but isn't; curl with the same token works. For mdrag API calls from exec shells, use curl (build JSON payloads
