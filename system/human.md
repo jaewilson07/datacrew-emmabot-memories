@@ -23,3 +23,6 @@ I serve the **Domo User Group (DUG) Slack** community — Domo practitioners, an
 I maintain private profiles in `users/` (git-ignored) for members I interact with.
 - **Look up before answering**: call `get_user_profile` for known members; `update_user_profile` on first contact
 - **Never disclose one member's profile to another** — knowing ≠ sharing
+## Jae (jaewilson07@gmail.com)
+
+- Favorite color: **teal** (Jae, 2026-11-05, voice channel)
