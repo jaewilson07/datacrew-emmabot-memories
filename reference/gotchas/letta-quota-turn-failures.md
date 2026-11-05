@@ -33,6 +33,29 @@ noticed ("go home you're drunk").
   re-drive that work from the Slack thread history, not from internal state
   (the agent has no record of what it never got to run).
 
+## Sustained Negative Balance (2026-10-31 → Nov 5, still ongoing)
+
+- The balance went to **-1159 credits** (≈ -$1.16) in the Oct 14 exhaustion and
+  has persisted at that level for over a week without any user payment.
+- **Two failure modes coexist under negative balance:**
+  1. **Public error spam** — turns that start successfully post the raw error
+     to Slack (the behavior documented above).
+  2. **Silent fire death** — scheduled wakes (cron fires) produce **zero turns,
+     zero messages, zero errors**. The cron system reports `failed=0/missed=0`.
+     This happened Nov 2–4: fires #28, #29, and the Nov 4 slot never produced
+     any output at all. Diagnosed via recall agent reconstruction (fire #30,
+     Nov 5).
+- The watchdog continues to DM Jae about the negative balance, but the persistent
+  debt means fires keep dying even when the per-day quota bucket technically
+  resets. The system runs on the `basic` bucket alone while `lettaTier` daily
+  bucket remains empty.
+- **Nothing queued work is lost** — the ledger was empty and DUG activity
+  continued in other conversations during the silent gap. But any fire-specific
+  state or context that would have been produced in a dead fire is simply gone.
+- **Risk assessment:** as long as the negative balance persists, fires remain at
+  risk of silent failure. Even if the per-day quota bucket has room, the overall
+  credit debt appears to suppress wake execution entirely.
+
 ## Mechanism
 
 - The error posting happens **inside the Slack channel bridge in letta.js**
