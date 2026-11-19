@@ -70,3 +70,19 @@ Net: 1 merge (#73), 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
 - **KB repo (letta-datacrew-memories):** open #65 (Renovate config, claude-review fail, no reviews) — skipped. Merged since Nov 17: none (latest #62, Oct 31).
 
 Net: 4 merges (#75, #76, #77, #78), 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
+
+## Fire #44 — Nov 19, 2026 (14:01 UTC)
+
+**No merges. alix-at-dc merged PRs #79/#80 (shared CI) between fires.**
+
+- **Main HEAD:** `f1722b80` (Nov 19 06:37 UTC) — advanced by alix-at-dc's merges of PR #79 (Nov 18 19:32 UTC) and PR #80 (Nov 19 06:07 UTC), both "ci: lint/tests from shared Python CI (personal-home#1096)." Not EmmaBot merges.
+- **Open PRs:**
+  - **#72** "Update dependency cl to v1.6.0" — SKIPPED. CI: ci-ok FAIL, renovate/artifacts FAIL (uv.lock: "Distribution not found at: file:///tmp/renovate/repos/github/jaewilson07/pattern-hunter/wheels/domain_state-0.0.1-py3-none-any.whl"), test FAIL, GitGuardian pass. mergeStateStatus UNKNOWN, no reviews. 3rd consecutive fire CI-red.
+  - **#69** "Move cl and dc-auth to gated private package index" — SKIPPED. DRAFT, CI test FAIL (DAT-1703 Infisical CI-secret break), GitGuardian pass, zero reviews, ~30 days stale.
+- **Milestone #6–#9:** all four OPEN, no movement since Oct 5. Live-testing trigger NOT met.
+- **Anomalies:** None new. alix-at-dc push + PR events Nov 18–19 (shared CI integration). No billing notices, no new issues, no workflow failures on main.
+- **KB repo (letta-datacrew-memories):** open #65 (Renovate config, claude-review FAIL 13s, GitGuardian pass, mergeStateStatus UNSTABLE, no reviews) — SKIPPED. Merged since Nov 18: none (latest #62, Oct 31).
+
+Net: 0 merges, 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
+
+**Note:** PR #72's `renovate/artifacts` failure is now 3 consecutive fires. The local wheel `domain_state-0.0.1-py3-none-any.whl` path in pyproject.toml/uv.lock can't be resolved during Renovate's artifact-update pass. This is a config issue (the wheel path or the dependency declaration), not a transient CI flake.
