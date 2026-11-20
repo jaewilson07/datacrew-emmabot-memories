@@ -86,3 +86,19 @@ Net: 4 merges (#75, #76, #77, #78), 2 skips (#72 CI-red, #69 draft CI-red), KB #
 Net: 0 merges, 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
 
 **Note:** PR #72's `renovate/artifacts` failure is now 3 consecutive fires. The local wheel `domain_state-0.0.1-py3-none-any.whl` path in pyproject.toml/uv.lock can't be resolved during Renovate's artifact-update pass. This is a config issue (the wheel path or the dependency declaration), not a transient CI flake.
+
+## Fire #45 — Nov 20, 2026 (14:01 UTC)
+
+**(a) Main HEAD + activity:** `f1722b80` (Nov 19 06:37 UTC) — unchanged since fire #44. Activity since Nov 19: alix-at-dc push + PR events (shared CI integration, PR #80 merge Nov 19 06:07 UTC). No new issues, no workflow failures on main, no billing notices.
+
+**(b) Open PRs + decisions:**
+- **#72 "Update dependency cl to v1.6.0" — SKIPPED.** 4th consecutive fire CI-red. CI: ci-ok FAIL, renovate/artifacts FAIL (uv.lock: "Distribution not found at: file:///tmp/renovate/repos/github/jaewilson07/pattern-hunter/wheels/domain_state-0.0.1-py3-none-any.whl"), test FAIL, GitGuardian pass. mergeStateStatus BLOCKED, no reviews. Config issue (local wheel path), not transient.
+- **#69 "Move cl and dc-auth to gated private package index" — SKIPPED.** DRAFT, CI test FAIL (DAT-1703 Infisical CI-secret break), GitGuardian pass, zero reviews, ~31 days stale.
+
+**(c) Milestone #6–#9:** all four OPEN, no movement since Oct 5. Live-testing trigger NOT met.
+
+**(d) Anomalies:** None new. alix-at-dc activity Nov 18–19 (shared CI). No billing notices, no new issues, no workflow failures on main.
+
+**(e) KB repo (letta-datacrew-memories):** open #65 (Renovate config, claude-review FAIL 13s, GitGuardian pass, mergeStateStatus UNSTABLE, no reviews) — SKIPPED. Merged since Nov 19: none (latest #62, Nov 2).
+
+**Net:** 0 merges, 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
