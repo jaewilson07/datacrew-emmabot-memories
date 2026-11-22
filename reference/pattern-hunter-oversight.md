@@ -114,3 +114,19 @@ Net: 0 merges, 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
 - **KB repo (letta-datacrew-memories):** open #65 (Renovate config, claude-review FAIL 13s, GitGuardian pass, mergeStateStatus UNSTABLE, no reviews) — SKIPPED. Merged since Nov 20: none (latest #62, Nov 2).
 
 Net: 1 merge (#82), 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
+
+## Fire #47 — Nov 22, 2026 (14:08 UTC)
+
+**(a) Main HEAD + activity:** `48580d23` (Nov 21 14:07 UTC) — advanced since fire #46. Activity since Nov 20: jaewilson07 push + PR merge Nov 21 14:07 UTC (PR #82 squash-merge), renovate[bot] PR #82 created Nov 21 14:07 UTC, alix-at-dc issue events Nov 20 14:39/14:51 UTC. No workflow failures on main, no billing notices.
+
+**(b) Open PRs + decisions:**
+- **#72 "Update dependency cl to v1.6.0" — SKIPPED.** 6th consecutive fire CI-red. CI: ci-ok FAIL, renovate/artifacts FAIL (uv.lock: "Distribution not found at: file:///tmp/renovate/repos/github/jaewilson07/pattern-hunter/wheels/domain_state-0.0.1-py3-none-any.whl"), test FAIL, GitGuardian pass. mergeStateStatus UNKNOWN, no reviews. Config issue (local wheel path), not transient.
+- **#69 "Move cl and dc-auth to gated private package index" — SKIPPED.** DRAFT, CI test FAIL (DAT-1703 Infisical CI-secret break), GitGuardian pass, zero reviews, ~33 days stale.
+
+**(c) Milestone #6–#9:** all four OPEN, no movement since Oct 5. Live-testing trigger NOT met.
+
+**(d) Anomalies:** None new. jaewilson07 merge Nov 21 (PR #82). No billing notices, no new issues, no workflow failures on main.
+
+**(e) KB repo (letta-datacrew-memories):** open #65 (Renovate config, claude-review FAIL 13s, GitGuardian pass, mergeStateStatus UNSTABLE, no reviews) — SKIPPED. Merged since Nov 21: none (latest #62, Nov 2).
+
+**Net:** 0 merges, 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
