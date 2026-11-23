@@ -130,3 +130,19 @@ Net: 1 merge (#82), 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
 **(e) KB repo (letta-datacrew-memories):** open #65 (Renovate config, claude-review FAIL 13s, GitGuardian pass, mergeStateStatus UNSTABLE, no reviews) — SKIPPED. Merged since Nov 21: none (latest #62, Nov 2).
 
 **Net:** 0 merges, 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
+
+## Fire #48 — Nov 23, 2026 (14:09 UTC)
+
+**(a) Main HEAD + activity:** `48580d23` (Nov 21 14:07 UTC) — unchanged since fire #47. No new activity since Nov 22.
+
+**(b) Open PRs + decisions:**
+- **#72 "Update dependency cl to v1.6.0" — SKIPPED.** 7th consecutive fire CI-red. CI: ci-ok FAIL, renovate/artifacts FAIL (same local-wheel path error), test FAIL, GitGuardian pass. mergeStateStatus MERGEABLE, zero reviews. Config issue (local wheel path), not transient.
+- **#69 "Move cl and dc-auth to gated private package index" — SKIPPED.** DRAFT, CI test FAIL, GitGuardian pass, zero reviews, ~34 days stale.
+
+**(c) Milestone #6–#9:** all four OPEN, no movement since Oct 5. Live-testing trigger NOT met.
+
+**(d) Anomalies:** None new. No billing notices, no new issues, no workflow failures on main.
+
+**(e) KB repo (datacrew-private-memories):** open #65 (Renovate config, claude-review FAIL, GitGuardian pass, mergeStateStatus UNSTABLE, no reviews) — SKIPPED. Merged since Nov 21: none (latest #62, Nov 2).
+
+**Net:** 0 merges, 2 skips (#72 CI-red, #69 draft CI-red), KB #65 skipped.
